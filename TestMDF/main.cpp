@@ -1,5 +1,8 @@
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <cstdio>
+#include <memory>
 
 #include "mdflibrary/MdfReader.h"
 #include "mdflibrary/MdfWriter.h"
@@ -7,139 +10,244 @@
 
 using namespace MdfLibrary;
 
-// ----------------------
-// BusLogger writer
-// ----------------------
-void writerBusLogger(const char* filePath) {
-    MdfWriter writer(MdfWriterType::MdfBusLogger, filePath);
+void write(const std::string &filePath) {
+    std::cout << "Writing MDF file to:" << filePath << std::endl;
+
+    MdfWriter writer(MdfWriterType::MdfBusLogger, filePath.c_str());
     writer.SetBusType(MdfBusType::CAN);
     writer.SetStorageType(MdfStorageType::VlsdStorage);
-    writer.CreateBusLogConfiguration();
+    if (!writer.CreateBusLogConfiguration()) {
+        std::cout << "Error: failed to create CAN bus log configuration" << std::endl;
+        return;
+    }
 
-    auto file = writer.GetFile();
-    auto dataGroups = file.GetDataGroups();
+    auto fileObj = writer.GetFile();
+    auto dataGroups = fileObj.GetDataGroups();
+    if (dataGroups.empty()) {
+        std::cout << "Error: no DataGroups available after configuration" << std::endl;
+        return;
+    }
 
-    MdfChannelGroup canFrameGroup = dataGroups.front().GetChannelGroups().front();
-    bool found = false;
+    std::unique_ptr<MdfChannelGroup> canFrameGroup;
     for (auto& dg : dataGroups) {
-        for (auto& cg : dg.GetChannelGroups()) {
+        auto channelGroups = dg.GetChannelGroups();
+        for (auto& cg : channelGroups) {
             if (cg.GetName() == "CAN_DataFrame") {
-                canFrameGroup = cg;
-                found = true;
+                canFrameGroup = std::make_unique<MdfChannelGroup>(cg.GetChannelGroup());
                 break;
             }
         }
-        if (found) break;
+        if (canFrameGroup != nullptr) break;
     }
-    if (!found) return;
+    if (canFrameGroup == nullptr) {
+        std::cout << "Error: CAN_DataFrame group not found" << std::endl;
+        return;
+    }
 
-    writer.InitMeasurement();
-    writer.StartMeasurement(100000000);
+    if (!writer.InitMeasurement()) {
+        std::cout << "Error: failed to initialize measurement" << std::endl;
+        return;
+    }
+
+    // Manual DBC assumptions (Tests/valid.dbc):
+    // BO_ 2297431040 EEC1
+    // SG_ ECU_Engine_Torque : 16|8@1+ (1,-125) [-125|125]
+    // SG_ ECU_Engine_Speed  : 24|16@1+ (0.125,0) [0|3000]
+    constexpr uint32_t kEec1MessageId = 2297431040U;
+    constexpr double kTorqueOffset = -125.0;
+    constexpr double kTorqueFactor = 1.0;
+    constexpr double kTorqueMin = -125.0;
+    constexpr double kTorqueMax = 125.0;
+    constexpr double kSpeedOffset = 0.0;
+    constexpr double kSpeedFactor = 0.125;
+    constexpr double kSpeedMin = 0.0;
+    constexpr double kSpeedMax = 3000.0;
+
+    const auto encodeTorqueRaw = [](double engineeringValue,
+                                    double minValue,
+                                    double maxValue,
+                                    double offset,
+                                    double factor) -> uint8_t {
+        const double clamped = std::clamp(engineeringValue, minValue, maxValue);
+        const double raw = (clamped - offset) / factor;
+        return static_cast<uint8_t>(std::llround(raw));
+    };
+
+    const auto encodeSpeedRaw = [](double engineeringValue,
+                                   double minValue,
+                                   double maxValue,
+                                   double offset,
+                                   double factor) -> uint16_t {
+        const double clamped = std::clamp(engineeringValue, minValue, maxValue);
+        const double raw = (clamped - offset) / factor;
+        return static_cast<uint16_t>(std::llround(raw));
+    };
+
+    const uint64_t measurementStartNs = 100000000ULL;
+    const uint64_t sampleStepNs = 100000000ULL;
+    writer.StartMeasurement(measurementStartNs);
 
     for (int i = 0; i < 3; ++i) {
-        uint64_t t_ns = (i+1) * 100000000;
+        uint64_t t_ns = measurementStartNs + static_cast<uint64_t>(i + 1) * sampleStepNs;
 
         CanMessage msg;
-        msg.SetMessageId(0x0CF00400);
+        msg.SetMessageId(kEec1MessageId); // EEC1
         msg.SetExtendedId(true);
-        msg.SetDlc(8);
-
-        uint8_t torque_raw = 80 + i*20;
-        uint16_t speed_raw = 6400 + i*1600;
 
         std::vector<uint8_t> payload(8, 0);
-        payload[2] = torque_raw;
-        payload[3] = speed_raw & 0xFF;
-        payload[4] = (speed_raw >> 8) & 0xFF;
-        msg.SetDataBytes(payload);
 
-        writer.SaveCanMessage(canFrameGroup, t_ns, msg);
+        {
+            const double torque_eng = -45 + i * 20;  // engineering value (%)
+            const uint8_t torque_raw = encodeTorqueRaw(torque_eng, kTorqueMin, kTorqueMax, kTorqueOffset, kTorqueFactor);
+            payload[2] = torque_raw;  // bitStart=16 → byte 2
+        }
+
+        {
+            const double speed_eng = 800 + i * 200;  // engineering value (rpm)
+            const uint16_t speed_raw = encodeSpeedRaw(speed_eng, kSpeedMin, kSpeedMax, kSpeedOffset, kSpeedFactor);
+            payload[3] = speed_raw & 0xFF;     // bitStart=24 → byte 3
+            payload[4] = (speed_raw >> 8) & 0xFF;
+        }
+
+        msg.SetDataBytes(payload);
+        writer.SaveCanMessage(*canFrameGroup, t_ns, msg);
     }
 
-    writer.StopMeasurement(300000000);
-    writer.FinalizeMeasurement();
+    writer.StopMeasurement(measurementStartNs + 3 * sampleStepNs);
+    if (!writer.FinalizeMeasurement()) {
+        std::cout << "Error: failed to finalize measurement" << std::endl;
+        return;
+    }
+
+    std::cout << "MDF file written successfully." << std::endl;
 }
 
-// ----------------------
-// BusLogger reader
-// ----------------------
-void readerBusLogger(const char* filePath) {
-    MdfReader reader(filePath);
+void read(const std::string &filePath) {
+    std::cout << "Reading MDF file from:" << filePath << std::endl;
+
+    MdfReader reader(filePath.c_str());
     if (!reader.Open()) {
-        std::cerr << "Error: no se pudo abrir el archivo " << filePath << std::endl;
+        std::cout << "Error: could not open file" << filePath << std::endl;
         return;
     }
     reader.ReadEverythingButData();
 
-    auto file = reader.GetFile();
-    auto header = file.GetHeader();
-
-    uint64_t start_time_ns = header.GetStartTime();
-
-    auto dataGroups = file.GetDataGroups();
+    auto fileObj = reader.GetFile();
+    auto dataGroups = fileObj.GetDataGroups();
     if (dataGroups.empty()) {
-        std::cerr << "Error: no hay DataGroups en el archivo." << std::endl;
+        std::cout << "Error: no DataGroups in file." << std::endl;
         return;
     }
 
+    std::cout << "Number of DataGroups:" << dataGroups.size() << std::endl;
     for (auto& dg : dataGroups) {
         auto cg_list = dg.GetChannelGroups();
         if (cg_list.empty()) continue;
 
+        std::cout << "Processing DataGroup with" << cg_list.size() << "ChannelGroups" << std::endl;
         for (auto& cg : cg_list) {
             if (cg.GetName() == "CAN_DataFrame") {
-                auto cn_list = cg.GetChannels();
-                if (cn_list.empty()) continue;
+                auto topLevelChannels = cg.GetChannels();
+                if (topLevelChannels.empty()) {
+                    continue;
+                }
 
-                MdfChannel idChannel = cn_list.front();
-                MdfChannel dataChannel = cn_list.front();
-                MdfChannel timeChannel = cn_list.front();
-                bool foundId = false, foundData = false, foundTime = false;
+                MdfChannel timeChannel = topLevelChannels.front();
+                MdfChannel frameChannel = topLevelChannels.front();
+                bool foundTime = false;
+                bool foundFrame = false;
 
-                for (auto& cn : cn_list) {
-                    const std::string name = cn.GetName();
-                    if (name == "CAN_DataFrame.ID") {
-                        idChannel = cn; foundId = true;
-                    } else if (name == "CAN_DataFrame.DataBytes") {
-                        dataChannel = cn; foundData = true;
-                    } else if (name == "t") {
-                        timeChannel = cn; foundTime = true;
+                for (auto& channel : topLevelChannels) {
+                    const std::string channelName = channel.GetName();
+                    if (channelName == "t") {
+                        timeChannel = channel;
+                        foundTime = true;
+                    } else if (channelName == "CAN_DataFrame") {
+                        frameChannel = channel;
+                        foundFrame = true;
                     }
                 }
-                if (!foundId || !foundData || !foundTime) continue;
 
-                MdfChannelObserver idObs(dg, cg, idChannel);
-                MdfChannelObserver dataObs(dg, cg, dataChannel);
-                MdfChannelObserver timeObs(dg, cg, timeChannel);
+                if (!foundTime || !foundFrame) {
+                    continue;
+                }
 
-                reader.ReadData(dg);
+                auto composedChannels = frameChannel.GetChannelCompositions();
+                if (composedChannels.empty()) {
+                    continue;
+                }
 
-                for (int64_t sample = 0; sample < idObs.GetNofSamples(); ++sample) {
-                    double id_val = 0.0, ts_val = 0.0;
+                MdfChannel idChannel = composedChannels.front();
+                MdfChannel ideChannel = composedChannels.front();
+                MdfChannel dataChannel = composedChannels.front();
+                bool foundId = false;
+                bool foundIde = false;
+                bool foundData = false;
+
+                for (auto& channel : composedChannels) {
+                    const std::string channelName = channel.GetName();
+                    if (channelName == "CAN_DataFrame.ID") {
+                        idChannel = channel;
+                        foundId = true;
+                    } else if (channelName == "CAN_DataFrame.IDE") {
+                        ideChannel = channel;
+                        foundIde = true;
+                    } else if (channelName == "CAN_DataFrame.DataBytes") {
+                        dataChannel = channel;
+                        foundData = true;
+                    }
+                }
+
+                if (!foundId || !foundIde || !foundData) {
+                    continue;
+                }
+
+                MdfChannelObserver idObserver(dg, cg, idChannel);
+                MdfChannelObserver ideObserver(dg, cg, ideChannel);
+                MdfChannelObserver dataObserver(dg, cg, dataChannel);
+                MdfChannelObserver timeObserver(dg, cg, timeChannel);
+
+                if (!reader.ReadData(dg)) {
+                    std::cout << "Warning: unable to read data for CAN_DataFrame" << std::endl;
+                    continue;
+                }
+
+                const int64_t maxSamples = std::min({
+                    idObserver.GetNofSamples(),
+                    ideObserver.GetNofSamples(),
+                    dataObserver.GetNofSamples(),
+                    timeObserver.GetNofSamples()
+                });
+
+                for (int64_t sample = 0; sample < maxSamples; ++sample) {
+                    uint64_t rawId = 0;
+                    uint64_t rawIde = 0;
                     std::vector<uint8_t> payload;
+                    double relativeTimeSeconds = 0.0;
 
-                    bool id_ok = idObs.GetChannelValue(sample, id_val);
-                    bool data_ok = dataObs.GetChannelValue(sample, payload);
-                    bool ts_ok = timeObs.GetChannelValue(sample, ts_val);
+                    const bool idOk = idObserver.GetChannelValue(sample, rawId);
+                    const bool ideOk = ideObserver.GetChannelValue(sample, rawIde);
+                    const bool dataOk = dataObserver.GetChannelValue(sample, payload);
+                    const bool timeOk = timeObserver.GetChannelValue(sample, relativeTimeSeconds);
 
-                    if (id_ok && data_ok && ts_ok) {
-                        uint32_t id = static_cast<uint32_t>(id_val);
-                        uint64_t timestamp_ns = static_cast<uint64_t>(ts_val * 1e9) + start_time_ns;
+                    if (!idOk || !ideOk || !dataOk || !timeOk) {
+                        continue;
+                    }
 
-                        if ((id & 0x1FFFFFFF) == 0x0CF00400 && payload.size() >= 5) {
-                            // SPN 513: Engine Percent Torque
-                            uint8_t torque_raw = payload[2];
-                            double torque = torque_raw * 1.0 + (-125);
+                    const uint32_t messageId = (rawIde != 0)
+                                                   ? (static_cast<uint32_t>(rawId) | 0x80000000U)
+                                                   : static_cast<uint32_t>(rawId);
 
-                            // SPN 190: Engine Speed
-                            uint16_t speed_raw = payload[3] | (payload[4] << 8);
-                            double speed = speed_raw * 0.125;
+                    if (messageId == 2297431040U && payload.size() >= 5) {
+                        const uint64_t timestamp_ns = static_cast<uint64_t>(std::llround(relativeTimeSeconds * 1e9));
+                        const uint8_t torque_raw = payload[2];
+                        const double torque = static_cast<double>(torque_raw) - 125.0;
+                        const uint16_t speed_raw = static_cast<uint16_t>(payload[3] | (payload[4] << 8));
+                        const double speed = static_cast<double>(speed_raw) * 0.125;
 
-                            std::cout << "Timestamp=" << timestamp_ns << " ns"
-                                      << " SPN 513 (Engine Percent Torque)=" << torque << " %"
-                                      << " SPN 190 (Engine Speed)=" << speed << " rpm"
-                                      << std::endl;
-                        }
+                        std::cout << "Timestamp=" << timestamp_ns << "ns"
+                                  << "SPN 513 (Engine Percent Torque)=" << torque << "%"
+                                  << "SPN 190 (Engine Speed)=" << speed << "rpm" << std::endl;
                     }
                 }
             }
@@ -147,6 +255,7 @@ void readerBusLogger(const char* filePath) {
     }
     reader.Close();
 }
+
 
 // ----------------------
 // Main
@@ -157,8 +266,8 @@ int main() {
     // Delete file if it already exists
     std::remove(filePath);
 
-    writerBusLogger(filePath);
-    readerBusLogger(filePath);
+    write(filePath);
+    read(filePath);
     return 0;
 }
 
