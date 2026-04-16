@@ -253,8 +253,7 @@ void read ( const std::string &filePath ) {
           const bool idOk = idObserver.GetChannelValue ( sample, rawId );
           const bool ideOk = ideObserver.GetChannelValue ( sample, rawIde );
           const bool dataOk = dataObserver.GetChannelValue ( sample, payload );
-          const bool timeOk = timeObserver.GetChannelValue ( sample,
-                              relativeTimeSeconds );
+          const bool timeOk = timeObserver.GetChannelValue ( sample, relativeTimeSeconds );
 
           if ( !idOk || !ideOk || !dataOk || !timeOk ) {
             continue;
@@ -284,7 +283,6 @@ void read ( const std::string &filePath ) {
 
   reader.Close ();
 }
-
 
 // ----------------------
 // Main
