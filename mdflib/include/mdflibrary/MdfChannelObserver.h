@@ -2,12 +2,32 @@
  * Copyright 2023 Simplxs
  * SPDX-License-Identifier: MIT
  */
+/**
+ * @file MdfChannelObserver.h
+ * @brief Wrapper for channel observer access.
+ *
+ * The `MdfChannelObserver` class exposes a convenient C++ wrapper around the
+ * lower-level `mdf::IChannelObserver` interface. It provides easy access to
+ * channel metadata, sample counts and value retrieval in multiple formats.
+ *
+ * @ingroup mdflibrary
+ */
 #pragma once
 #include "MdfDataGroup.h"
 
 using namespace MdfLibrary::ExportFunctions;
 
 namespace MdfLibrary {
+  /**
+   * @class MdfChannelObserver
+   * @brief Observes channel values and metadata.
+   *
+   * `MdfChannelObserver` allows inspection of a channel's sample count,
+   * unit and value at a given sample index. The wrapper maps the underlying
+   * `mdf::IChannelObserver` to a C++ friendly API.
+   *
+   * @ingroup mdflibrary
+   */
   class MdfChannelObserver {
   private:
     mdf::IChannelObserver* observer;
@@ -40,22 +60,46 @@ namespace MdfLibrary {
       observer = channel_observer.observer;
       channel_observer.observer = nullptr;
     }
+    /**
+     * @brief Returns the number of samples for the observed channel.
+     * @return Number of available samples.
+     */
     int64_t GetNofSamples () const {
       return MdfChannelObserverGetNofSamples ( observer );
     }
+
+    /**
+     * @brief Returns the channel name.
+     * @return Channel name string.
+     */
     std::string GetName () const {
       std::string str ( MdfChannelObserverGetName ( observer, nullptr ) + 1, '\0' );
       str.resize ( MdfChannelObserverGetName ( observer, str.data () ) );
       return str;
     }
+
+    /**
+     * @brief Returns the channel unit.
+     * @return Unit string for the channel.
+     */
     std::string GetUnit () const {
       std::string str ( MdfChannelObserverGetUnit ( observer, nullptr ) + 1, '\0' );
       str.resize ( MdfChannelObserverGetUnit ( observer, str.data () ) );
       return str;
     }
+
+    /**
+     * @brief Returns the underlying channel object.
+     * @return The channel associated with this observer.
+     */
     const MdfChannel GetChannel () const {
       return MdfChannel ( MdfChannelObserverGetChannel ( observer ) );
     }
+
+    /**
+     * @brief Returns true if this channel observer represents a master channel.
+     * @return `true` when the channel is a master channel.
+     */
     bool IsMaster () const { return MdfChannelObserverIsMaster ( observer ); }
     bool GetChannelValue ( uint64_t sample, int64_t& value ) const {
       return MdfChannelObserverGetChannelValueAsSigned ( observer, sample, value );

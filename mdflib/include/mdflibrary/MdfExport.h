@@ -2,6 +2,15 @@
  * Copyright 2023 Simplxs
  * SPDX-License-Identifier: MIT
  */
+/**
+ * @file MdfExport.h
+ * @brief Shared type and enum definitions for the MdfLibrary wrapper.
+ *
+ * This header defines common enumeration values and forward declarations used
+ * by the MdfLibrary wrapper classes.
+ *
+ * @ingroup mdflibrary
+ */
 #pragma once
 #include <stdint.h>
 
