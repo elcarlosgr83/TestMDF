@@ -112,6 +112,16 @@ namespace mdf {
     [ [ nodiscard ] ] virtual IChannel* CreateChannel ( const std::string_view& 
       name );
 
+      /** \brief Returns an existing channel by name or name substring.
+       *
+       * Note that the function searches for a channel name that includes the
+       * provided search name. Example: searching for '.DataLength' will return
+       * 'CAN_DataFrame.DataLength' if it exists without requiring the full name.
+       * @param name Channel name or substring.
+       * @return Pointer to the matching channel or nullptr.
+       */
+    [ [ nodiscard ] ] virtual IChannel* GetChannel ( const std::string_view& name ) const;
+
       /** \brief Returns an existing channel by part of its name.
        *
        * Note that the function search for a name that includes the search name.

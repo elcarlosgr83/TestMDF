@@ -62,6 +62,8 @@ namespace mdf {
      *
      * @param iso_date_time ISO date-time string.
      */
+    explicit UtcTimestamp ( const std::string &iso_date_time );
+    [ [ nodiscard ] ] uint64_t GetTimeNs () const override;
     [ [ nodiscard ] ] int16_t GetTimezoneMin () const override;
     [ [ nodiscard ] ] int16_t GetDstMin () const override;
     [ [ nodiscard ] ] uint64_t GetUtcTimeNs () const override;
