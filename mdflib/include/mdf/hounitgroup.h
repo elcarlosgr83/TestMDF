@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file hounitgroup.h
+ * \brief MDF core API header for group interface definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file hounitgroup.h
+ * \brief MDF core API header for group interface definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <string>

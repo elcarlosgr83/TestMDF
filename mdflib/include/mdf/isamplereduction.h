@@ -84,28 +84,40 @@ namespace mdf {
        */
     [ [ nodiscard ] ] virtual double Interval () const = 0;
 
-      /** \brief Synchronization type. Example Time or number of samples.
+      /** \brief Synchronization type, for example Time or number of samples.
        *
-       * @param type Type of synchronization
+       * @param type Type of synchronization.
        */
       virtual void SyncType ( SrSyncType type );
 
-      /** \brief return type of synchronization. */
+      /** \brief Returns the synchronization type.
+       *
+       * @return Synchronization type.
+       */
     [ [ nodiscard ] ] virtual SrSyncType SyncType () const;
 
-      virtual void Flags ( uint8_t flags ); ///< Sets SR flags.
-    [ [ nodiscard ] ] virtual uint8_t Flags () const; ///< Returns the SR flags.
+      /** \brief Sets SR flags.
+       *
+       * @param flags Flags to store in the SR block.
+       */
+      virtual void Flags ( uint8_t flags );
+
+      /** \brief Returns the SR flags.
+       *
+       * @return SR flags.
+       */
+    [ [ nodiscard ] ] virtual uint8_t Flags () const;
 
       /** \brief Returns its channel group. */
     [ [ nodiscard ] ] virtual const IChannelGroup* ChannelGroup () const = 0;
 
-      /** \brief Returns the channel value for a specific sample.
+      /** \brief Returns the reduced SR value for a specific sample.
        *
-       * @tparam T Type of vaöue
+       * @tparam T Type of value.
        * @param channel Reference to the channel.
        * @param sample Sample index.
-       * @param array_index Array index. Only used for an array channel.
-       * @param value Returns the SR value.
+       * @param array_index Array index. Only used for array channels.
+       * @param value Returns the SR sample values.
        */
       template <typename T>
       void GetChannelValue ( const IChannel& channel, uint64_t sample,
@@ -126,14 +138,33 @@ namespace mdf {
       virtual void ClearData () = 0; ///< Resets the internal SR data bytes.
 
     protected:
-      /** brief Returns the value as unsigned integer. */
+      /** \brief Returns the value as an unsigned integer.
+       *
+       * @param channel Reference to the channel.
+       * @param sample Sample index.
+       * @param array_index Array index for array channels.
+       * @param value Returns the unsigned SR values.
+       */
       virtual void GetChannelValueUint ( const IChannel& channel, uint64_t sample,
       uint64_t array_index, SrValue<uint64_t>& value ) const = 0;
 
-      /** brief Returns the value as an integer. */
+      /** \brief Returns the value as a signed integer.
+       *
+       * @param channel Reference to the channel.
+       * @param sample Sample index.
+       * @param array_index Array index for array channels.
+       * @param value Returns the signed SR values.
+       */
       virtual void GetChannelValueInt ( const IChannel& channel, uint64_t sample,
       uint64_t array_index, SrValue<int64_t>& value ) const = 0;
-      /** Returns the value as a double value. */
+
+      /** \brief Returns the value as a double.
+       *
+       * @param channel Reference to the channel.
+       * @param sample Sample index.
+       * @param array_index Array index for array channels.
+       * @param value Returns the double SR values.
+       */
       virtual void GetChannelValueDouble ( const IChannel& channel, uint64_t sample,
       uint64_t array_index, SrValue<double>& value ) const = 0;
   };

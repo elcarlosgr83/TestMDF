@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file hointerval.h
+ * \brief MDF core API header definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file hointerval.h
+ * \brief MDF core API header definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <optional>

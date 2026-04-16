@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file mdnumber.h
+ * \brief MDF core API header definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file mdnumber.h
+ * \brief MDF core API header definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <cstdint>

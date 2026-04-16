@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file hocompumethod.h
+ * \brief MDF core API header definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file hocompumethod.h
+ * \brief MDF core API header definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <optional>

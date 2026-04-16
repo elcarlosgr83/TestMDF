@@ -306,11 +306,17 @@ namespace mdf {
        */
     [ [ nodiscard ] ] virtual std::optional<double> StartDistance () const;
 
+      /** \brief Sets the header comment block.
+       * @param hd_comment HD comment object.
+       */
       void SetHdComment ( const HdComment& hd_comment );
+      /** \brief Retrieves the header comment block.
+       * @param hd_comment Receives the HD comment object.
+       */
       void GetHdComment ( HdComment& hd_comment ) const;
 
     protected:
-      ~IHeader () override = default; ///< Default constructor
+      ~IHeader () override = default; ///< Default destructor
   };
 
   }  // end namespace mdf

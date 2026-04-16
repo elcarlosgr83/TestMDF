@@ -5,9 +5,9 @@
 
 /** \file imetadata.h
  *
- * Support class for storing meta data within an MDF block. Many MDF4 blocks
- * store its properties in an embedded XML file or more correctly an XML
- * snippets which just includes the root tag and its content.
+ * Support class for storing metadata within an MDF block. Many MDF4 blocks
+ * store their properties in an embedded XML snippet that includes only the
+ * root tag and its content.
  */
 #pragma once
 #include <string>

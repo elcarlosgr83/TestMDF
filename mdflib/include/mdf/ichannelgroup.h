@@ -80,15 +80,24 @@ namespace mdf {
       0; ///< Description.
 
     [ [ nodiscard ] ] virtual uint64_t NofSamples () const
-      = 0; ///< Sets number of samples.
-      virtual void NofSamples ( uint64_t nof_samples ) = 0; ///< Number of samples
+      = 0; ///< Number of samples.
+      /** \brief Sets the number of samples.
+       * @param nof_samples Number of samples.
+       */
+      virtual void NofSamples ( uint64_t nof_samples ) = 0;
 
-    [ [ nodiscard ] ] virtual uint16_t Flags () const; ///< Sets CgFlag.
-      virtual void Flags ( uint16_t flags ); ///< Returns CgFlag.
+    [ [ nodiscard ] ] virtual uint16_t Flags () const; ///< Returns CgFlag.
+      /** \brief Sets the channel group flags.
+       * @param flags Flags from the CgFlag namespace.
+       */
+      virtual void Flags ( uint16_t flags );
 
     [ [ nodiscard ] ] virtual char16_t
-      PathSeparator (); ///< Sets the path separator.
-      virtual void PathSeparator ( char16_t path_separator ); ///< Path separator.
+      PathSeparator (); ///< Returns the path separator.
+      /** \brief Sets the path separator.
+       * @param path_separator Character used as path separator.
+       */
+      virtual void PathSeparator ( char16_t path_separator );
 
       /** \brief Returns a list of channels. */
     [ [ nodiscard ] ] virtual std::vector<IChannel*> Channels () const = 0;
@@ -96,22 +105,27 @@ namespace mdf {
       /** \brief Creates a new channel. */
     [ [ nodiscard ] ] virtual IChannel* CreateChannel () = 0;
 
-      /** \brief Creates a new channel or returns an existing channel. */
-    [ [ nodiscard ] ] virtual IChannel* CreateChannel ( const std::string_view&
+      /** \brief Creates a new channel or returns an existing channel.
+       * @param name Name of the channel to create or locate.
+       * @return Existing or newly created channel.
+       */
+    [ [ nodiscard ] ] virtual IChannel* CreateChannel ( const std::string_view& 
       name );
 
-      /** \brief Returns an existing channels part of name.
+      /** \brief Returns an existing channel by part of its name.
        *
        * Note that the function search for a name that includes the search name.
        * Example if the search name is '.DataLength', the signal with the name
-       * 'CAN_DataFrame.DataLength' will be returned
-       * the name instead of the full name */
-    [ [ nodiscard ] ] virtual IChannel* GetChannel ( const std::string_view& name )
-      const;
-
+       * 'CAN_DataFrame.DataLength' will be returned instead of requiring the full name.
+       * @param name Channel name or substring.
+       * @return Pointer to the matching channel or nullptr.
+       */
     [ [ nodiscard ] ] virtual IChannel* GetMasterChannel () const;
 
-      /** \brief Returns an external reference channel. */
+      /** \brief Returns an external reference channel.
+       * @param reference Reference channel used for lookup.
+       * @return Pointer to the referenced external channel or nullptr.
+       */
     [ [ nodiscard ] ] virtual const IChannel* GetXChannel (
       const IChannel& reference ) const = 0;
 
@@ -136,7 +150,9 @@ namespace mdf {
        */
     [ [ nodiscard ] ] BusType GetBusType () const;
 
-      /** \brief Support function that creates a sample record. */
+      /** \brief Support function that creates a sample record.
+       * @return Sample record object.
+       */
     [ [ nodiscard ] ] SampleRecord GetSampleRecord () const;
 
       /** \brief Resets the internal sample counter. Internal use only. */
@@ -156,7 +172,13 @@ namespace mdf {
       /** \brief Returns a pointer to data group (DG) block. */
     [ [ nodiscard ] ] virtual const IDataGroup* DataGroup () const = 0;
 
+      /** \brief Sets the channel group comment.
+       * @param cg_comment Channel group comment object.
+       */
       void SetCgComment ( const CgComment& cg_comment );
+      /** \brief Retrieves the channel group comment.
+       * @param cg_comment Receives the channel group comment object.
+       */
       void GetCgComment ( CgComment& cg_comment ) const;
 
       void StorageType ( MdfStorageType storage_type ) {

@@ -52,8 +52,13 @@ namespace mdf {
    */
   class MdfLogStream : public std::ostringstream {
   public:
-    MdfLogStream ( MdfLocation location, MdfLogSeverity severity ); ///< Constructor
-    ~MdfLogStream () override;                                   ///< Destructor
+    /** \brief Creates a log stream for a location and severity.
+     * @param location Source location of the log message.
+     * @param severity Severity level of the log message.
+     */
+    MdfLogStream ( MdfLocation location, MdfLogSeverity severity );
+    /** \brief Destructor that flushes the log stream. */
+    ~MdfLogStream () override;
 
     MdfLogStream () = delete;
     MdfLogStream ( const MdfLogStream& ) = delete;
@@ -61,11 +66,21 @@ namespace mdf {
     MdfLogStream& operator= ( const MdfLogStream& ) = delete;
     MdfLogStream& operator= ( MdfLogStream&& ) = delete;
 
-    /** \brief Sets a log function. */
+    /** \brief Sets a log function.
+     * @param func Log callback.
+     */
     static void SetLogFunction1 ( const MdfLogFunction1& func );
-    /** \brief Sets a log function. */
+    /** \brief Sets a log function.
+     * @param func Log callback.
+     */
     static void SetLogFunction2 ( const MdfLogFunction2& func );
+    /** \brief Resets the current log function to the default behavior. */
     static void ResetLogFunction ();
+    /** \brief Writes a log message directly to the console.
+     * @param location Source location of the log message.
+     * @param severity Severity level.
+     * @param text Message text.
+     */
     static void LogToConsole ( const MdfLocation& location,
                                MdfLogSeverity severity,
                                const std::string& text );

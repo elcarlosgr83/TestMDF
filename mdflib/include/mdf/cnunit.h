@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file cnunit.h
+ * \brief MDF core API header for unit definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file cnunit.h
+ * \brief MDF core API header for unit definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 #include <string>
 

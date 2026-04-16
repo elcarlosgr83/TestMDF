@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file mdformula.h
+ * \brief MDF core API header for formula helpers.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file mdformula.h
+ * \brief MDF core API header for formula helpers.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include "mdf/mdsyntax.h"

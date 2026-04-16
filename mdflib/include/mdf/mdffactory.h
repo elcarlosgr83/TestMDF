@@ -47,19 +47,39 @@ namespace mdf {
   /** \brief MDF factory class. */
   class MdfFactory {
   public:
-    /** \brief Creates an MDF writer object. */
+    /** \brief Creates an MDF writer object.
+     * @param type Writer type to create.
+     * @return Unique pointer to the created writer.
+     */
     static std::unique_ptr<MdfWriter> CreateMdfWriter ( MdfWriterType type );
-    /** \brief Create an MDF file object.*/
+    /** \brief Create an MDF file object.
+     * @param type File type to create.
+     * @return Unique pointer to the created file object.
+     */
     static std::unique_ptr<MdfFile> CreateMdfFile ( MdfFileType type );
 
-    /** \brief Creates an MDF writer object. */
+    /** \brief Creates an MDF writer object.
+     * @param type Writer type to create.
+     * @return Pointer to the created writer.
+     */
     static MdfWriter* CreateMdfWriterEx ( MdfWriterType type );
-    /** \brief Create an MDF file object.*/
+    /** \brief Create an MDF file object.
+     * @param type File type to create.
+     * @return Pointer to the created file object.
+     */
     static MdfFile* CreateMdfFileEx ( MdfFileType type );
 
-    /** \brief Sets the log function. */
+    /** \brief Sets the log function.
+     * @param func Log callback function.
+     */
     static void SetLogFunction2 ( const MdfLogFunction2& func );
 
+    /** \brief Creates a channel observer.
+     * @param data_group Data group containing the channel.
+     * @param channel_group Channel group containing the channel.
+     * @param channel Channel to observe.
+     * @return Smart pointer to the created observer.
+     */
     static std::unique_ptr<IChannelObserver> CreateChannelObserver (
       const IDataGroup& data_group, const IChannelGroup& channel_group,
       const IChannel& channel );

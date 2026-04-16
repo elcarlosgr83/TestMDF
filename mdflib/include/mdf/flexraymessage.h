@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file flexraymessage.h
+ * \brief MDF core API header for message definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file flexraymessage.h
+ * \brief MDF core API header for message definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <cstdint>

@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file sicomment.h
+ * \brief MDF core API header for comment block definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file sicomment.h
+ * \brief MDF core API header for comment block definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include "mdf/mdcomment.h"

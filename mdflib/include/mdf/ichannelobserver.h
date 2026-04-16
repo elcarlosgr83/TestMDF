@@ -107,9 +107,9 @@ namespace mdf {
     /** \brief If this is an array channel, this function returns the array size.
      *
      * Returns the array size if the channel is an array channel. The function
-     * returns 1 if not is an array channel.
-     * @return
-     */
+       * returns 1 if the channel is not an array channel.
+       * @return Number of elements in the array channel or 1 for scalar channels.
+       */
     [ [ nodiscard ] ] uint64_t ArraySize () const;
 
       /** \brief Returns the channel value for a sample.
@@ -209,15 +209,19 @@ namespace mdf {
        *
        * This VLSD offset list is only needed when setting the ReadVLSDData()
        * property to false. By only reading the offset list, the VLSD bytes can be
-       * read later as sample by sample or as a range of VSLD bytes. THis read
-       * saves primary memory and is much faster if only some samples are needed.
-       * @return
+       * read later sample by sample or as a range of VLSD bytes. This read
+       * saves primary memory and is much faster when only some samples are needed.
+       * @return Reference to the VLSD sample offset list.
        */
     [ [ nodiscard ] ] const std::vector<uint64_t>& GetOffsetList () const {
         return offset_list_;
     }
 
-    /** \brief Returns the sample to valid list.  */
+    /** \brief Returns the sample validity list.
+     *
+     * Each entry in the vector corresponds to whether a sample is valid.
+     * @return Reference to the valid sample list.
+     */
     [ [ nodiscard ] ] const std::vector<bool>& GetValidList () const {
         return valid_list_;
     }

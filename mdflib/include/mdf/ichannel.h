@@ -128,28 +128,35 @@ namespace mdf {
   class IChannel : public IBlock {
   public:
 
-    virtual void Name ( const std::string &name ) = 0; ///< Sets channel name
+    /** \brief Sets channel name.
+     * @param name Channel name.
+     */
+    virtual void Name ( const std::string &name ) = 0;
     [ [ nodiscard ] ] virtual std::string Name () const =
-      0; ///< Returns channel name
+      0; ///< Returns channel name.
 
+      /** \brief Sets the display name. */
       virtual void DisplayName ( const std::string &name ) =
       0; ///< Sets display name.
     [ [ nodiscard ] ] virtual std::string DisplayName () const =
       0; ///< Display name.
 
-      /** \brief Sets the description. */
+      /** \brief Sets the description.
+       * @param description Channel description text.
+       */
       virtual void Description ( const std::string &description ) = 0;
 
       /** \brief Returns the description. */
     [ [ nodiscard ] ] virtual std::string Description () const = 0;
 
-      /** \brief Sets unit string or or the MIME text string.
+      /** \brief Sets unit string or MIME content type.
        *
        * The function sets the unit string for the channel. If the channel data
-       * type is a MIME sample or a stream, the unit is a mime content type string.
+       * type is a MIME sample or a stream, the unit is a MIME content type string.
        *
        * Note that this unit belongs to the value after scaling (CC) i.e.
        * engineering value.
+       * @param unit Unit string or MIME content type.
        */
       virtual void Unit ( const std::string &unit ) = 0;
 
@@ -168,65 +175,100 @@ namespace mdf {
        */
     [ [ nodiscard ] ] virtual std::string Unit () const = 0; ///< Returns the unit
 
+      /** \brief Sets the channel unit block.
+       * @param unit Channel unit object.
+       */
       virtual void SetCnUnit ( const CnUnit& unit );
+      /** \brief Retrieves the channel unit block.
+       * @param unit Receives the channel unit object.
+       */
       virtual void GetCnUnit ( CnUnit& unit ) const;
 
-      /** \brief Sets channel flags. Flags are defined in the CnFlag namespace  */
+      /** \brief Sets channel flags. Flags are defined in the CnFlag namespace.
+       * @param flags Flag bits.
+       */
       virtual void Flags ( uint32_t flags );
 
-      /** \brief Channel flags are defined in the CnFlag namespace  */
+      /** \brief Channel flags are defined in the CnFlag namespace.
+       * @return Current channel flag bits.
+       */
     [ [ nodiscard ] ] virtual uint32_t Flags () const;
 
     [ [ nodiscard ] ] virtual bool IsUnitValid () const =
       0; ///< True if unit exists.
 
-      virtual void Type ( ChannelType type ) = 0; ///< Sets the type of channel.
+      /** \brief Sets the channel type.
+       * @param type Channel type.
+       */
+      virtual void Type ( ChannelType type ) = 0;
     [ [ nodiscard ] ] virtual ChannelType Type () const = 0; ///< Type of channel.
 
-      virtual void Sync ( ChannelSyncType type ); ///< Sets the type of sync.
+      /** \brief Sets the channel synchronization type.
+       * @param type Synchronization type.
+       */
+      virtual void Sync ( ChannelSyncType type );
     [ [ nodiscard ] ] virtual ChannelSyncType Sync () const; ///< Type of sync.
 
-      virtual void DataType ( ChannelDataType type ) = 0; ///< Sets the data type.
+      /** \brief Sets the channel data type.
+       * @param type Channel data type.
+       */
+      virtual void DataType ( ChannelDataType type ) = 0;
     [ [ nodiscard ] ] virtual ChannelDataType DataType () const = 0; ///< Data type.
 
+      /** \brief Sets the data size in bytes.
+       * @param nof_bytes Number of data bytes.
+       */
       virtual void DataBytes ( uint64_t nof_bytes ) =
-      0; ///< Sets the data size (bytes)
+      0;
     [ [ nodiscard ] ] virtual uint64_t DataBytes () const =
       0; ///< Data size (bytes);
 
-      /** \brief Sets number of decimals (floating points only)  */
+      /** \brief Sets number of decimals for floating point values.
+       * @param precision Number of decimals.
+       */
       virtual void Decimals ( uint8_t precision );
       /** \brief Number of decimals (floating points)  */
     [ [ nodiscard ] ] virtual uint8_t Decimals () const = 0;
 
-      /** \brief Returns true if decimals is used  */
+      /** \brief Returns true if decimals are used. */
     [ [ nodiscard ] ] virtual bool IsDecimalUsed () const = 0;
 
-      /** \brief Sets the ranges.  */
+      /** \brief Sets the valid value range.
+       * @param min Minimum value.
+       * @param max Maximum value.
+       */
       virtual void Range ( double min, double max );
 
-      /** \brief Returns the ranges.  */
+      /** \brief Returns the valid value range. */
     [ [ nodiscard ] ] virtual std::optional<std::pair<double, double>> Range ()
       const;
 
-      /** \brief Sets the limits.  */
+      /** \brief Sets the limits.
+       * @param min Minimum limit.
+       * @param max Maximum limit.
+       */
       virtual void Limit ( double min, double max );
 
-      /** \brief Returns the limits.  */
+      /** \brief Returns the limits. */
     [ [ nodiscard ] ] virtual std::optional<std::pair<double, double>> Limit ()
       const;
 
-      /** \brief Sets the extended limits.  */
+      /** \brief Sets the extended limits.
+       * @param min Minimum extended limit.
+       * @param max Maximum extended limit.
+       */
       virtual void ExtLimit ( double min, double max );
 
-      /** \brief Returns the extended limits.  */
+      /** \brief Returns the extended limits. */
     [ [ nodiscard ] ] virtual std::optional<std::pair<double, double>> ExtLimit ()
       const;
 
-      /** \brief Sets the sample rate (s). This is a MDF 3 feature.  */
+      /** \brief Sets the sample rate in seconds.
+       * @param sampling_rate Sample period in seconds.
+       */
       virtual void SamplingRate ( double sampling_rate ) = 0;
 
-      /** \brief Returns the sample rate (s). This is a MDF 3 feature.  */
+      /** \brief Returns the sample rate in seconds. */
     [ [ nodiscard ] ] virtual double SamplingRate () const = 0;
 
       /** \brief Returns the source information, if any. */
@@ -236,7 +278,7 @@ namespace mdf {
        *
        * This function creates or returns the existing source information (SI)
        * block.
-       * Source information is describes the source. It can be the test
+       * Source information describes the source. It can be the test
        * object or test equipment.
        * SI blocks only exist in MDF 4 files.
        * @return Existing or a new source information (SI) block.
@@ -251,9 +293,9 @@ namespace mdf {
        * a composite channel array (CA), the channel is now storing an array of values.
        * The array may be multidimensional.
        *
-       * The function is alo used to indicate if the channel is of array type.
+       * The function is also used to indicate if the channel is of array type.
        * Channel arrays only exist in MDF 4 files.
-       * @param index The channel may consist of multiple arrays
+       * @param index Index of the channel array.
        * @return Pointer to the CA block or nullptr.
        */
     [ [ nodiscard ] ] virtual IChannelArray* ChannelArray ( size_t index ) const;

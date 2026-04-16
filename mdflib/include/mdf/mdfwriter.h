@@ -127,11 +127,11 @@ namespace mdf {
      */
     bool Init ( const std::string& filename );
 
-    /** \brief Initialize the writer against a  generic stream buffer.
+    /** \brief Initialize the writer against a generic stream buffer.
      *
-     * This function attach the internal stream buffer
-     * @param buffer
-     * @return
+     * Attaches an existing stream buffer for writing MDF output.
+     * @param buffer Shared pointer to the target stream buffer.
+     * @return `true` if initialization succeeded.
      */
     bool Init ( const std::shared_ptr<std::streambuf>& buffer );
 
@@ -165,30 +165,38 @@ namespace mdf {
 
     [ [ nodiscard ] ] IHeader* Header () const; ///< Returns the header block (HD).
 
-      /** \brief Creates a DG, CG, SI and CN blocks that bus loggers uses.
+      /** \brief Creates a bus logger configuration.
        *
-       * This function create all data groups, channel groups, source information
-       * and channels for a typical bus logger.
-       *
-       * Do not use this function unless you updates only the last DG group.
-       * New user should use the IConfigAdapter interface instead.
-       * Before calling this function, set the bus and
-       * storage types as this function uses these settings.
+       * Creates data groups, channel groups, source information and channels for
+       * a typical bus logger setup.
+       * @return `true` if the configuration was created successfully.
        */
       bool CreateBusLogConfiguration ();
 
-      /** \brief Create a new data group (DG) block. */
+      /** \brief Create a new data group (DG) block.
+       * @return Pointer to the newly created data group.
+       */
     [ [ nodiscard ] ] IDataGroup* CreateDataGroup ();
-      /** \brief Create a new channel group (CG) block. */
+      /** \brief Create a new channel group (CG) block.
+       * @param parent Parent data group.
+       * @return Pointer to the new channel group.
+       */
     [ [ nodiscard ] ] static IChannelGroup* CreateChannelGroup (
       IDataGroup* parent );
-      /** \brief Creates a new channel (CN) block. */
+      /** \brief Creates a new channel (CN) block.
+       * @param parent Parent channel group.
+       * @return Pointer to the new channel.
+       */
     [ [ nodiscard ] ] static IChannel* CreateChannel ( IChannelGroup* parent );
-      /** \brief Create a new channel conversion (CC) block. */
+      /** \brief Create a new channel conversion (CC) block.
+       * @param parent Parent channel.
+       * @return Pointer to the newly created conversion.
+       */
       virtual IChannelConversion* CreateChannelConversion ( IChannel* parent ) = 0;
 
       /** \brief Initialize the sample queue and write any unwritten block to the
        * file.
+       * @return `true` if the measurement initialization succeeded.
        */
       virtual bool InitMeasurement ();
 
@@ -203,9 +211,16 @@ namespace mdf {
        * samples are added in chronological order. The time will be converted
        * to a relative time before it is stored onto the disc. The will be relative
        * to the start time, see StartMeasurement() function.
+       * @param group Channel group that owns the sample values.
+       * @param time Absolute timestamp in nanoseconds since 1970.
        */
       virtual void SaveSample ( const IChannelGroup& group, uint64_t time ) = 0;
 
+      /** \brief Saves a sample record for a channel group inside a data group.
+       * @param data_group Parent data group.
+       * @param channel_group Channel group that owns the sample values.
+       * @param time Absolute timestamp in nanoseconds since 1970.
+       */
       virtual void SaveSample ( const IDataGroup& data_group,
       const IChannelGroup& channel_group,
       uint64_t time ) = 0;
@@ -217,71 +232,122 @@ namespace mdf {
        *
        * As before the function creates a record byte array and puts it onto an
        * internal sample buffer. The time shall be absolute time (ns since 1970).
-       * @param group  Reference to the channel group (CG).
-       * @param time   Absolute time nano-seconds since 1970.
-       * @param msg    The CAN message to store.
+       * @param group Reference to the channel group (CG).
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The CAN message to store.
        */
       virtual void SaveCanMessage ( const IChannelGroup& group, uint64_t time,
       const CanMessage& msg ) = 0;
+      /** \brief Saves a CAN message into a bus logger channel group.
+       *
+       * This overload saves a CAN message with an explicit data group context.
+       * @param data_group Parent data group.
+       * @param channel_group Channel group that owns the message.
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The CAN message to store.
+       */
       virtual void SaveCanMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group, uint64_t time,
       const CanMessage& msg ) = 0;
       /** \brief Saves a LIN message into a bus logger channel group.
        *
-       * This function replace the normal SaveSample() function. It shall be used
-       * when logging LIN messages into a standard ASAM bus logger
-       * configuration.
+       * This function replaces the normal SaveSample() function. It should be used
+       * when logging LIN messages into a standard ASAM bus logger configuration.
        *
-       * As before the function creates a record byte array and puts it onto an
+       * As before, the function creates a record byte array and puts it onto an
        * internal sample buffer. The time shall be absolute time (ns since 1970).
-       * @param group  Reference to the channel group (CG).
-       * @param time   Absolute time nano-seconds since 1970.
-       * @param msg    The LIN message to store.
+       * @param group Reference to the channel group (CG).
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The LIN message to store.
        */
       virtual void SaveLinMessage ( const IChannelGroup& group, uint64_t time,
       const LinMessage& msg ) = 0;
+      /** \brief Saves a LIN message into a bus logger channel group.
+       *
+       * This overload saves a LIN message with an explicit data group context.
+       * @param data_group Parent data group.
+       * @param channel_group Channel group that owns the message.
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The LIN message to store.
+       */
       virtual void SaveLinMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group, uint64_t time,
       const LinMessage& msg ) = 0;
       /** \brief Saves an Ethernet message into a bus logger channel group.
-      *
-      * This function replace the normal SaveSample() function. It shall be used
-      * when logging Ethernet messages into a standard ASAM bus logger
-      * configuration.
-      *
-      * As before the function creates a record byte array and puts it onto an
-      * internal sample buffer. The time shall be absolute time (ns since 1970).
-      * @param group  Reference to the channel group (CG).
-      * @param time   Absolute time nano-seconds since 1970.
-      * @param msg    The ethnernet message to store.
-                                                  */
+       *
+       * This function replaces the normal SaveSample() function. It should be used
+       * when logging Ethernet messages into a standard ASAM bus logger
+       * configuration.
+       *
+       * As before, the function creates a record byte array and puts it onto an
+       * internal sample buffer. The time shall be absolute time (ns since 1970).
+       * @param group Reference to the channel group (CG).
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The Ethernet message to store.
+       */
       virtual void SaveEthMessage ( const IChannelGroup& group, uint64_t time,
       const EthMessage& msg ) = 0;
 
+      /** \brief Saves an Ethernet message into a bus logger channel group.
+       *
+       * This overload saves an Ethernet message with an explicit data group context.
+       * @param data_group Parent data group.
+       * @param channel_group Channel group that owns the message.
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The Ethernet message to store.
+       */
       virtual void SaveEthMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group, uint64_t time,
       const EthMessage& msg ) = 0;
 
+      /** \brief Saves a MOST message into a bus logger channel group.
+       *
+       * This function saves a MOST event message into the supplied channel group.
+       * @param data_group Parent data group.
+       * @param channel_group Channel group that owns the message.
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The MOST event to store.
+       */
       virtual void SaveMostMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group,
       uint64_t time,
       const IMostEvent& msg ) = 0;
+
+      /** \brief Saves a FlexRay message into a bus logger channel group.
+       *
+       * This function saves a FlexRay event message into the supplied channel
+       * group.
+       * @param data_group Parent data group.
+       * @param channel_group Channel group that owns the message.
+       * @param time Absolute time nano-seconds since 1970.
+       * @param msg The FlexRay event to store.
+       */
       virtual void SaveFlexRayMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group,
       uint64_t time,
       const IFlexRayEvent& msg ) = 0;
-      /** \brief Starts the measurement. */
+      /** \brief Starts the measurement.
+       * @param start_time Start timestamp in nanoseconds since 1970.
+       */
       virtual void StartMeasurement ( uint64_t start_time );
 
-      /** \brief Starts the measurement. */
+      /** \brief Starts the measurement using a timestamp object.
+       * @param start_time Timestamp object.
+       */
       virtual void StartMeasurement ( ITimestamp &start_time );
-      /** \brief Stops the measurement. */
+      /** \brief Stops the measurement.
+       * @param stop_time Stop timestamp in nanoseconds since 1970.
+       */
       virtual void StopMeasurement ( uint64_t stop_time );
-      /** \brief Stops the measurement. */
-      virtual void StopMeasurement ( ITimestamp &start_time );
+      /** \brief Stops the measurement using a timestamp object.
+       * @param stop_time Timestamp object.
+       */
+      virtual void StopMeasurement ( ITimestamp &stop_time );
 
       /** \brief Stop the sample queue and write all unwritten blocks to
-       * the file.*/
+       * the file.
+       * @return `true` if the finalization succeeded.
+       */
       virtual bool FinalizeMeasurement ();
 
       /** \brief Only used when doing bus logging. It defines the default
@@ -302,7 +368,9 @@ namespace mdf {
      */
     [ [ nodiscard ] ] uint16_t BusType () const { return bus_type_; }
 
-    /** \brief Returns the bus type as text. */
+    /** \brief Returns the bus type as text.
+     * @return Human-readable bus type name.
+     */
     [ [ nodiscard ] ] std::string BusTypeAsString () const;
 
       /** \brief Only used when doing bus logging. It defines how raw data is

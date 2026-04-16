@@ -157,7 +157,13 @@ namespace mdf {
     [ [ nodiscard ] ] virtual bool IsUnitValid () const =
       0; ///< True if unit exist.
 
+      /** \brief Sets the channel conversion unit.
+       * @param unit CC unit object.
+       */
       virtual void SetCcUnit ( const CcUnit& unit );
+      /** \brief Retrieves the channel conversion unit.
+       * @param unit Receives the CC unit object.
+       */
       virtual void GetCcUnit ( CcUnit& unit ) const;
 
       virtual void Type ( ConversionType type ) = 0; ///< Sets the conversion type.
@@ -166,33 +172,59 @@ namespace mdf {
 
     [ [ nodiscard ] ] virtual bool IsDecimalUsed ()
       const = 0; ///< True if decimal is used.
-      virtual void Decimals ( uint8_t decimals ); ///< Sets number of decimals.
+      /** \brief Sets number of decimals.
+       * @param decimals Number of decimals.
+       */
+      virtual void Decimals ( uint8_t decimals );
     [ [ nodiscard ] ] virtual uint8_t Decimals () const =
       0; ///< Number of decimals.
 
-      /** \brief Creates an inverse conversion block. */
+      /** \brief Creates an inverse conversion block.
+       * @return Inverse conversion block.
+       */
     [ [ nodiscard ] ] virtual IChannelConversion* CreateInverse ();
 
-      /** \brief Returns the inverse conversion block. Seldom in use. */
+      /** \brief Returns the inverse conversion block. Seldom in use.
+       * @return Inverse conversion block or nullptr.
+       */
     [ [ nodiscard ] ] virtual IChannelConversion* Inverse () const;
 
-      virtual void Range ( double min, double max ); ///< Sets the range.
+      /** \brief Sets the conversion range.
+       * @param min Minimum value.
+       * @param max Maximum value.
+       */
+      virtual void Range ( double min, double max );
     [ [ nodiscard ] ] virtual std::optional<std::pair<double, double>> Range ()
-      const; ///< Returns the range if exist.
+      const; ///< Returns the range if it exists.
 
-      virtual void Flags ( uint16_t flags ); ///< Sets the CcFlag
+      /** \brief Sets CC flags.
+       * @param flags Flags from the CcFlag namespace.
+       */
+      virtual void Flags ( uint16_t flags );
     [ [ nodiscard ] ] virtual uint16_t Flags () const; ///< Returns CcFlag
 
-      /** \brief Creates a meta-data (MD) block. */
+      /** \brief Creates a meta-data (MD) block.
+       * @return Meta-data block.
+       */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData ();
 
-      /** \brief Returns the meta-data block. */
+      /** \brief Returns the meta-data block.
+       * @return Meta-data block or nullptr.
+       */
     [ [ nodiscard ] ] virtual IMetaData* MetaData () const;
 
+      /** \brief Sets the CC comment block.
+       * @param cc_comment CC comment object.
+       */
       void SetCcComment ( const CcComment& cc_comment );
+      /** \brief Retrieves the CC comment block.
+       * @param cc_comment Receives the CC comment object.
+       */
       void GetCcComment ( CcComment& cc_comment ) const;
 
-      /** \brief Sets the formula string. */
+      /** \brief Sets the formula string.
+       * @param formula Formula text.
+       */
       virtual void Formula ( const std::string& formula );
       /** \brief Returns formula string. */
     [ [ nodiscard ] ] virtual const std::string& Formula () const;
@@ -207,17 +239,17 @@ namespace mdf {
        */
       void Parameter ( uint16_t index, double parameter );
 
-      /** \brief Returns the parameter (double)
+      /** \brief Returns the parameter value.
        *
-       * @param index
-       * @return Parameter floating point value
+       * @param index Parameter index.
+       * @return Floating point parameter value.
        */
     [ [ nodiscard ] ] double Parameter ( uint16_t index ) const;
 
-      /** \brief Returns the parameter as a bit field (uint64_t)
+      /** \brief Returns the parameter as a bit field (uint64_t).
        *
-       * @param index
-       * @return Parameter floating point value
+       * @param index Parameter index.
+       * @return Unsigned integer parameter value.
        */
     [ [ nodiscard ] ] uint64_t ParameterUint ( uint16_t index ) const;
       /** \brief Sets an unsigned integer parameter value.
@@ -230,14 +262,17 @@ namespace mdf {
       /** \brief Number of references in the block. */
     [ [ nodiscard ] ] virtual uint16_t NofReferences () const;
 
-      /** \brief Sets text reference (TX) block
+      /** \brief Sets text reference (TX) block.
        *
        * @param index Index of the text block (TX).
        * @param text Text content of the TX block.
        */
       virtual void Reference ( uint16_t index, const std::string& text );
 
-      /** \brief Returns the reference string by its index */
+      /** \brief Returns the reference string by its index.
+       * @param index Reference index.
+       * @return Reference text.
+       */
     [ [ nodiscard ] ] virtual std::string Reference ( uint16_t index ) const;
 
       /** \brief Sets the CN block data type.

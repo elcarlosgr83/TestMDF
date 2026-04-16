@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file flexrayconfigadapter.h
+ * \brief MDF core API header for configuration adapter definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file flexrayconfigadapter.h
+ * \brief MDF core API header for configuration adapter definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include "mdf/iconfigadapter.h"

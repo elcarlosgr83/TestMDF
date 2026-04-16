@@ -72,29 +72,38 @@ namespace mdf {
        */
       virtual void FileType ( const std::string& file_type ) = 0;
 
-      /** \brief Returns the MIME type of the string.
+      /** \brief Returns the MIME type of the attachment.
        *
-       * Returns the MIME type string
-       * @return
+       * Returns the MIME type string.
+       * @return MIME type string.
        */
     [ [ nodiscard ] ] virtual const std::string& FileType () const = 0;
 
       /** \brief Create a meta-data (MD) block.
        *
        * Creates a meta-data (MD) block. Note that the AT block normally only
-       * have the description TX-tag included. See also IMetaData class.
-       * @return Returns a pointer to an IMetaData class.
+       * has the description TX-tag included. See also IMetaData class.
+       * @return Pointer to the created IMetaData block.
        */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData () = 0;
 
       /** \brief Returns the meta-data (MD) block.
        *
        * Returns existing meta-data block. Note, may return nullptr.
-       * @return Pointer to a IMeteData block or nullptr if it doesn't exists.
+       * @return Pointer to an IMetaData block or nullptr if it does not exist.
        */
     [ [ nodiscard ] ] virtual IMetaData* MetaData () const = 0;
 
+      /** \brief Sets the attachment comment metadata.
+       *
+       * @param at_comment Attachment comment object.
+       */
       void SetAtComment ( const AtComment& at_comment );
+
+      /** \brief Retrieves the attachment comment metadata.
+       *
+       * @param at_comment Receives the attachment comment object.
+       */
       void GetAtComment ( AtComment& at_comment ) const;
   };
 

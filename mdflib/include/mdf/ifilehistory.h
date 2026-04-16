@@ -185,7 +185,13 @@ namespace mdf {
         return md4 != nullptr ? md4->StringProperty ( "user_name" ) : std::string ();
     }
 
+    /** \brief Sets the file history comment.
+     * @param fh_comment File history comment object.
+     */
     void SetFhComment ( const FhComment& fh_comment );
+    /** \brief Retrieves the file history comment.
+     * @param fh_comment Receives the file history comment object.
+     */
     void GetFhComment ( FhComment& fh_comment ) const;
     };
 

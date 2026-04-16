@@ -204,19 +204,25 @@ namespace mdf {
      */
     static void Trim ( std::string &text );
 
-    /// Converts a floating point value to a string using number of decimals.\n
-    /// It also fix rounding and returning a fixed decimals.
-    /// Presenting fixed number of decimals means that it fills up the string with
-    /// '0' characters.\n Example: Value: 1.23 and decimals 3,String: (Fixed =
-    /// false) "1.23" (Fixed = true) "1.230"\n Optional it can append a unit to
-    /// the string (Example: "1.23 m/s").\n \param[in] value  The floating point
-    /// value. \param[in] decimals Max number of decimals. \param[in] fixed If it
-    /// should show fixed number of decimals. \param[in] unit Appends a unit
-    /// string to the output. \return The formatted string.
+    /** \brief Converts a floating point value to a string using a fixed number of decimals.
+     *
+     * The function fixes rounding and returns a text representation of the value
+     * with the requested number of decimals. When `fixed` is true, missing
+     * decimals are padded with zeros. Example: value `1.23`, decimals `3`,
+     * fixed `true` -> "1.230".
+     * @param value The floating point value.
+     * @param decimals Maximum number of decimals.
+     * @param fixed If `true`, the output string is padded to the requested number of decimals.
+     * @param unit Optional unit string appended to the output string.
+     * @return The formatted string.
+     */
     static std::string FormatDouble (
       double value, uint8_t decimals, bool fixed = false,
       const std::string &unit = {} ); ///< Converts a float to a string.
 
+    /** \brief Returns the current UTC time in nanoseconds since 1970.
+     * @return Nano-seconds since 1970.
+     */
     static uint64_t NowNs (); ///< Return nano-seconds since 1970.
 
     /** \brief Converts a Latin1 string to UTF8 string. */

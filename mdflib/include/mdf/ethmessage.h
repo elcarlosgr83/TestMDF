@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file ethmessage.h
+ * \brief MDF core API header for message definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file ethmessage.h
+ * \brief MDF core API header for message definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <cstdint>

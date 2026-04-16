@@ -1,3 +1,10 @@
+/**
+ * \file itimestamp.h
+ * \brief MDF core API header for timestamp utilities.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 #include <string>
 #include <cstdint>
@@ -42,23 +49,41 @@ namespace mdf {
   class UtcTimestamp : public ITimestamp {
   public:
 
+    /** \brief Default constructor for UTC timestamps. */
     UtcTimestamp ();
-    /**
-     * \brief Constructor for UtcTimeStamp.
-     * \param utc_timestamp The UTC timestamp in nanoseconds.
+
+    /** \brief Constructor for UTC timestamps from nanoseconds.
+     *
+     * @param utc_timestamp The UTC timestamp in nanoseconds.
      */
     explicit UtcTimestamp ( uint64_t utc_timestamp );
-    explicit UtcTimestamp ( const std::string& iso_date_time );
 
-    [ [ nodiscard ] ] uint64_t GetTimeNs () const override;
+    /** \brief Constructor from an ISO date-time string.
+     *
+     * @param iso_date_time ISO date-time string.
+     */
     [ [ nodiscard ] ] int16_t GetTimezoneMin () const override;
     [ [ nodiscard ] ] int16_t GetDstMin () const override;
     [ [ nodiscard ] ] uint64_t GetUtcTimeNs () const override;
 
+    /** \brief Returns the timestamp as an ISO date string.
+     * @return ISO date string (YYYY-MM-DD).
+     */
     [ [ nodiscard ] ] std::string ToIsoDate () const;
+    /** \brief Returns the timestamp as an ISO time string.
+     * @param include_ms Include milliseconds when true.
+     * @return ISO time string.
+     */
     [ [ nodiscard ] ] std::string ToIsoTime ( bool include_ms ) const;
+    /** \brief Returns the timestamp as an ISO date and time string.
+     * @param include_ms Include milliseconds when true.
+     * @return ISO date-time string.
+     */
     [ [ nodiscard ] ] std::string ToIsoDateTime ( bool include_ms ) const;
 
+      /** \brief Sets the timestamp from an ISO date-time string.
+       * @param date_time ISO date-time string.
+       */
       void FromIsoDateTime ( const std::string& date_time );
 
     private:
@@ -95,10 +120,11 @@ namespace mdf {
   class TimezoneTimestamp : public ITimestamp {
   public:
     /**
-     * \brief Constructor for TimezoneTimeStamp.
-     * \param utc_timestamp The UTC timestamp in nanoseconds.
-     * \param timezone_offset_min The timezone offset in minutes.
-     * \param dst_offset_min The daylight saving time offset in minutes.
+     * \brief Constructor for TimezoneTimestamp.
+     *
+     * @param utc_timestamp The UTC timestamp in nanoseconds.
+     * @param timezone_offset_min The timezone offset in minutes.
+     * @param dst_offset_min The daylight saving time offset in minutes.
      */
     TimezoneTimestamp ( uint64_t utc_timestamp, int16_t timezone_offset_min,
     int16_t dst_offset_min );

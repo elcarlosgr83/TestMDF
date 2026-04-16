@@ -76,7 +76,13 @@ namespace mdf {
       /** \brief Returns an existing meta-data (MD) block. */
     [ [ nodiscard ] ] virtual const IMetaData* MetaData () const = 0;
 
+      /** \brief Sets the source information comment.
+       * @param si_comment Source information comment object.
+       */
       void SetSiComment ( const SiComment& si_comment );
+      /** \brief Retrieves the source information comment.
+       * @param si_comment Receives the source information comment object.
+       */
       void GetSiComment ( SiComment& si_comment ) const;
   };
 

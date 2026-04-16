@@ -65,21 +65,35 @@ namespace mdf {
        */
     [ [ nodiscard ] ] virtual const IMetaData* MetaData () const = 0;
 
-      /** \brief Adds an element link. */
+      /** \brief Adds an element link.
+       * @param element Element link to add.
+       */
       virtual void AddElementLink ( const ElementLink& element ) = 0;
 
-      /** \brief Returns a list of element links. */
+      /** \brief Returns a list of element links.
+       * @return Element link list.
+       */
     [ [ nodiscard ] ] virtual const std::vector<ElementLink>& ElementLinks ()
       const = 0;
 
-      /** \brief Create a CH block. */
+      /** \brief Create a CH block.
+       * @return New channel hierarchy block.
+       */
     [ [ nodiscard ] ] virtual IChannelHierarchy* CreateChannelHierarchy () = 0;
 
-      /** \brief Returns a list of CH blocks. */
+      /** \brief Returns a list of CH blocks.
+       * @return List of channel hierarchy blocks.
+       */
     [ [ nodiscard ] ] virtual std::vector<IChannelHierarchy*> ChannelHierarchies ()
       const = 0;
 
+      /** \brief Sets the channel hierarchy comment.
+       * @param ch_comment Channel hierarchy comment object.
+       */
       void SetChComment ( const ChComment& ch_comment );
+      /** \brief Retrieves the channel hierarchy comment.
+       * @param ch_comment Receives the channel hierarchy comment object.
+       */
       void GetChComment ( ChComment& ch_comment ) const;
   };
   }  // namespace mdf

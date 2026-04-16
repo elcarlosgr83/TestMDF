@@ -42,25 +42,50 @@ namespace mdf {
   class IDataGroup : public IBlock {
   public:
 
-    /** \brief Sets the descriptive text for the measurement. */
+    /** \brief Sets the descriptive text for the measurement.
+     *
+     * @param desc Description text for the data group.
+     */
     virtual void Description ( const std::string& desc );
-    /** \brief Return the descriptive text. */
+
+    /** \brief Returns the descriptive text for the measurement.
+     *
+     * @return Description text.
+     */
     [ [ nodiscard ] ] virtual std::string Description () const;
 
-      /** \brief Sets size of the record ID (bytes). Note that record
-       * ID and its size, is automatically set when writing MDF files. */
+      /** \brief Sets the size of the record ID in bytes.
+       *
+       * Note that the record ID and its size are automatically set when
+       * writing MDF files.
+       * @param id_size Record ID size in bytes.
+       */
       virtual void RecordIdSize ( uint8_t id_size );
-      /** \brief Returns the record ID size in bytes. */
+
+      /** \brief Returns the record ID size in bytes.
+       *
+       * @return Record ID size in bytes.
+       */
     [ [ nodiscard ] ] virtual uint8_t RecordIdSize () const;
 
-      /** \brief Returns a list of channel groups. */
+      /** \brief Returns a list of channel groups.
+       *
+       * @return Vector of channel group pointers.
+       */
     [ [ nodiscard ] ] virtual std::vector<IChannelGroup*> ChannelGroups () const =
       0;
 
-      /** \brief Create a new empty channel group. */
+      /** \brief Create a new empty channel group.
+       *
+       * @return Pointer to the newly created channel group.
+       */
     [ [ nodiscard ] ] virtual IChannelGroup* CreateChannelGroup () = 0;
 
-      /** \brief Create a new channel group or return the existing group. */
+      /** \brief Create a new channel group or return the existing group.
+       *
+       * @param name Full name of the group.
+       * @return Existing or newly created channel group.
+       */
     [ [ nodiscard ] ] IChannelGroup* CreateChannelGroup (
       const std::string_view& name );
 
@@ -69,28 +94,47 @@ namespace mdf {
        * The function return a channel group by its full name. If the full name
        * search fails, it search on a sub-string instead. The sub-string must
        * be larger than 3 characters.
-       * @param name Full name of the group or a sub-string
+       * @param name Full name of the group or a sub-string.
        * @return Pointer to the matching channel group or nullptr at no match.
        */
-    [ [ nodiscard ] ] IChannelGroup* GetChannelGroup ( const std::string_view&
+    [ [ nodiscard ] ] IChannelGroup* GetChannelGroup ( const std::string_view& 
       name ) const;
 
-      /** \brief Return a channel group by its record id. */
+      /** \brief Returns a channel group by its record id.
+       * @param record_id Group record identifier.
+       * @return Pointer to the matching channel group or nullptr if not found.
+       */
     [ [ nodiscard ] ] IChannelGroup* GetChannelGroup ( uint64_t record_id ) const;
 
-      /** \brief Create or return the existing meta-data (MD) block. */
+      /** \brief Create or return the existing meta-data (MD) block.
+       *
+       * @return Pointer to the created or existing IMetaData block.
+       */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData ();
-      /** \brief Returns the existing meta-data (MD) block if it exist. */
+
+      /** \brief Returns the existing meta-data (MD) block if it exists.
+       *
+       * @return Pointer to the IMetaData block or nullptr.
+       */
     [ [ nodiscard ] ] virtual IMetaData* MetaData () const;
 
-      /** \brief Internal function that attach a sample observer to the
-       *  measurement block.  */
+      /** \brief Internal function that attaches a sample observer to the
+       *  measurement block.
+       * @param observer Observer to attach.
+       */
       void AttachSampleObserver ( ISampleObserver* observer ) const;
-      /** \brief Detach an observer from  the measurement. */
+      /** \brief Detach an observer from the measurement.
+       * @param observer Observer to detach.
+       */
       void DetachSampleObserver ( const ISampleObserver* observer ) const;
       /** \brief Detaches all observers from the measurement. */
       void DetachAllSampleObservers () const;
-      /** \brief Notifies the observer that a new sample record have been read.*/
+      /** \brief Notifies the observers that a new sample record has been read.
+       * @param sample Sample index.
+       * @param record_id Record identifier.
+       * @param record Record bytes.
+       * @return True if any observer handled the sample notification.
+       */
       bool NotifySampleObservers ( uint64_t sample, uint64_t record_id,
       const std::vector<uint8_t>& record ) const;
 
@@ -103,27 +147,38 @@ namespace mdf {
        */
       virtual void ClearData ();
 
-      /** \brief Set the DG blocks data as read. */
+      /** \brief Mark the DG block data as read.
+       *
+       * @param mark_as_read True to mark the data as read.
+       */
       void SetAsRead ( bool mark_as_read = true ) const {
         mark_as_read_ = mark_as_read;
     }
 
-    /** \brief Returns true if no samples has been stored yet. */
+    /** \brief Returns true if no samples have been stored yet.
+     *
+     * @return True if the data group is empty.
+     */
     [ [ nodiscard ] ] bool IsEmpty () const;
 
-      /** \brief Return true if the DG blocks data has been read not the DG block
-       * itself.  */
+      /** \brief Returns true if the DG block data has been read, not the DG block
+       * itself.
+       *
+       * @return True if the data group has been marked as read.
+       */
     [ [ nodiscard ] ] bool IsRead () const { return mark_as_read_; }
 
     /** \brief Support function that return the first CG block that contains
      * a specific CN block.
+     * @param channel Channel to search for.
+     * @return Parent channel group containing the channel, or nullptr.
      */
     [ [ nodiscard ] ] virtual IChannelGroup* FindParentChannelGroup (
       const IChannel &channel ) const = 0;
 
       /**
        * \brief Checks if this data group subscribes on a specific record.
-       * @param record_id Record ID of the channel group
+       * @param record_id Record ID of the channel group.
        * @return True if the observer list subscribe on this channel group.
        */
     [ [ nodiscard ] ] bool IsSubscribingOnRecord ( uint64_t record_id ) const;
@@ -136,14 +191,23 @@ namespace mdf {
     [ [ nodiscard ] ] bool IsSubscribingOnChannel ( const IChannel& channel ) const;
 
       /**
-      * \brief Checks if this data group subscribes on a specific channels VLSD raw data.
+      * \brief Checks if this data group subscribes on a specific channel's VLSD raw data.
       * @param channel Reference to the channel.
-      * @return True if the observer list subscribe on this channels VLSD raw data  .
+      * @return True if the observer list subscribe on this channel's VLSD raw data.
       */
     [ [ nodiscard ] ] bool IsSubscribingOnChannelVlsd ( const IChannel& channel )
       const;
 
+      /** \brief Sets the DG comment block.
+       *
+       * @param dg_comment DG comment object.
+       */
       void SetDgComment ( const DgComment& dg_comment );
+
+      /** \brief Retrieves the DG comment block.
+       *
+       * @param dg_comment Receives the DG comment object.
+       */
       void GetDgComment ( DgComment& dg_comment ) const;
 
       void MandatoryMembersOnly ( bool mandatory_only ) const {

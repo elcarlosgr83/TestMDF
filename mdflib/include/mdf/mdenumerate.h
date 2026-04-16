@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file mdenumerate.h
+ * \brief MDF core API header for enumerations.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file mdenumerate.h
+ * \brief MDF core API header for enumerations.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <utility>

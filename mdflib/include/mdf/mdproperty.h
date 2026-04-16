@@ -2,6 +2,20 @@
 * Copyright 2025 Ingemar Hedvall
 * SPDX-License-Identifier: MIT
  */
+/**
+ * \file mdproperty.h
+ * \brief MDF core API header for property definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file mdproperty.h
+ * \brief MDF core API header for property definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <cstdint>

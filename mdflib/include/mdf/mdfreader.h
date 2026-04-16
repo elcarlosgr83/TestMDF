@@ -3,6 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file mdfreader.h
+ * \brief MDF core API header for reader API definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 #include <cstdio>
 #include <memory>
@@ -42,7 +49,12 @@ namespace mdf {
      */
   [ [ nodiscard ] ] bool IsMdfFile ( std::streambuf& buffer );
 
-    /// \brief Creates and attaches a channel sample observer.
+    /** \brief Create and attach a channel observer.
+     * @param data_group Data group containing the channel.
+     * @param group Channel group containing the channel.
+     * @param channel Channel to observe.
+     * @return Smart pointer to the created observer.
+     */
   [ [ nodiscard ] ] ChannelObserverPtr CreateChannelObserver (
     const IDataGroup& data_group, const IChannelGroup& group,
     const IChannel& channel );
@@ -51,13 +63,17 @@ namespace mdf {
      * case that the channel exist in many channel groups, it selects the group with
      * the largest number of samples.
      * @param dg_group The data group with the channel.
-     * @param channel_name The channel name
+     * @param channel_name The channel name.
      * @return A smart pointer to a channel observer.
      */
   [ [ nodiscard ] ] ChannelObserverPtr CreateChannelObserver (
     const IDataGroup& dg_group, const std::string& channel_name );
 
-    /** \brief Creates a channel observer. */
+    /** \brief Creates a channel observer for a channel group.
+     * @param data_group Parent data group.
+     * @param group Channel group to observe.
+     * @param dest Destination list that receives the observer.
+     */
     void CreateChannelObserverForChannelGroup ( const IDataGroup& data_group,
     const IChannelGroup& group,
     ChannelObserverList& dest );
@@ -135,27 +151,44 @@ namespace mdf {
       /// pointer.
     [ [ nodiscard ] ] const MdfFile* GetFile () const { return instance_.get (); }
 
-    /** \brief Returns the header (HD) block. */
+    /** \brief Returns the header (HD) block.
+     * @return Pointer to the header block.
+     */
     [ [ nodiscard ] ] const IHeader* GetHeader () const;
-      /** \brief Returns the data group (DG) block. */
+      /** \brief Returns the data group (DG) block.
+       * @param order Index of the data group.
+       * @return Pointer to the data group.
+       */
     [ [ nodiscard ] ] IDataGroup* GetDataGroup ( size_t order ) const;
 
-    [ [ nodiscard ] ] std::string ShortName ()
-      const;  ///< Returns the file name without paths.
+    /** \brief Returns the file name without path.
+     * @return Short file name.
+     */
+    [ [ nodiscard ] ] std::string ShortName () const;
 
       /** \brief Opens the internal stream buffer.
        *
        * Normally the stream buffer is an ordinary file but the use may also
-       * attach a generic C++ stream
+       * attach a generic C++ stream.
        * @return True if the stream was opened.
        */
     [ [ nodiscard ] ] bool Open ();
     [ [ nodiscard ] ] bool IsOpen () const;
-      void Close (); ///< Closes the file stream.
+      /** \brief Closes the file stream. */
+      void Close ();
 
-      bool ReadHeader ();            ///< Reads the ID and the HD block.
-      bool ReadMeasurementInfo ();   ///< Reads everything but not CG and raw data.
-      bool ReadEverythingButData (); ///< Reads all blocks but not raw data.
+      /** \brief Reads the ID and the HD block.
+       * @return True if the header read succeeded.
+       */
+      bool ReadHeader ();
+      /** \brief Reads measurement metadata without raw data.
+       * @return True if the measurement info read succeeded.
+       */
+      bool ReadMeasurementInfo ();
+      /** \brief Reads all blocks except raw sample data.
+       * @return True if the file structure read succeeded.
+       */
+      bool ReadEverythingButData ();
 
       /** \brief Export the attachment data to a destination file.
        *
@@ -165,8 +198,8 @@ namespace mdf {
        * copied to the destination file.
        *
        * Any existing file will be overwritten.
-       * @param attachment Reference to the attachment block
-       * @param dest_file Full path to the
+       * @param attachment Reference to the attachment block.
+       * @param dest_file Full path to the destination file.
        * @return True if the export was successful.
        */
       bool ExportAttachmentData ( const IAttachment& attachment,
@@ -174,12 +207,12 @@ namespace mdf {
 
       /** \brief Export an embedded attachment to a stream buffer.
        *
-       * This function export an attachment data to an external stream buffer.
-       * Note that this function shouldn't be used with external referenced
+       * This function exports attachment data to an external stream buffer.
+       * Note that this function should not be used with externally referenced
        * files.
        *
        * @param attachment Reference to an attachment.
-       * @param dest_buffer Refrence to an external stream buffer.
+       * @param dest_buffer Reference to an external stream buffer.
        * @return True if the export was successful.
        */
       bool ExportAttachmentData ( const IAttachment& attachment,

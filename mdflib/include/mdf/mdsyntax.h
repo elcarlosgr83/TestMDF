@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file mdsyntax.h
+ * \brief MDF core API header for syntax helper definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file mdsyntax.h
+ * \brief MDF core API header for syntax helper definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <string>

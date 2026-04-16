@@ -60,86 +60,133 @@ namespace mdf {
    */
   class IEvent : public IBlock {
   public:
-    virtual void Name ( const std::string& name ) = 0; ///< Sets the name.
+    /** \brief Sets the event name.
+     * @param name Event name.
+     */
+    virtual void Name ( const std::string& name ) = 0;
     [ [ nodiscard ] ] virtual const std::string& Name () const = 0; ///< Name.
 
-      /** \brief Sets the group name. */
+      /** \brief Sets the event group name.
+       * @param group_name Group name.
+       */
       virtual void GroupName ( const std::string& group_name ) = 0;
       /** \brief Returns the group name. */
     [ [ nodiscard ] ] virtual const std::string& GroupName () const = 0;
 
 
+      /** \brief Sets the event type.
+       * @param event_type Event type value.
+       */
       virtual void Type ( EventType event_type ) = 0; ///< Sets type of event.
     [ [ nodiscard ] ] virtual EventType Type () const = 0; ///< Type of event.
     [ [ nodiscard ] ] std::string TypeToString () const; ///< Typ as string.
 
-      virtual void Sync ( SyncType sync_type ) = 0; ///< Sets type of sync.
+      /** \brief Sets the sync type.
+       * @param sync_type Synchronization type.
+       */
+      virtual void Sync ( SyncType sync_type ) = 0;
     [ [ nodiscard ] ] virtual SyncType Sync () const = 0; ///< Type of sync.
 
-      virtual void Range ( RangeType range_type ) = 0; ///< Sets type of range.
+      /** \brief Sets the range type.
+       * @param range_type Range type.
+       */
+      virtual void Range ( RangeType range_type ) = 0;
     [ [ nodiscard ] ] virtual RangeType Range () const = 0; ///< Type of range.
     [ [ nodiscard ] ] std::string RangeToString () const; ///< Range to string.
 
-      virtual void Cause ( EventCause cause ) = 0; ///< Sets the cause.
+      /** \brief Sets the event cause.
+       * @param cause Event cause.
+       */
+      virtual void Cause ( EventCause cause ) = 0;
     [ [ nodiscard ] ] virtual EventCause Cause () const = 0; ///< Cause of event.
     [ [ nodiscard ] ] std::string CauseToString () const; ///< Cause to string.
 
-      virtual void CreatorIndex ( size_t index ) = 0; ///< Sets the creator index.
+      /** \brief Sets the creator index.
+       * @param index Creator index.
+       */
+      virtual void CreatorIndex ( size_t index ) = 0;
     [ [ nodiscard ] ] virtual size_t CreatorIndex () const = 0; ///< Creator index.
 
-      virtual void SyncValue ( int64_t value ) = 0; ///< Sets the sync value.
+      /** \brief Sets the sync value.
+       * @param value Sync value.
+       */
+      virtual void SyncValue ( int64_t value ) = 0;
     [ [ nodiscard ] ] virtual int64_t SyncValue () const = 0; ///< Sync value.
 
-      virtual void SyncFactor ( double factor ) = 0; ///< Sets the factor.
+      /** \brief Sets the sync factor.
+       * @param factor Sync factor.
+       */
+      virtual void SyncFactor ( double factor ) = 0;
     [ [ nodiscard ] ] virtual double SyncFactor () const = 0; ///< Sync factor.
     [ [ nodiscard ] ] std::string ValueToString () const; ///< Sync value as string.
 
-      /** \brief Sets the parent event. */
+      /** \brief Sets the parent event.
+       * @param parent Parent event object.
+       */
       virtual void ParentEvent ( const IEvent* parent ) = 0;
       /** \brief Returns the parent event. */
     [ [ nodiscard ] ] virtual const IEvent* ParentEvent () const = 0;
 
-      /** \brief Sets the range. */
+      /** \brief Sets the range event.
+       * @param range_event Range event object.
+       */
       virtual void RangeEvent ( const IEvent* range_event ) = 0;
       /** \brief Returns the range. */
     [ [ nodiscard ] ] virtual const IEvent* RangeEvent () const = 0;
 
-      /** \brief Adds a scope reference. */
+      /** \brief Adds a scope reference.
+       * @param scope Scope pointer to reference.
+       */
       virtual void AddScope ( const void* scope ) = 0;
       /** \brief Returns referenced CN and CG blocks. */
     [ [ nodiscard ] ] virtual const std::vector<const void*>& Scopes () const = 0;
 
-      /** \brief Adds an attachment reference. */
+      /** \brief Adds an attachment reference.
+       * @param attachment Attachment to reference.
+       */
       virtual void AddAttachment ( const IAttachment* attachment ) = 0;
       /** \brief Returns a list of attachment references. */
     [ [ nodiscard ] ] virtual const std::vector<const IAttachment*>& Attachments ()
       const = 0;
 
-      /** \brief Returns an interface against an MD4 block
-       *
+      /** \brief Returns an interface against an MD4 block.
        * @return Pointer to a meta data block.
        */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData () = 0;
 
-      /** \brief Returns an constant interface against a MD4 block
-       *
-       * @return Pointer to a meta data block.
+      /** \brief Returns a constant interface against an MD4 block.
+       * @return Pointer to a meta data block or nullptr.
        */
     [ [ nodiscard ] ] virtual const IMetaData* MetaData () const = 0;
 
-      void Description ( const std::string& description ); ///< Sets description.
+      /** \brief Sets the event description.
+       * @param description Event description text.
+       */
+      void Description ( const std::string& description );
     [ [ nodiscard ] ] std::string Description () const; ///< Returns description.
 
-      void PreTrig ( double pre_trig ); ///< Sets the pre-trig time (s).
+      /** \brief Sets the pre-trigger time.
+       * @param pre_trig Pre-trigger time in seconds.
+       */
+      void PreTrig ( double pre_trig );
 
     [ [ nodiscard ] ] double PreTrig () const; ///< Returns the pre-trig value (s).
 
-      void PostTrig ( double post_trig ); ///< Sets the post-trig value (s)
+      /** \brief Sets the post-trigger time.
+       * @param post_trig Post-trigger time in seconds.
+       */
+      void PostTrig ( double post_trig );
 
     [ [ nodiscard ] ] double PostTrig ()
       const; ///< Returns the post-trig value (s).
 
+      /** \brief Sets the event comment block.
+       * @param ev_comment Event comment object.
+       */
       void SetEvComment ( const EvComment& ev_comment );
+      /** \brief Retrieves the event comment block.
+       * @param ev_comment Receives the event comment object.
+       */
       void GetEvComment ( EvComment& ev_comment ) const;
   };
 

@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file ethconfigadapter.h
+ * \brief MDF core API header for configuration adapter definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file ethconfigadapter.h
+ * \brief MDF core API header for configuration adapter definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include "mdf/iconfigadapter.h"

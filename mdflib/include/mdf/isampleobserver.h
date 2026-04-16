@@ -30,6 +30,10 @@ namespace mdf {
 
     virtual ~ISampleObserver (); ///< Destructor
 
+    /** \brief Sets the associated data group for this observer.
+     *
+     * @param data_group Pointer to the data group that owns the sample records.
+     */
     void DataGroup ( const IDataGroup* data_group ) const {
       data_group_ = data_group;
     };

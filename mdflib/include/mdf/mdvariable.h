@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file mdvariable.h
+ * \brief MDF core API header for variable definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file mdvariable.h
+ * \brief MDF core API header for variable definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include <cstdint>

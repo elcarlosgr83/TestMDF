@@ -3,6 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
+/**
+ * \file canconfigadapter.h
+ * \brief MDF core API header for configuration adapter definitions.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file canconfigadapter.h
+ * \brief MDF core API header for configuration adapter definitions.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include "mdf/iconfigadapter.h"

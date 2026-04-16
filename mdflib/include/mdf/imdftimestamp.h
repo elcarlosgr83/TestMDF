@@ -1,3 +1,17 @@
+/**
+ * \file imdftimestamp.h
+ * \brief MDF core API header for timestamp utilities.
+ *
+ * @ingroup mdf
+ */
+
+/**
+ * \file imdftimestamp.h
+ * \brief MDF core API header for timestamp utilities.
+ *
+ * @ingroup mdf
+ */
+
 #pragma once
 
 #include "mdf/itimestamp.h"

@@ -101,10 +101,15 @@ namespace mdf {
        */
     [ [ nodiscard ] ] virtual const std::vector<uint64_t>& Shape () const = 0;
 
-      /** \brief Returns a dimension size. */
+      /** \brief Returns a dimension size.
+       * @param dimension Dimension index.
+       * @return Size of the requested dimension.
+       */
     [ [ nodiscard ] ] virtual uint64_t DimensionSize ( size_t dimension ) const = 0;
 
-      /** \brief Returns the fixed axis value list for reading only. */
+      /** \brief Returns the fixed axis value list for reading only.
+       * @return Axis values for read access.
+       */
     [ [ nodiscard ] ] virtual const std::vector<double>& AxisValues () const = 0;
 
       /** \brief Returns the fixed axis value list for write. */
@@ -143,7 +148,7 @@ namespace mdf {
     [ [ nodiscard ] ] const std::vector<int64_t>& DataLinks () const {
         return data_links_;
     }
-    /** \brief Returns a list of data kink indexes. */
+    /** \brief Returns a list of data link indexes. */
     [ [ nodiscard ] ] std::vector<int64_t>& DataLinks ();
 
       /** \brief Returns the dynamic size list. */
@@ -198,8 +203,8 @@ namespace mdf {
       /** \brief Summation of all array dimensions.
        *
        * Support function that summarizes the dimension sizes. This
-       * function is mainly used internally to size
-       * @return
+       * function is mainly used internally to size buffers and arrays.
+       * @return Sum of all array dimensions.
        */
     [ [ nodiscard ] ] virtual uint64_t SumOfArray () const = 0;
 
