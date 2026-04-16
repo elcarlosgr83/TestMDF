@@ -30,5 +30,8 @@ win32-g++ {
     QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
 }
 
+# --- Entropy source for embedded Expat ---
+DEFINES += XML_DEV_URANDOM
+
 # --- Directorio de salida fijo ---
 DESTDIR = $$PWD/../lib
