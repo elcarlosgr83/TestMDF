@@ -110,8 +110,8 @@ enum {
 };
 
 typedef struct prolog_state {
-  int(PTRCALL *handler)(struct prolog_state *state, int tok, const char *ptr,
-                        const char *end, const ENCODING *enc);
+  int ( PTRCALL *handler ) ( struct prolog_state *state, int tok, const char* ptr,
+                             const char* end, const ENCODING *enc );
   unsigned level;
   int role_none;
 #  ifdef XML_DTD
@@ -121,13 +121,13 @@ typedef struct prolog_state {
 #  endif /* XML_DTD */
 } PROLOG_STATE;
 
-void XmlPrologStateInit(PROLOG_STATE *state);
+void XmlPrologStateInit ( PROLOG_STATE *state );
 #  ifdef XML_DTD
-void XmlPrologStateInitExternalEntity(PROLOG_STATE *state);
+void XmlPrologStateInitExternalEntity ( PROLOG_STATE *state );
 #  endif /* XML_DTD */
 
-#  define XmlTokenRole(state, tok, ptr, end, enc)                              \
-    (((state)->handler)(state, tok, ptr, end, enc))
+# define XmlTokenRole(state, tok, ptr, end, enc) \
+  (((state)->handler)(state, tok, ptr, end, enc))
 
 #  ifdef __cplusplus
 }

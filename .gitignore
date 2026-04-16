@@ -132,4 +132,4 @@ CMakeLists.txt.user*
 .rcc/
 .uic/
 /build*/
->>>>>>> b2db12d (Proyecto mínimo con filesystem condicional)
+doc/

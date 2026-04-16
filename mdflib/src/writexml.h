@@ -6,9 +6,9 @@
 #pragma once
 #include "ixmlfile.h"
 namespace mdf {
-class WriteXml final : public IXmlFile {
- public:
- protected:
-};
+  class WriteXml final : public IXmlFile {
+  public:
+  protected:
+  };
 
 }  // namespace mdf

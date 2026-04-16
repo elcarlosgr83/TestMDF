@@ -5,12 +5,11 @@
 #include "mdf/cgcomment.h"
 
 
-
 namespace mdf {
 
-CgComment::CgComment()
- : MdComment("CG") {
+  CgComment::CgComment ()
+    : MdComment ( "CG" ) {
 
-}
+  }
 
 }  // namespace mdf

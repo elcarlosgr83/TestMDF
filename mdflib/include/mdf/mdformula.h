@@ -11,31 +11,31 @@
 
 namespace mdf {
 
-class IXmlNode;
+  class IXmlNode;
 
-class MdFormula : public MdStandardAttribute {
- public:
-  [[nodiscard]] bool IsActive() const override;
+  class MdFormula : public MdStandardAttribute {
+  public:
+    [ [ nodiscard ] ] bool IsActive () const override;
 
-  void Syntax(MdSyntax syntax);
-  [[nodiscard]] const MdSyntax& Syntax() const;
+      void Syntax ( MdSyntax syntax );
+    [ [ nodiscard ] ] const MdSyntax& Syntax () const;
 
-  void AddCustomSyntax(MdSyntax syntax);
-  [[nodiscard]] const MdSyntaxList& CustomSyntaxes() const;
-  [[nodiscard]] MdSyntaxList& CustomSyntaxes();
+      void AddCustomSyntax ( MdSyntax syntax );
+    [ [ nodiscard ] ] const MdSyntaxList& CustomSyntaxes () const;
+    [ [ nodiscard ] ] MdSyntaxList& CustomSyntaxes ();
 
-  void AddVariable(MdVariable variable);
-  [[nodiscard]] const MdVariableList& Variables() const;
-  [[nodiscard]] MdVariableList& Variables();
+      void AddVariable ( MdVariable variable );
+    [ [ nodiscard ] ] const MdVariableList& Variables () const;
+    [ [ nodiscard ] ] MdVariableList& Variables ();
 
-  void ToXml(IXmlNode& formula_node) const override;
-  void FromXml(const IXmlNode& formula_node) override;
+      void ToXml ( IXmlNode& formula_node ) const override;
+      void FromXml ( const IXmlNode& formula_node ) override;
 
- private:
-  MdSyntax syntax_;
-  MdSyntaxList custom_syntax_list_;
-  MdVariableList variable_list_;
-};
+    private:
+      MdSyntax syntax_;
+      MdSyntaxList custom_syntax_list_;
+      MdVariableList variable_list_;
+  };
 
-}  // namespace mdf
+  }  // namespace mdf
 

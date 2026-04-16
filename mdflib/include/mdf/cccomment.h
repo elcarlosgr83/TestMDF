@@ -11,19 +11,19 @@
 
 namespace mdf {
 
-class CcComment : public MdComment {
- public:
-  CcComment();
-  explicit CcComment(std::string comment);
+  class CcComment : public MdComment {
+  public:
+    CcComment ();
+    explicit CcComment ( std::string comment );
 
-  [[nodiscard]] const HoCompuMethod& CompuMethod() const;
-  [[nodiscard]] HoCompuMethod& CompuMethod();
+    [ [ nodiscard ] ] const HoCompuMethod& CompuMethod () const;
+    [ [ nodiscard ] ] HoCompuMethod& CompuMethod ();
 
-  [[nodiscard]] std::string ToXml() const override;
-  void FromXml(const std::string& xml_snippet) override;
- private:
-  HoCompuMethod method_;
-};
+    [ [ nodiscard ] ] std::string ToXml () const override;
+      void FromXml ( const std::string& xml_snippet ) override;
+    private:
+      HoCompuMethod method_;
+  };
 
-}  // namespace mdf
+  }  // namespace mdf
 

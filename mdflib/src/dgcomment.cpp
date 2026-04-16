@@ -8,14 +8,14 @@
 
 namespace mdf {
 
-DgComment::DgComment() :
-MdComment("DG") {
+  DgComment::DgComment () :
+    MdComment ( "DG" ) {
 
-}
+  }
 
-DgComment::DgComment(std::string comment)
-    : DgComment() {
-  Comment(std::move(comment));
-}
+  DgComment::DgComment ( std::string comment )
+    : DgComment () {
+    Comment ( std::move ( comment ) );
+  }
 
 }  // namespace mdf

@@ -10,13 +10,13 @@
 
 namespace mdf {
 
-class ChComment : public MdComment {
- public:
-  ChComment();
-  explicit ChComment(std::string comment);
- private:
+  class ChComment : public MdComment {
+  public:
+    ChComment ();
+    explicit ChComment ( std::string comment );
+  private:
 
-};
+  };
 
 }  // namespace mdf
 

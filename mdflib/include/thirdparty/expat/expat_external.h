@@ -64,63 +64,63 @@
    compiled with the cdecl calling convention as the default since
    system headers may assume the cdecl convention.
 */
-#  ifndef XMLCALL
-#    if defined(_WIN32)
-#      define XMLCALL __cdecl
-#    elif defined(__GNUC__) && defined(__i386) && ! defined(__INTEL_COMPILER)
-#      define XMLCALL __attribute__((cdecl))
-#    else
-/* For any platform which uses this definition and supports more than
-   one calling convention, we need to extend this definition to
-   declare the convention used on that platform, if it's possible to
-   do so.
+#ifndef XMLCALL
+  #if defined(_WIN32)
+    #define XMLCALL __cdecl
+  #elif defined(__GNUC__) && defined(__i386) && ! defined(__INTEL_COMPILER)
+    #define XMLCALL __attribute__((cdecl))
+  #else
+    /* For any platform which uses this definition and supports more than
+    one calling convention, we need to extend this definition to
+    declare the convention used on that platform, if it's possible to
+    do so.
 
-   If this is the case for your platform, please file a bug report
-   with information on how to identify your platform via the C
-   pre-processor and how to specify the same calling convention as the
-   platform's malloc() implementation.
-*/
-#      define XMLCALL
-#    endif
-#  endif /* not defined XMLCALL */
+    If this is the case for your platform, please file a bug report
+    with information on how to identify your platform via the C
+    pre-processor and how to specify the same calling convention as the
+    platform's malloc() implementation.
+    */
+    #define XMLCALL
+  #endif
+#endif /* not defined XMLCALL */
 
-#  if 0 && ! defined(XMLIMPORT)
-#    ifndef XML_BUILDING_EXPAT
-/* using Expat from an application */
+#if 0 && ! defined(XMLIMPORT)
+  #ifndef XML_BUILDING_EXPAT
+    /* using Expat from an application */
 
-#      if defined(_WIN32) && ! defined(__BEOS__) && ! defined(__CYGWIN__)
-#        define XMLIMPORT __declspec(dllimport)
-#      endif
+    #if defined(_WIN32) && ! defined(__BEOS__) && ! defined(__CYGWIN__)
+      #define XMLIMPORT __declspec(dllimport)
+    #endif
 
-#    endif
-#  endif /* not defined XML_STATIC */
+  #endif
+#endif /* not defined XML_STATIC */
 
-#  ifndef XML_ENABLE_VISIBILITY
-#    define XML_ENABLE_VISIBILITY 0
-#  endif
+#ifndef XML_ENABLE_VISIBILITY
+  #define XML_ENABLE_VISIBILITY 0
+#endif
 
-#  if ! defined(XMLIMPORT) && XML_ENABLE_VISIBILITY
-#    define XMLIMPORT __attribute__((visibility("default")))
-#  endif
+#if ! defined(XMLIMPORT) && XML_ENABLE_VISIBILITY
+  #define XMLIMPORT __attribute__((visibility("default")))
+#endif
 
 /* If we didn't define it above, define it away: */
-#  ifndef XMLIMPORT
-#    define XMLIMPORT
-#  endif
+#ifndef XMLIMPORT
+  #define XMLIMPORT
+#endif
 
-#  if defined(__GNUC__)                                                        \
-      && (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96))
-#    define XML_ATTR_MALLOC __attribute__((__malloc__))
-#  else
-#    define XML_ATTR_MALLOC
-#  endif
+#if defined(__GNUC__)                                                        \
+  && (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96))
+  #define XML_ATTR_MALLOC __attribute__((__malloc__))
+#else
+  #define XML_ATTR_MALLOC
+#endif
 
-#  if defined(__GNUC__)                                                        \
-      && ((__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
-#    define XML_ATTR_ALLOC_SIZE(x) __attribute__((__alloc_size__(x)))
-#  else
-#    define XML_ATTR_ALLOC_SIZE(x)
-#  endif
+#if defined(__GNUC__)                                                        \
+  && ((__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
+  #define XML_ATTR_ALLOC_SIZE(x) __attribute__((__alloc_size__(x)))
+#else
+  #define XML_ATTR_ALLOC_SIZE(x)
+#endif
 
 #  define XMLPARSEAPI(type) XMLIMPORT type XMLCALL
 

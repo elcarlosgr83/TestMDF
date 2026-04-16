@@ -1,3 +1,5 @@
+# astyle --options=astylerc.sh --suffix=none --recursive "*.c,*.cc,*.cpp,*.h,*.hpp"
+
 # Brace Style Options:
 # --------------------
 # default brace style

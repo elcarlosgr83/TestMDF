@@ -9,18 +9,18 @@
 #include <fstream>
 namespace mdf::detail {
 
-class MdfConverter : public Mdf4Writer {
- public:
-  MdfConverter();
-  ~MdfConverter() override;
+  class MdfConverter : public Mdf4Writer {
+  public:
+    MdfConverter ();
+    ~MdfConverter () override;
 
-  bool InitMeasurement() override;
+    bool InitMeasurement () override;
 
-  bool FinalizeMeasurement() override;
- protected:
- private:
-  // void ConverterThread();
-};
+    bool FinalizeMeasurement () override;
+  protected:
+  private:
+    // void ConverterThread();
+  };
 
 }  // namespace mdf::detail
 

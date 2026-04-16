@@ -12,32 +12,32 @@
 
 namespace mdf {
 
-class HoScaleConstraint;
-class IXmlNode;
+  class HoScaleConstraint;
+  class IXmlNode;
 
-using HoScaleConstraintList = std::vector<HoScaleConstraint>;
+  using HoScaleConstraintList = std::vector<HoScaleConstraint>;
 
-class HoScaleConstraint {
- public:
-  [[nodiscard]] bool IsActive() const;
+  class HoScaleConstraint {
+  public:
+    [ [ nodiscard ] ] bool IsActive () const;
 
-  void LowerLimit(HoInterval limit);
-  [[nodiscard]] const HoInterval& LowerLimit() const;
+      void LowerLimit ( HoInterval limit );
+    [ [ nodiscard ] ] const HoInterval& LowerLimit () const;
 
-  void UpperLimit(HoInterval limit);
-  [[nodiscard]] const HoInterval& UpperLimit() const;
+      void UpperLimit ( HoInterval limit );
+    [ [ nodiscard ] ] const HoInterval& UpperLimit () const;
 
-  void Validity(HoValidity validity);
-  [[nodiscard]] HoValidity Validity() const;
+      void Validity ( HoValidity validity );
+    [ [ nodiscard ] ] HoValidity Validity () const;
 
-  virtual void ToXml(IXmlNode& root_node) const;
-  virtual void FromXml(const IXmlNode& scale_node);
+      virtual void ToXml ( IXmlNode& root_node ) const;
+      virtual void FromXml ( const IXmlNode& scale_node );
 
- protected:
-  HoInterval lower_limit_;
-  HoInterval upper_limit_;
-  HoValidity validity_ = HoValidity::Valid;
-};
+    protected:
+      HoInterval lower_limit_;
+      HoInterval upper_limit_;
+      HoValidity validity_ = HoValidity::Valid;
+  };
 
-}  // namespace mdf
+  }  // namespace mdf
 

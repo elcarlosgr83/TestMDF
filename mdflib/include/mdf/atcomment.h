@@ -9,12 +9,12 @@
 
 namespace mdf {
 
-class AtComment : public MdComment {
- public:
-  AtComment();
-  explicit AtComment(std::string comment);
- private:
-};
+  class AtComment : public MdComment {
+  public:
+    AtComment ();
+    explicit AtComment ( std::string comment );
+  private:
+  };
 
 }  // namespace mdf
 

@@ -9,17 +9,17 @@
 #include "mdfblock.h"
 
 namespace mdf::detail {
-class Pr3Block : public MdfBlock {
- public:
-  Pr3Block() = default;
-  explicit Pr3Block(std::string meta_data);
+  class Pr3Block : public MdfBlock {
+  public:
+    Pr3Block () = default;
+    explicit Pr3Block ( std::string meta_data );
 
-  uint64_t Read(std::streambuf& buffer) override;
-  uint64_t Write(std::streambuf& buffer) override;
+    uint64_t Read ( std::streambuf& buffer ) override;
+    uint64_t Write ( std::streambuf& buffer ) override;
 
-  [[nodiscard]] std::string Text() const { return text_; }
+    [ [ nodiscard ] ] std::string Text () const { return text_; }
 
- private:
-  std::string text_;
-};
+  private:
+    std::string text_;
+    };
 }  // namespace mdf::detail

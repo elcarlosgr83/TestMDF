@@ -9,12 +9,11 @@
 
 namespace mdf {
 
-class CgComment : public MdComment {
- public:
-  CgComment();
+  class CgComment : public MdComment {
+  public:
+    CgComment ();
 
-};
+  };
 
 }  // namespace mdf
-
 

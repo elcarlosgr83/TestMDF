@@ -11,12 +11,11 @@
 
 namespace mdf {
 
-class CnUnit : public CcUnit {
- public:
-  CnUnit();
-  explicit CnUnit(std::string unit);
-};
+  class CnUnit : public CcUnit {
+  public:
+    CnUnit ();
+    explicit CnUnit ( std::string unit );
+  };
 
 }  // namespace mdf
-
 

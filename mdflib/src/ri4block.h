@@ -8,12 +8,12 @@
 
 namespace mdf::detail {
 
-class Ri4Block : public DataBlock {
- public:
-  uint64_t Read(std::streambuf& buffer) override;
+  class Ri4Block : public DataBlock {
+  public:
+    uint64_t Read ( std::streambuf& buffer ) override;
 
- protected:
-  [[nodiscard]] uint64_t DataSize() const override;
-};
+  protected:
+    [ [ nodiscard ] ] uint64_t DataSize () const override;
+  };
 
 }  // namespace mdf::detail

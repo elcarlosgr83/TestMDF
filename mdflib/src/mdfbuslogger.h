@@ -9,11 +9,11 @@
 
 namespace mdf::detail {
 
-class MdfBusLogger : public Mdf4Writer {
- public:
-  MdfBusLogger();
-  ~MdfBusLogger() override;
+  class MdfBusLogger : public Mdf4Writer {
+  public:
+    MdfBusLogger ();
+    ~MdfBusLogger () override;
 
-};
+  };
 
 }  // namespace mdf::detail

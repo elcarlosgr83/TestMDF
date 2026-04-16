@@ -11,11 +11,11 @@
 
 namespace mdf {
 
-class DgComment : public MdComment {
- public:
-  DgComment();
-  explicit DgComment(std::string comment);
-};
+  class DgComment : public MdComment {
+  public:
+    DgComment ();
+    explicit DgComment ( std::string comment );
+  };
 
 }  // namespace mdf
 

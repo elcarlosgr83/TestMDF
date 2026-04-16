@@ -6,13 +6,13 @@
 #include "mdfbuslogger.h"
 
 namespace mdf::detail {
-MdfBusLogger::MdfBusLogger() {
-  type_of_writer_ = MdfWriterType::MdfBusLogger;
-}
+  MdfBusLogger::MdfBusLogger () {
+    type_of_writer_ = MdfWriterType::MdfBusLogger;
+  }
 
-MdfBusLogger::~MdfBusLogger() {
-  write_cache_.Exit();
-}
+  MdfBusLogger::~MdfBusLogger () {
+    write_cache_.Exit ();
+  }
 
 
 }  // namespace mdf

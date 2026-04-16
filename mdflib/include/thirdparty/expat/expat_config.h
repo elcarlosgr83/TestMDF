@@ -79,9 +79,9 @@
 #define PACKAGE_VERSION "2.7.4"
 
 /* Define to 1 if you have the ANSI C header files. */
-#  ifndef STDC_HEADERS
-#define STDC_HEADERS
-#  endif
+#ifndef STDC_HEADERS
+  #define STDC_HEADERS
+#endif
 
 /* whether byteorder is bigendian */
 /* #undef WORDS_BIGENDIAN */
@@ -94,10 +94,10 @@
    point, 0 to disable. */
 #  define XML_CONTEXT_BYTES 1024
 
-#  if ! defined(_WIN32)
-/* Define to include code reading entropy from `/dev/urandom'. */
-/* #undef XML_DEV_URANDOM */
-#  endif
+#if ! defined(_WIN32)
+  /* Define to include code reading entropy from `/dev/urandom'. */
+  /* #undef XML_DEV_URANDOM */
+#endif
 
 /* Define to make parameter entity parsing functionality available. */
 #define XML_DTD
@@ -109,9 +109,9 @@
 #define XML_NS
 
 /* Define to __FUNCTION__ or "" if `__func__' does not conform to ANSI C. */
-#  ifdef _MSC_VER
-#    define __func__ __FUNCTION__
-#  endif
+#ifdef _MSC_VER
+  #define __func__ __FUNCTION__
+#endif
 
 /* Define to `long' if <sys/types.h> does not define. */
 /* #undef off_t */

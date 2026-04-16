@@ -9,44 +9,50 @@
 
 namespace mdf {
 
-std::string MdfBusTypeToString( uint16_t bus_type) {
-  std::ostringstream type;
+  std::string MdfBusTypeToString ( uint16_t bus_type ) {
+    std::ostringstream type;
 
-  if ((bus_type & MdfBusType::CAN) != 0) {
-    if (!type.str().empty()) {
-      type << ",";
-    }
-    type << "CAN";
-  }
+    if ( ( bus_type & MdfBusType::CAN ) != 0 ) {
+      if ( !type.str ().empty () ) {
+        type << ",";
+      }
 
-  if ((bus_type & MdfBusType::LIN) != 0) {
-    if (!type.str().empty()) {
-      type << ",";
+      type << "CAN";
     }
-    type << "LIN";
-  }
 
-  if ((bus_type & MdfBusType::FlexRay) != 0) {
-    if (!type.str().empty()) {
-      type << ",";
-    }
-    type << "FlexRay";
-  }
+    if ( ( bus_type & MdfBusType::LIN ) != 0 ) {
+      if ( !type.str ().empty () ) {
+        type << ",";
+      }
 
-  if ((bus_type & MdfBusType::MOST) != 0) {
-    if (!type.str().empty()) {
-      type << ",";
+      type << "LIN";
     }
-    type << "MOST";
-  }
 
-  if ((bus_type & MdfBusType::Ethernet) != 0) {
-    if (!type.str().empty()) {
-      type << ",";
+    if ( ( bus_type & MdfBusType::FlexRay ) != 0 ) {
+      if ( !type.str ().empty () ) {
+        type << ",";
+      }
+
+      type << "FlexRay";
     }
-    type << "Ethernet";
+
+    if ( ( bus_type & MdfBusType::MOST ) != 0 ) {
+      if ( !type.str ().empty () ) {
+        type << ",";
+      }
+
+      type << "MOST";
+    }
+
+    if ( ( bus_type & MdfBusType::Ethernet ) != 0 ) {
+      if ( !type.str ().empty () ) {
+        type << ",";
+      }
+
+      type << "Ethernet";
+    }
+
+    return type.str ();
   }
-  return type.str();
-}
 
 }
