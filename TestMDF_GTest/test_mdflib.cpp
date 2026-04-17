@@ -1,29 +1,30 @@
+#include <filesystem>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include "mdflibrary/MdfWriter.h"
 
-// Interfaz que queremos simular
-class Foo {
-public:
-    virtual ~Foo() = default;
-    virtual int DoSomething(int x) = 0;
-};
+TEST(MdfWriterTest, CanCreateAndWriteMf4File) {
+    const std::string filePath = "test_write_mf4.mf4";
 
-// Mock de la interfaz usando gMock
-class MockFoo : public Foo {
-public:
-    MOCK_METHOD(int, DoSomething, (int x), (override));
-};
+    std::filesystem::remove(filePath);
 
-// Test con gMock
-TEST(GMockSanityTest, CanMockMethod) {
-    MockFoo mock;
+    {
+        MdfLibrary::MdfWriter writer(MdfLibrary::MdfWriterType::MdfBusLogger, filePath.c_str());
+        writer.SetBusType(MdfLibrary::MdfBusType::CAN);
+        writer.SetStorageType(MdfLibrary::MdfStorageType::VlsdStorage);
 
-    // Configuramos expectativa: se llamará con 5 y devolverá 10
-    EXPECT_CALL(mock, DoSomething(5))
-        .Times(1)
-        .WillOnce(::testing::Return(10));
+        EXPECT_TRUE(writer.CreateBusLogConfiguration());
+        EXPECT_TRUE(writer.InitMeasurement());
 
-    // Ejecutamos y verificamos
-    int result = mock.DoSomething(5);
-    EXPECT_EQ(result, 10);
+        const uint64_t measurementStartNs = 100000000ULL;
+        writer.StartMeasurement(measurementStartNs);
+        writer.StopMeasurement(measurementStartNs + 100000000ULL);
+
+        EXPECT_TRUE(writer.FinalizeMeasurement());
+    }
+
+    EXPECT_TRUE(std::filesystem::exists(filePath));
+    EXPECT_GT(std::filesystem::file_size(filePath), 0);
+
+    std::filesystem::remove(filePath);
 }
