@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file isourceinformation.h
- * \brief Interface against a source information (SI) block.
- *
- */
 #pragma once
 #include <cstdint>
 #include <string>
@@ -49,12 +45,31 @@ namespace mdf {
    *
    * The source information (SI) describe the test equipment or its environment.
    */
+
   class ISourceInformation : public IBlock {
   public:
+    /**
+     * @brief Name.
+     * @param name name.
+     * @return virtual void.
+     */
     virtual void Name ( const std::string& name ) = 0; ///< Sets the name.
+    /**
+     * @brief Name.
+     * @return [ [ nodiscard ] ] virtual std::string&.
+     */
     [ [ nodiscard ] ] virtual const std::string& Name () const = 0; ///< Name.
 
+      /**
+       * @brief Path.
+       * @param path path.
+       * @return virtual void.
+       */
       virtual void Path ( const std::string& path ) = 0; ///< Sets the path.
+    /**
+     * @brief Path.
+     * @return [ [ nodiscard ] ] virtual std::string&.
+     */
     [ [ nodiscard ] ] virtual const std::string& Path () const = 0; ///< Path.
 
       /** \brief Sets the descriptive text. */
@@ -62,13 +77,40 @@ namespace mdf {
       /** \brief Return the descriptive text. */
     [ [ nodiscard ] ] virtual std::string Description () const = 0;
 
+      /**
+       * @brief Type.
+       * @param type type.
+       * @return virtual void.
+       */
       virtual void Type ( SourceType type ) = 0; ///< Sets the type of source.
+    /**
+     * @brief Type.
+     * @return [ [ nodiscard ] ] virtual SourceType.
+     */
     [ [ nodiscard ] ] virtual SourceType Type () const = 0; ///< Type of source.
 
+      /**
+       * @brief Bus.
+       * @param type type.
+       * @return virtual void.
+       */
       virtual void Bus ( BusType type ) = 0; ///< Set the type of bus.
+    /**
+     * @brief Bus.
+     * @return [ [ nodiscard ] ] virtual BusType.
+     */
     [ [ nodiscard ] ] virtual BusType Bus () const = 0; ///< Type of bus.
 
+      /**
+       * @brief Flags.
+       * @param flags flags.
+       * @return virtual void.
+       */
       virtual void Flags ( uint8_t flags ) = 0; ///< Set the SiFlag.
+    /**
+     * @brief Flags.
+     * @return [ [ nodiscard ] ] virtual uint8_t.
+     */
     [ [ nodiscard ] ] virtual uint8_t Flags () const = 0; ///< Returns SiFlag.
 
       /** \brief Creates a meta-data (MD) block. */
@@ -79,9 +121,17 @@ namespace mdf {
       /** \brief Sets the source information comment.
        * @param si_comment Source information comment object.
        */
+      /**
+       * @brief SetSiComment.
+       * @param si_comment si_comment.
+       */
       void SetSiComment ( const SiComment& si_comment );
       /** \brief Retrieves the source information comment.
        * @param si_comment Receives the source information comment object.
+       */
+      /**
+       * @brief GetSiComment.
+       * @param si_comment si_comment.
        */
       void GetSiComment ( SiComment& si_comment ) const;
   };

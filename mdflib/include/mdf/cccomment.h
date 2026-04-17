@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file cccomment.h
- * \brief MDF core API header for comment block definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file cccomment.h
- * \brief MDF core API header for comment block definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 #include <string>
@@ -25,19 +13,45 @@
 
 namespace mdf {
 
+  /**
+   * @brief CcComment class definition.
+   */
   class CcComment : public MdComment {
   public:
+    /**
+     * @brief CcComment.
+     */
     CcComment ();
+    /**
+     * @brief CcComment.
+     * @param comment comment.
+     * @return explicit.
+     */
     explicit CcComment ( std::string comment );
 
+    /**
+     * @brief CompuMethod.
+     * @return [ [ nodiscard ] ] HoCompuMethod&.
+     */
     [ [ nodiscard ] ] const HoCompuMethod& CompuMethod () const;
+    /**
+     * @brief CompuMethod.
+     * @return [ [ nodiscard ] ] HoCompuMethod&.
+     */
     [ [ nodiscard ] ] HoCompuMethod& CompuMethod ();
 
+    /**
+     * @brief ToXml.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string ToXml () const override;
+      /**
+       * @brief FromXml.
+       * @param xml_snippet xml_snippet.
+       */
       void FromXml ( const std::string& xml_snippet ) override;
     private:
       HoCompuMethod method_;
   };
 
   }  // namespace mdf
-

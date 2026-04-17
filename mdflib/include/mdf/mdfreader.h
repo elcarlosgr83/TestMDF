@@ -1,14 +1,13 @@
+/**
+ * @file mdfreader.h
+ * @brief MDF header declarations for mdfreader.
+ */
+
 /*
  * Copyright 2021 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file mdfreader.h
- * \brief MDF core API header for reader API definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 #include <cstdio>
@@ -24,6 +23,9 @@
 
 namespace mdf {
 
+  /**
+   * @brief IChannelGroup class definition.
+   */
   class IChannelGroup;
 
   /** \brief Smart pointer to an observer. */
@@ -38,6 +40,11 @@ namespace mdf {
    * @param filename Full path to the file.
    * @return True if this is a MDF file.
    */
+  /**
+   * @brief IsMdfFile.
+   * @param filename filename.
+   * @return [ [ nodiscard ] ] bool.
+   */
   [ [ nodiscard ] ] bool IsMdfFile ( const std::string& filename );
 
     /** \brief Returns true if the stream buffer is an MDF file.
@@ -47,6 +54,11 @@ namespace mdf {
      * @param buffer Reference to the stream buffer.
      * @return True if this is a MDF stream.
      */
+  /**
+   * @brief IsMdfFile.
+   * @param buffer buffer.
+   * @return [ [ nodiscard ] ] bool.
+   */
   [ [ nodiscard ] ] bool IsMdfFile ( std::streambuf& buffer );
 
     /** \brief Create and attach a channel observer.
@@ -55,6 +67,13 @@ namespace mdf {
      * @param channel Channel to observe.
      * @return Smart pointer to the created observer.
      */
+  /**
+   * @brief CreateChannelObserver.
+   * @param data_group data_group.
+   * @param group group.
+   * @param channel channel.
+   * @return [ [ nodiscard ] ] ChannelObserverPtr.
+   */
   [ [ nodiscard ] ] ChannelObserverPtr CreateChannelObserver (
     const IDataGroup& data_group, const IChannelGroup& group,
     const IChannel& channel );
@@ -74,6 +93,12 @@ namespace mdf {
      * @param group Channel group to observe.
      * @param dest Destination list that receives the observer.
      */
+    /**
+     * @brief CreateChannelObserverForChannelGroup.
+     * @param data_group data_group.
+     * @param group group.
+     * @param dest dest.
+     */
     void CreateChannelObserverForChannelGroup ( const IDataGroup& data_group,
     const IChannelGroup& group,
     ChannelObserverList& dest );
@@ -90,6 +115,11 @@ namespace mdf {
      * @param data_group Reference to the data group.
      * @param dest_list The subscriber list which is appended with channel observers.
      */
+    /**
+     * @brief CreateChannelObserverForDataGroup.
+     * @param data_group data_group.
+     * @param dest_list dest_list.
+     */
     void CreateChannelObserverForDataGroup ( const IDataGroup& data_group,
     ChannelObserverList& dest_list );
     /** \class MdfReader mdfreader.h "mdf/mdfreader.h"
@@ -97,6 +127,7 @@ namespace mdf {
      *
      * This is the main interface when reading MDF3 and MDF4 files.
      */
+
     class MdfReader {
     public:
       /** \brief Constructor for readers using an external file.
@@ -108,15 +139,45 @@ namespace mdf {
        *
        * @param filename Full file path to the input file.
        */
+      /**
+       * @brief MdfReader.
+       * @param filename filename.
+       * @return explicit.
+       */
       explicit MdfReader ( std::string filename );
 
+      /**
+       * @brief MdfReader.
+       * @param buffer buffer.
+       * @return explicit.
+       */
       explicit MdfReader ( const std::shared_ptr<std::streambuf>& buffer );
+      /**
+       * @brief ~MdfReader.
+       */
       virtual ~MdfReader (); ///< Destructor that close any open file and destructs.
 
+      /**
+       * @brief MdfReader.
+       */
       MdfReader () = delete;
+      /**
+       * @brief MdfReader.
+       */
       MdfReader ( const MdfReader& ) = delete;
+      /**
+       * @brief MdfReader.
+       */
       MdfReader ( MdfReader&& ) = delete;
+      /**
+       * @brief operator=.
+       * @return MdfReader&.
+       */
       MdfReader& operator= ( const MdfReader& ) = delete;
+      /**
+       * @brief operator=.
+       * @return MdfReader&.
+       */
       MdfReader& operator= ( MdfReader&& ) = delete;
 
       /**
@@ -144,6 +205,10 @@ namespace mdf {
      * is done by checking the ID block.
      * @return True if the file is marked as finalized.
      */
+    /**
+     * @brief IsFinalized.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool IsFinalized () const;
 
       /// Returns a pointer to the MDF file. This file holds references to the MDF
@@ -154,15 +219,28 @@ namespace mdf {
     /** \brief Returns the header (HD) block.
      * @return Pointer to the header block.
      */
+    /**
+     * @brief GetHeader.
+     * @return [ [ nodiscard ] ] IHeader*.
+     */
     [ [ nodiscard ] ] const IHeader* GetHeader () const;
       /** \brief Returns the data group (DG) block.
        * @param order Index of the data group.
        * @return Pointer to the data group.
        */
+    /**
+     * @brief GetDataGroup.
+     * @param order order.
+     * @return [ [ nodiscard ] ] IDataGroup*.
+     */
     [ [ nodiscard ] ] IDataGroup* GetDataGroup ( size_t order ) const;
 
     /** \brief Returns the file name without path.
      * @return Short file name.
+     */
+    /**
+     * @brief ShortName.
+     * @return [ [ nodiscard ] ] std::string.
      */
     [ [ nodiscard ] ] std::string ShortName () const;
 
@@ -172,7 +250,15 @@ namespace mdf {
        * attach a generic C++ stream.
        * @return True if the stream was opened.
        */
+    /**
+     * @brief Open.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool Open ();
+    /**
+     * @brief IsOpen.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool IsOpen () const;
       /** \brief Closes the file stream. */
       void Close ();
@@ -180,13 +266,25 @@ namespace mdf {
       /** \brief Reads the ID and the HD block.
        * @return True if the header read succeeded.
        */
+      /**
+       * @brief ReadHeader.
+       * @return bool.
+       */
       bool ReadHeader ();
       /** \brief Reads measurement metadata without raw data.
        * @return True if the measurement info read succeeded.
        */
+      /**
+       * @brief ReadMeasurementInfo.
+       * @return bool.
+       */
       bool ReadMeasurementInfo ();
       /** \brief Reads all blocks except raw sample data.
        * @return True if the file structure read succeeded.
+       */
+      /**
+       * @brief ReadEverythingButData.
+       * @return bool.
        */
       bool ReadEverythingButData ();
 
@@ -202,6 +300,12 @@ namespace mdf {
        * @param dest_file Full path to the destination file.
        * @return True if the export was successful.
        */
+      /**
+       * @brief ExportAttachmentData.
+       * @param attachment attachment.
+       * @param dest_file dest_file.
+       * @return bool.
+       */
       bool ExportAttachmentData ( const IAttachment& attachment,
       const std::string& dest_file );
 
@@ -214,6 +318,12 @@ namespace mdf {
        * @param attachment Reference to an attachment.
        * @param dest_buffer Reference to an external stream buffer.
        * @return True if the export was successful.
+       */
+      /**
+       * @brief ExportAttachmentData.
+       * @param attachment attachment.
+       * @param dest_buffer dest_buffer.
+       * @return bool.
        */
       bool ExportAttachmentData ( const IAttachment& attachment,
       std::streambuf& dest_buffer );
@@ -229,6 +339,11 @@ namespace mdf {
        * them when they are no more needed.
        * @param data_group Reference to the data group (DG) object.
        * @return True if the read was successful.
+       */
+      /**
+       * @brief ReadData.
+       * @param data_group data_group.
+       * @return bool.
        */
       bool ReadData ( IDataGroup& data_group );
 
@@ -251,6 +366,13 @@ namespace mdf {
        * @param max_sample Last sample index to read.
        * @return True if the read was successful.
        */
+      /**
+       * @brief ReadPartialData.
+       * @param data_group data_group.
+       * @param min_sample min_sample.
+       * @param max_sample max_sample.
+       * @return bool.
+       */
       bool ReadPartialData ( IDataGroup& data_group, size_t min_sample,
       size_t max_sample );
 
@@ -261,6 +383,11 @@ namespace mdf {
        * faster than to read in all data bytes for a data group (DG).
        * @param sr_group Reference to a sample reduction (SR) block.
        * @return True if the read was successful.
+       */
+      /**
+       * @brief ReadSrData.
+       * @param sr_group sr_group.
+       * @return bool.
        */
       bool ReadSrData ( ISampleReduction& sr_group );
 
@@ -305,6 +432,9 @@ namespace mdf {
 
       /** \brief Reads in the
        *
+       */
+      /**
+       * @brief VerifyMdfFile.
        */
       void VerifyMdfFile ();
 

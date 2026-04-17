@@ -1,3 +1,8 @@
+/**
+ * @file mdfwriter.h
+ * @brief MDF header declarations for mdfwriter.
+ */
+
 /*
  * Copyright 2022 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
@@ -31,6 +36,9 @@ namespace mdf {
     MdfConverter = 3, ///< MDF writer for MDF 4 conversion applications.
   };
 
+  /**
+   * @brief enum class WriteState enumeration.
+   */
   enum class WriteState : uint8_t {
     Create,     ///< Only at first measurement
     Init,       ///< Start work thread and start collecting samples
@@ -39,16 +47,43 @@ namespace mdf {
     Finalize    ///< OK to add new DG and CG blocks
   };
 
+  /**
+   * @brief IChannelGroup class definition.
+   */
   class IChannelGroup;
+  /**
+   * @brief IChannel class definition.
+   */
   class IChannel;
+  /**
+   * @brief IChannelConversion class definition.
+   */
   class IChannelConversion;
+  /**
+   * @brief IDataGroup class definition.
+   */
   class IDataGroup;
+  /**
+   * @brief IMostEvent class definition.
+   */
   class IMostEvent;
+  /**
+   * @brief IFlexRayEvent class definition.
+   */
   class IFlexRayEvent;
 
   namespace detail {
+    /**
+     * @brief SampleQueue class definition.
+     */
     class SampleQueue;
+    /**
+     * @brief Writer4SampleQueue class definition.
+     */
     class Writer4SampleQueue;
+    /**
+     * @brief ConverterSampleQueue class definition.
+     */
     class ConverterSampleQueue;
   }
 
@@ -73,7 +108,7 @@ namespace mdf {
    * that handle the queue of samples. The function also write the configuration
    * to the file and closes it.
    *
-   * The user shall know starts adding samples to the queue by first setting
+   * The user shall now start adding samples to the queue by first setting
    * the current channel value to each channel and then call the SaveSample()
    * function for each channel group (CG). Note that no samples are saved to the
    * file yet. The max queue size is set to the pre-trig time, see PreTrigTime().
@@ -92,27 +127,52 @@ namespace mdf {
    * unwritten blocks to the file.
    *
    */
+
   class MdfWriter {
     friend class detail::SampleQueue;
     friend class detail::Writer4SampleQueue;
     friend class detail::ConverterSampleQueue;
   public:
 
+    /**
+     * @brief ~MdfWriter.
+     */
     virtual ~MdfWriter () = default; ///< Default destructor.
 
+    /**
+     * @brief MdfWriter.
+     * @param writer writer.
+     */
     MdfWriter ( const MdfWriter& writer ) = delete;
+    /**
+     * @brief operator=.
+     * @param writer writer.
+     * @return MdfWriter&.
+     */
     MdfWriter& operator= ( const MdfWriter& writer ) = delete;
 
     /** \brief Returns the filename without extension and path (stem). */
     [ [ nodiscard ] ] std::string Name () const;
 
+    /**
+     * @brief TypeOfWriter.
+     * @return [ [ nodiscard ] ] MdfWriterType.
+     */
     [ [ nodiscard ] ] MdfWriterType TypeOfWriter () const {
         return type_of_writer_;
     }
 
+    /**
+     * @brief State.
+     * @param state state.
+     */
     void State ( WriteState state ) {
       write_state_ = state;
       }
+    /**
+     * @brief State.
+     * @return [ [ nodiscard ] ] WriteState.
+     */
     [ [ nodiscard ] ] WriteState State () const {
         return write_state_;
     }
@@ -125,6 +185,11 @@ namespace mdf {
      * @param filename Filename with full path.
      * @return Returns true if the function was successful.
      */
+    /**
+     * @brief Init.
+     * @param filename filename.
+     * @return bool.
+     */
     bool Init ( const std::string& filename );
 
     /** \brief Initialize the writer against a generic stream buffer.
@@ -132,6 +197,11 @@ namespace mdf {
      * Attaches an existing stream buffer for writing MDF output.
      * @param buffer Shared pointer to the target stream buffer.
      * @return `true` if initialization succeeded.
+     */
+    /**
+     * @brief Init.
+     * @param buffer buffer.
+     * @return bool.
      */
     bool Init ( const std::shared_ptr<std::streambuf>& buffer );
 
@@ -146,8 +216,22 @@ namespace mdf {
      * samples the writer holds internally, before the measurement is started.
      * @param pre_trig_time Pre-trig time in seconds.
      */
+    /**
+     * @brief PreTrigTime.
+     * @param pre_trig_time pre_trig_time.
+     */
     void PreTrigTime ( double pre_trig_time );
+    /**
+     * @brief PreTrigTime.
+     * @param s s.
+     * @return [ [ nodiscard ] ] double.
+     */
     [ [ nodiscard ] ] double PreTrigTime () const; ///< Pre-trig time (s).
+    /**
+     * @brief PreTrigTimeNs.
+     * @param ns ns.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t PreTrigTimeNs () const; ///< Pre-trig time (ns).
       /** \brief Returns start time in nano-seconds since 1970. */
     [ [ nodiscard ] ] uint64_t StartTime () const { return start_time_; }
@@ -163,6 +247,11 @@ namespace mdf {
      */
     MdfFile* GetFile () const { return mdf_file_.get (); }
 
+    /**
+     * @brief Header.
+     * @param HD HD.
+     * @return [ [ nodiscard ] ] IHeader*.
+     */
     [ [ nodiscard ] ] IHeader* Header () const; ///< Returns the header block (HD).
 
       /** \brief Creates a bus logger configuration.
@@ -171,32 +260,59 @@ namespace mdf {
        * a typical bus logger setup.
        * @return `true` if the configuration was created successfully.
        */
+      /**
+       * @brief CreateBusLogConfiguration.
+       * @return bool.
+       */
       bool CreateBusLogConfiguration ();
 
       /** \brief Create a new data group (DG) block.
        * @return Pointer to the newly created data group.
        */
+    /**
+     * @brief CreateDataGroup.
+     * @return [ [ nodiscard ] ] IDataGroup*.
+     */
     [ [ nodiscard ] ] IDataGroup* CreateDataGroup ();
       /** \brief Create a new channel group (CG) block.
        * @param parent Parent data group.
        * @return Pointer to the new channel group.
        */
+    /**
+     * @brief CreateChannelGroup.
+     * @param parent parent.
+     * @return [ [ nodiscard ] ] static IChannelGroup*.
+     */
     [ [ nodiscard ] ] static IChannelGroup* CreateChannelGroup (
       IDataGroup* parent );
       /** \brief Creates a new channel (CN) block.
        * @param parent Parent channel group.
        * @return Pointer to the new channel.
        */
+    /**
+     * @brief CreateChannel.
+     * @param parent parent.
+     * @return [ [ nodiscard ] ] static IChannel*.
+     */
     [ [ nodiscard ] ] static IChannel* CreateChannel ( IChannelGroup* parent );
       /** \brief Create a new channel conversion (CC) block.
        * @param parent Parent channel.
        * @return Pointer to the newly created conversion.
+       */
+      /**
+       * @brief CreateChannelConversion.
+       * @param parent parent.
+       * @return virtual IChannelConversion*.
        */
       virtual IChannelConversion* CreateChannelConversion ( IChannel* parent ) = 0;
 
       /** \brief Initialize the sample queue and write any unwritten block to the
        * file.
        * @return `true` if the measurement initialization succeeded.
+       */
+      /**
+       * @brief InitMeasurement.
+       * @return virtual bool.
        */
       virtual bool InitMeasurement ();
 
@@ -214,12 +330,25 @@ namespace mdf {
        * @param group Channel group that owns the sample values.
        * @param time Absolute timestamp in nanoseconds since 1970.
        */
+      /**
+       * @brief SaveSample.
+       * @param group group.
+       * @param time time.
+       * @return virtual void.
+       */
       virtual void SaveSample ( const IChannelGroup& group, uint64_t time ) = 0;
 
       /** \brief Saves a sample record for a channel group inside a data group.
        * @param data_group Parent data group.
        * @param channel_group Channel group that owns the sample values.
        * @param time Absolute timestamp in nanoseconds since 1970.
+       */
+      /**
+       * @brief SaveSample.
+       * @param data_group data_group.
+       * @param channel_group channel_group.
+       * @param time time.
+       * @return virtual void.
        */
       virtual void SaveSample ( const IDataGroup& data_group,
       const IChannelGroup& channel_group,
@@ -236,6 +365,13 @@ namespace mdf {
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The CAN message to store.
        */
+      /**
+       * @brief SaveCanMessage.
+       * @param group group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
+       */
       virtual void SaveCanMessage ( const IChannelGroup& group, uint64_t time,
       const CanMessage& msg ) = 0;
       /** \brief Saves a CAN message into a bus logger channel group.
@@ -245,6 +381,14 @@ namespace mdf {
        * @param channel_group Channel group that owns the message.
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The CAN message to store.
+       */
+      /**
+       * @brief SaveCanMessage.
+       * @param data_group data_group.
+       * @param channel_group channel_group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
        */
       virtual void SaveCanMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group, uint64_t time,
@@ -260,6 +404,13 @@ namespace mdf {
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The LIN message to store.
        */
+      /**
+       * @brief SaveLinMessage.
+       * @param group group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
+       */
       virtual void SaveLinMessage ( const IChannelGroup& group, uint64_t time,
       const LinMessage& msg ) = 0;
       /** \brief Saves a LIN message into a bus logger channel group.
@@ -269,6 +420,14 @@ namespace mdf {
        * @param channel_group Channel group that owns the message.
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The LIN message to store.
+       */
+      /**
+       * @brief SaveLinMessage.
+       * @param data_group data_group.
+       * @param channel_group channel_group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
        */
       virtual void SaveLinMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group, uint64_t time,
@@ -285,6 +444,13 @@ namespace mdf {
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The Ethernet message to store.
        */
+      /**
+       * @brief SaveEthMessage.
+       * @param group group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
+       */
       virtual void SaveEthMessage ( const IChannelGroup& group, uint64_t time,
       const EthMessage& msg ) = 0;
 
@@ -295,6 +461,14 @@ namespace mdf {
        * @param channel_group Channel group that owns the message.
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The Ethernet message to store.
+       */
+      /**
+       * @brief SaveEthMessage.
+       * @param data_group data_group.
+       * @param channel_group channel_group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
        */
       virtual void SaveEthMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group, uint64_t time,
@@ -307,6 +481,14 @@ namespace mdf {
        * @param channel_group Channel group that owns the message.
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The MOST event to store.
+       */
+      /**
+       * @brief SaveMostMessage.
+       * @param data_group data_group.
+       * @param channel_group channel_group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
        */
       virtual void SaveMostMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group,
@@ -322,6 +504,14 @@ namespace mdf {
        * @param time Absolute time nano-seconds since 1970.
        * @param msg The FlexRay event to store.
        */
+      /**
+       * @brief SaveFlexRayMessage.
+       * @param data_group data_group.
+       * @param channel_group channel_group.
+       * @param time time.
+       * @param msg msg.
+       * @return virtual void.
+       */
       virtual void SaveFlexRayMessage ( const IDataGroup& data_group,
       const IChannelGroup& channel_group,
       uint64_t time,
@@ -329,24 +519,48 @@ namespace mdf {
       /** \brief Starts the measurement.
        * @param start_time Start timestamp in nanoseconds since 1970.
        */
+      /**
+       * @brief StartMeasurement.
+       * @param start_time start_time.
+       * @return virtual void.
+       */
       virtual void StartMeasurement ( uint64_t start_time );
 
       /** \brief Starts the measurement using a timestamp object.
        * @param start_time Timestamp object.
        */
+      /**
+       * @brief StartMeasurement.
+       * @param start_time start_time.
+       * @return virtual void.
+       */
       virtual void StartMeasurement ( ITimestamp &start_time );
       /** \brief Stops the measurement.
        * @param stop_time Stop timestamp in nanoseconds since 1970.
        */
+      /**
+       * @brief StopMeasurement.
+       * @param stop_time stop_time.
+       * @return virtual void.
+       */
       virtual void StopMeasurement ( uint64_t stop_time );
       /** \brief Stops the measurement using a timestamp object.
        * @param stop_time Timestamp object.
+       */
+      /**
+       * @brief StopMeasurement.
+       * @param stop_time stop_time.
+       * @return virtual void.
        */
       virtual void StopMeasurement ( ITimestamp &stop_time );
 
       /** \brief Stop the sample queue and write all unwritten blocks to
        * the file.
        * @return `true` if the finalization succeeded.
+       */
+      /**
+       * @brief FinalizeMeasurement.
+       * @return virtual bool.
        */
       virtual bool FinalizeMeasurement ();
 
@@ -357,6 +571,10 @@ namespace mdf {
        * and channels are defined in an ASAM standard. The naming is depending on
        * the basic low level protocol.
        * @param type Type of basic protocols on the bus.
+       */
+      /**
+       * @brief BusType.
+       * @param type type.
        */
       void BusType ( uint16_t type ) {
         bus_type_ = type;
@@ -370,6 +588,10 @@ namespace mdf {
 
     /** \brief Returns the bus type as text.
      * @return Human-readable bus type name.
+     */
+    /**
+     * @brief BusTypeAsString.
+     * @return [ [ nodiscard ] ] std::string.
      */
     [ [ nodiscard ] ] std::string BusTypeAsString () const;
 
@@ -391,6 +613,10 @@ namespace mdf {
        * traffic.
        * @param type Type of storage.
        */
+    /**
+     * @brief StorageType.
+     * @param type type.
+     */
     void StorageType ( MdfStorageType type ) { storage_type_ = type; }
 
     /** \brief Returns the type of data storage the MDF file is associated with.
@@ -407,6 +633,10 @@ namespace mdf {
      * 64 bytes.
      * @param max_length Maximum number of payload data bytes.
      */
+    /**
+     * @brief MaxLength.
+     * @param max_length max_length.
+     */
     void MaxLength ( uint32_t max_length ) {max_length_ = max_length;};
 
     /** \brief Returns maximum number of payload data bytes. */
@@ -418,6 +648,10 @@ namespace mdf {
     /** \brief Returns true if the data block is compressed. */
     [ [ nodiscard ] ] bool CompressData () const { return compress_data_;}
 
+    /**
+     * @brief SavePeriodic.
+     * @param periodic periodic.
+     */
     void SavePeriodic ( bool periodic ) { periodic_save_ = periodic; }
     [ [ nodiscard ] ] bool IsSavePeriodic () const { return periodic_save_; }
 
@@ -433,9 +667,17 @@ namespace mdf {
      * property can be set to true.
      * @param mandatory_only If set true, only mandatory members are created.
      */
+    /**
+     * @brief MandatoryMembersOnly.
+     * @param mandatory_only mandatory_only.
+     */
     void MandatoryMembersOnly ( bool mandatory_only ) {
       mandatory_members_only_ = mandatory_only;
     }
+    /**
+     * @brief MandatoryMembersOnly.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool MandatoryMembersOnly () const {
         return mandatory_members_only_;
     }
@@ -460,23 +702,63 @@ namespace mdf {
     std::atomic<WriteState> write_state_ =
     WriteState::Create;  ///< Keeps track of the worker thread state.
 
+    /**
+     * @brief MdfWriter.
+     */
     MdfWriter () = default; ///< Default constructor.
 
+    /**
+     * @brief CreateMdfFile.
+     * @return virtual void.
+     */
     virtual void CreateMdfFile () = 0; ///< Creates an MDF file
+
+    /**
+     * @brief PrepareForWriting.
+     * @return virtual bool.
+     */
     virtual bool PrepareForWriting () = 0; ///< Prepare for writing.
 
+    /**
+     * @brief WriteSignalData.
+     * @param file file.
+     * @return virtual bool.
+     */
     virtual bool WriteSignalData ( std::streambuf& file ); ///< Write an SD block.
 
     /** \brief Set the last file position. */
 
 
     void Open ( std::ios_base::openmode mode );
+    /**
+     * @brief IsOpen.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool IsOpen () const;
+      /**
+       * @brief Close.
+       */
       void Close ();
 
+      /**
+       * @brief InitWriteCache.
+       * @return virtual void.
+       */
       virtual void InitWriteCache () = 0;
+      /**
+       * @brief ExitWriteCache.
+       * @return virtual void.
+       */
       virtual void ExitWriteCache () = 0;
+      /**
+       * @brief RecalculateTimeMaster.
+       * @return virtual void.
+       */
       virtual void RecalculateTimeMaster () = 0;
+      /**
+       * @brief NotifySample.
+       * @return virtual void.
+       */
       virtual void NotifySample () = 0;
 
       //void SetDataPosition();
@@ -489,6 +771,10 @@ namespace mdf {
       uint32_t max_length_ = 8; ///< Max data byte storage
       bool mandatory_members_only_ = false;
 
+    /**
+     * @brief IsFirstMeasurement.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool IsFirstMeasurement () const;
 
 

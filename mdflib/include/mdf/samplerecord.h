@@ -2,9 +2,6 @@
  * Copyright 2021 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
  */
-/** \file samplerecord.h
- * Structure that is used when saving samples to a file.
- */
 #pragma once
 #include <cstdint>
 #include <cstddef>
@@ -17,6 +14,7 @@ namespace mdf {
    * The sample record structure is used when writing samples to an MDF file. The
    * struct has a timestamp, record ID and the raw record bytes.
    */
+
   struct SampleRecord {
     uint64_t timestamp = 0;  ///< Nanosecond since midnight 1970-01-01 UTC.
     uint64_t record_id = 0;  ///< Unique record ID within the data group.
@@ -31,13 +29,28 @@ namespace mdf {
         return record_buffer.size () + vlsd_buffer.size () + 4;
     }
 
+    /**
+     * @brief Clear.
+     */
     void Clear () {
       timestamp = 0;
       record_id = 0;
+      /**
+       * @brief record_buffer.clear.
+       */
       record_buffer.clear ();
+      /**
+       * @brief record_buffer.shrink_to_fit.
+       */
       record_buffer.shrink_to_fit ();
       vlsd_data = false;
+      /**
+       * @brief vlsd_buffer.clear.
+       */
       vlsd_buffer.clear ();
+      /**
+       * @brief vlsd_buffer.shrink_to_fit.
+       */
       vlsd_buffer.shrink_to_fit ();
       }
 

@@ -14,6 +14,7 @@ namespace mdf {
   /**
    * \brief Interface for timestamp handling in MDF files.
    */
+
   class ITimestamp {
   public:
     /**
@@ -46,6 +47,7 @@ namespace mdf {
   /**
    * \brief Class representing a UTC timestamp.
    */
+
   class UtcTimestamp : public ITimestamp {
   public:
 
@@ -56,35 +58,79 @@ namespace mdf {
      *
      * @param utc_timestamp The UTC timestamp in nanoseconds.
      */
+    /**
+     * @brief UtcTimestamp.
+     * @param utc_timestamp utc_timestamp.
+     * @return explicit.
+     */
     explicit UtcTimestamp ( uint64_t utc_timestamp );
 
     /** \brief Constructor from an ISO date-time string.
      *
      * @param iso_date_time ISO date-time string.
      */
+    /**
+     * @brief UtcTimestamp.
+     * @param iso_date_time iso_date_time.
+     * @return explicit.
+     */
     explicit UtcTimestamp ( const std::string &iso_date_time );
+    /**
+     * @brief GetTimeNs.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t GetTimeNs () const override;
+    /**
+     * @brief GetTimezoneMin.
+     * @return [ [ nodiscard ] ] int16_t.
+     */
     [ [ nodiscard ] ] int16_t GetTimezoneMin () const override;
+    /**
+     * @brief GetDstMin.
+     * @return [ [ nodiscard ] ] int16_t.
+     */
     [ [ nodiscard ] ] int16_t GetDstMin () const override;
+    /**
+     * @brief GetUtcTimeNs.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t GetUtcTimeNs () const override;
 
     /** \brief Returns the timestamp as an ISO date string.
      * @return ISO date string (YYYY-MM-DD).
+     */
+    /**
+     * @brief ToIsoDate.
+     * @return [ [ nodiscard ] ] std::string.
      */
     [ [ nodiscard ] ] std::string ToIsoDate () const;
     /** \brief Returns the timestamp as an ISO time string.
      * @param include_ms Include milliseconds when true.
      * @return ISO time string.
      */
+    /**
+     * @brief ToIsoTime.
+     * @param include_ms include_ms.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string ToIsoTime ( bool include_ms ) const;
     /** \brief Returns the timestamp as an ISO date and time string.
      * @param include_ms Include milliseconds when true.
      * @return ISO date-time string.
      */
+    /**
+     * @brief ToIsoDateTime.
+     * @param include_ms include_ms.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string ToIsoDateTime ( bool include_ms ) const;
 
       /** \brief Sets the timestamp from an ISO date-time string.
        * @param date_time ISO date-time string.
+       */
+      /**
+       * @brief FromIsoDateTime.
+       * @param date_time date_time.
        */
       void FromIsoDateTime ( const std::string& date_time );
 
@@ -95,6 +141,7 @@ namespace mdf {
   /**
    * \brief Class representing a local timestamp, with timezone and DST offset.
    */
+
   class LocalTimestamp : public ITimestamp {
   public:
 
@@ -104,9 +151,25 @@ namespace mdf {
      * and DST offset.
      */
     explicit LocalTimestamp ( uint64_t local_timestamp );
+    /**
+     * @brief GetTimeNs.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t GetTimeNs () const override;
+    /**
+     * @brief GetTimezoneMin.
+     * @return [ [ nodiscard ] ] int16_t.
+     */
     [ [ nodiscard ] ] int16_t GetTimezoneMin () const override;
+    /**
+     * @brief GetDstMin.
+     * @return [ [ nodiscard ] ] int16_t.
+     */
     [ [ nodiscard ] ] int16_t GetDstMin () const override;
+    /**
+     * @brief GetUtcTimeNs.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t GetUtcTimeNs () const override;
 
 
@@ -119,6 +182,7 @@ namespace mdf {
   /**
    * \brief Class representing a timestamp with timezone information.
    */
+
   class TimezoneTimestamp : public ITimestamp {
   public:
     /**
@@ -130,9 +194,25 @@ namespace mdf {
      */
     TimezoneTimestamp ( uint64_t utc_timestamp, int16_t timezone_offset_min,
     int16_t dst_offset_min );
+    /**
+     * @brief GetTimeNs.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t GetTimeNs () const override;
+    /**
+     * @brief GetTimezoneMin.
+     * @return [ [ nodiscard ] ] int16_t.
+     */
     [ [ nodiscard ] ] int16_t GetTimezoneMin () const override;
+    /**
+     * @brief GetDstMin.
+     * @return [ [ nodiscard ] ] int16_t.
+     */
     [ [ nodiscard ] ] int16_t GetDstMin () const override;
+    /**
+     * @brief GetUtcTimeNs.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t GetUtcTimeNs () const override;
 
     private:

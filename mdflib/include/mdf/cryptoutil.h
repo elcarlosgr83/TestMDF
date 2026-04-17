@@ -3,12 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file cryptoutil.h
- * \brief Checksum and other encryption routines.
- *
- * The file is a wrapper around the OpenSSL library and simplifies the usage of
- * encryption and hash checksums as MD5.
- */
 
 #pragma once
 #include <cstdint>
@@ -22,6 +16,11 @@ namespace mdf {
    * @param [in] file Full path to the file name.
    * @return A 32 (hex) character string on success else an empty string.
    */
+  /**
+   * @brief CreateMd5FileString.
+   * @param file file.
+   * @return std::string.
+   */
   std::string CreateMd5FileString ( const std::string& file );
 
   /** \brief Create a file hash byte array according to MD5
@@ -31,6 +30,12 @@ namespace mdf {
    * @param [out] md5 Returns a byte array. The vector size is set by the
    * function.
    * @return True on success.
+   */
+  /**
+   * @brief CreateMd5FileChecksum.
+   * @param file file.
+   * @param md5 md5.
+   * @return bool.
    */
   bool CreateMd5FileChecksum ( const std::string& file,
                                std::vector<uint8_t>& md5 );

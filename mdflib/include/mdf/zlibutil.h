@@ -1,9 +1,11 @@
+/**
+ * @file zlibutil.h
+ * @brief MDF header declarations for zlibutil.
+ */
+
 /*
  * Copyright 2022 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
- */
-/** \file zlibutil.h
- * \brief Various ZLIB compress functions.
  */
 
 #pragma once
@@ -56,17 +58,52 @@ namespace mdf {
   bool Deflate ( const std::string& filename,
                  ByteArray& buf_out ); ///< Compress array to array.
 
+  /**
+   * @brief Inflate.
+   * @param in in.
+   * @param out out.
+   * @return bool.
+   */
   bool Inflate ( std::streambuf& in,
                  std::streambuf& out ); ///< Decompress file to file.
+  /**
+   * @brief Inflate.
+   * @param in in.
+   * @param out out.
+   * @param nof_bytes nof_bytes.
+   * @return bool.
+   */
   bool Inflate ( std::streambuf& in, std::streambuf& out,
                  uint64_t nof_bytes ); ///< Decompress part of file to file
+  /**
+   * @brief Inflate.
+   * @param in in.
+   * @param out out.
+   * @return bool.
+   */
   bool Inflate ( const ByteArray& in,
                  ByteArray& out ); ///< Decompress array to array.
+  /**
+   * @brief Inflate.
+   * @param in in.
+   * @param out out.
+   * @return bool.
+   */
   bool Inflate ( const ByteArray& in,
                  std::streambuf& out ); ///< Decompress array to file.
 
+  /**
+   * @brief Transpose.
+   * @param data data.
+   * @param record_size record_size.
+   */
   void Transpose ( ByteArray& data,
                    size_t record_size ); ///< Transpose of an array.
+  /**
+   * @brief InvTranspose.
+   * @param data data.
+   * @param record_size record_size.
+   */
   void InvTranspose ( ByteArray& data,
                       size_t record_size ); ///< Invert transpose of an array.
 

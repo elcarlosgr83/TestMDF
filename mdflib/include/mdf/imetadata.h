@@ -3,12 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file imetadata.h
- *
- * Support class for storing metadata within an MDF block. Many MDF4 blocks
- * store their properties in an embedded XML snippet that includes only the
- * root tag and its content.
- */
 #pragma once
 #include <string>
 #include <vector>
@@ -24,6 +18,7 @@ namespace mdf {
    * Interface class against an meta data block in a MDF4 file. In reality is the
    * block just an interface against an XML snippets
    */
+
   class IMetaData : public IBlock {
   public:
     /** \brief Initiate the MD block.
@@ -33,12 +28,21 @@ namespace mdf {
      * owner block.
      * @param root_name Root tag name of the XML snippet.
      */
+    /**
+     * @brief InitMd.
+     * @param root_name root_name.
+     */
     void InitMd ( const std::string& root_name );
 
     /** \brief Sets a string property in the block.
      *
      * @param tag Tag name.
      * @param value Tag value.
+     */
+    /**
+     * @brief StringProperty.
+     * @param tag tag.
+     * @param value value.
      */
     void StringProperty ( const std::string& tag, const std::string& value );
 
@@ -47,12 +51,22 @@ namespace mdf {
      * @param tag Tag name.
      * @return  Tag value.
      */
+    /**
+     * @brief StringProperty.
+     * @param tag tag.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string StringProperty ( const std::string& tag ) const;
 
       /** \brief Sets a float property in the block.
        *
        * @param tag Tag name.
        * @param value Tag value.
+       */
+      /**
+       * @brief FloatProperty.
+       * @param tag tag.
+       * @param value value.
        */
       void FloatProperty ( const std::string& tag, double value );
 
@@ -61,11 +75,20 @@ namespace mdf {
        * @param tag Tag name.
        * @return  Tag value.
        */
+    /**
+     * @brief FloatProperty.
+     * @param tag tag.
+     * @return [ [ nodiscard ] ] double.
+     */
     [ [ nodiscard ] ] double FloatProperty ( const std::string& tag ) const;
 
       /** \brief Sets a common property.
        *
        * @param e_tag Property to set.
+       */
+      /**
+       * @brief CommonProperty.
+       * @param e_tag e_tag.
        */
       void CommonProperty ( const ETag& e_tag );
 
@@ -74,11 +97,20 @@ namespace mdf {
        * @param name Property name.
        * @return Common property.
        */
+    /**
+     * @brief CommonProperty.
+     * @param name name.
+     * @return [ [ nodiscard ] ] ETag.
+     */
     [ [ nodiscard ] ] ETag CommonProperty ( const std::string& name ) const;
 
       /** \brief Sets a number of common properties.
        *
        * @param tag_list List of common properties.
+       */
+      /**
+       * @brief CommonProperties.
+       * @param tag_list tag_list.
        */
       void CommonProperties ( const std::vector<ETag>& tag_list );
 
@@ -86,17 +118,30 @@ namespace mdf {
        *
        * @return All common properties.
        */
+    /**
+     * @brief CommonProperties.
+     * @return [ [ nodiscard ] ] std::vector<ETag>.
+     */
     [ [ nodiscard ] ] std::vector<ETag> CommonProperties () const;
 
       /** \brief Returns all properties without children
        *
        * @return All properties.
        */
+    /**
+     * @brief Properties.
+     * @return [ [ nodiscard ] ] std::vector<ETag>.
+     */
     [ [ nodiscard ] ] std::vector<ETag> Properties () const;
 
       /** \brief Stores the XML as a string..
        *
        * @param text The XML string.
+       */
+      /**
+       * @brief XmlSnippet.
+       * @param text text.
+       * @return virtual void.
        */
       virtual void XmlSnippet ( const std::string& text ) = 0;
 
@@ -104,6 +149,10 @@ namespace mdf {
        *
        * @return The XML as a string.
        */
+    /**
+     * @brief XmlSnippet.
+     * @return [ [ nodiscard ] ] virtual std::string&.
+     */
     [ [ nodiscard ] ] virtual const std::string& XmlSnippet () const = 0;
   };
 

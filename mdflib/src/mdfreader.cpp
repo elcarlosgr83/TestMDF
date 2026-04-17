@@ -1,3 +1,10 @@
+/**
+ * @file mdfreader.cpp
+ * @brief Core MDF reader implementation and helper factories.
+ *
+ * This file implements the `mdf::MdfReader` class and supporting helper
+ * functions for file detection and channel observer creation.
+ */
 /*
  * Copyright 2021 Ingemar Hedvall
  * SPDX-License-Identifier: MIT

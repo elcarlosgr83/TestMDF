@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file flexrayconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file flexrayconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -23,11 +11,26 @@
 
 namespace mdf {
 
+  /**
+   * @brief FlexRayConfigAdapter class definition.
+   */
   class FlexRayConfigAdapter : public IConfigAdapter {
   public:
+    /**
+     * @brief FlexRayConfigAdapter.
+     */
     FlexRayConfigAdapter () = delete;
+    /**
+     * @brief FlexRayConfigAdapter.
+     * @param writer writer.
+     * @return explicit.
+     */
     explicit FlexRayConfigAdapter ( const MdfWriter& writer );
 
+    /**
+     * @brief CreateConfig.
+     * @param dg_block dg_block.
+     */
     void CreateConfig ( IDataGroup& dg_block ) override;
 
   protected:
@@ -67,6 +70,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateFlxFrame.
+     * @param data_group data_group.
+     */
     void CreateFlxFrame ( IDataGroup& data_group ) const;
 
     /** \brief Creates the FLX_Pdu channel group.
@@ -100,6 +107,10 @@ namespace mdf {
     * <tr><td>20-27</td><td>Offset to VLSD/SD (64-bit). Must be last</td></tr>
     * </table>
     * @param data_group Reference to the data group.
+     */
+    /**
+     * @brief CreateFlxPdu.
+     * @param data_group data_group.
      */
     void CreateFlxPdu ( IDataGroup& data_group ) const;
 
@@ -136,6 +147,10 @@ namespace mdf {
     * <tr><td>24-33</td><td>Offset to VLSD/SD (64-bit). Must be last</td></tr>
     * </table>
     * @param data_group Reference to the data group.
+     */
+    /**
+     * @brief CreateFlxFrameHeader.
+     * @param data_group data_group.
      */
     void CreateFlxFrameHeader ( IDataGroup& data_group ) const;
 
@@ -174,6 +189,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
        */
+    /**
+     * @brief CreateFlxNullFrame.
+     * @param data_group data_group.
+     */
     void CreateFlxNullFrame ( IDataGroup& data_group ) const;
 
     /** \brief Creates the FLX_ErrorFrame channel group.
@@ -215,6 +234,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateFlxErrorFrame.
+     * @param data_group data_group.
+     */
     void CreateFlxErrorFrame ( IDataGroup& data_group ) const;
 
     /** \brief Creates the FLX_Symbol channel group.
@@ -240,36 +263,103 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateFlxSymbol.
+     * @param data_group data_group.
+     */
     void CreateFlxSymbol ( IDataGroup& data_group ) const;
   private:
+    /**
+     * @brief CreateFrameChannel.
+     * @param data_group data_group.
+     */
     void CreateFrameChannel ( IChannelGroup& data_group ) const;
+    /**
+     * @brief CreatePduChannel.
+     * @param data_group data_group.
+     */
     void CreatePduChannel ( IChannelGroup& data_group ) const;
+    /**
+     * @brief CreateFrameHeaderChannel.
+     * @param data_group data_group.
+     */
     void CreateFrameHeaderChannel ( IChannelGroup& data_group ) const;
+    /**
+     * @brief CreateNullFrameChannel.
+     * @param data_group data_group.
+     */
     void CreateNullFrameChannel ( IChannelGroup& data_group ) const;
+    /**
+     * @brief CreateErrorFrameChannel.
+     * @param data_group data_group.
+     */
     void CreateErrorFrameChannel ( IChannelGroup& data_group ) const;
+    /**
+     * @brief CreateSymbolChannel.
+     * @param data_group data_group.
+     */
     void CreateSymbolChannel ( IChannelGroup& data_group ) const;
 
+    /**
+     * @brief CreateFlxChannelChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     */
     void CreateFlxChannelChannel ( IChannel& parent_channel,
                                    uint32_t byte_offset,
                                    uint16_t bit_offset ) const;
+    /**
+     * @brief CreateFlxChannelMaskChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     */
     void CreateFlxChannelMaskChannel ( IChannel& parent_channel,
                                        uint32_t byte_offset,
                                        uint16_t bit_offset ) const;
+    /**
+     * @brief CreateSymbolTypeChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     */
     void CreateSymbolTypeChannel ( IChannel& parent_channel,
                                    uint32_t byte_offset,
                                    uint16_t bit_offset ) const;
+    /**
+     * @brief CreateDirectionChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     */
     void CreateDirectionChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset,
                                   uint16_t bit_offset ) const;
+    /**
+     * @brief CreateNullFrameChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     */
     void CreateNullFrameChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset,
                                   uint16_t bit_offset ) const;
+    /**
+     * @brief CreateDataBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateDataBytesChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset ) const;
+    /**
+     * @brief CreateFillDataBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateFillDataBytesChannel ( IChannel& parent_channel,
                                       uint32_t byte_offset ) const;
   };
 
 
 }  // namespace mdf
-

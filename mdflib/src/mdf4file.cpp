@@ -1,3 +1,9 @@
+/**
+ * @file mdf4file.cpp
+ * @brief Implementation of the MDF4 file container and block reading logic.
+ *
+ * Implements the concrete MDF4 file operations used by the core MDF reader.
+ */
 /*
  * Copyright 2021 Ingemar Hedvall
  * SPDX-License-Identifier: MIT

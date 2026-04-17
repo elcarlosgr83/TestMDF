@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file mostconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file mostconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -23,11 +11,26 @@
 
 namespace mdf {
 
+  /**
+   * @brief MostConfigAdapter class definition.
+   */
   class MostConfigAdapter : public IConfigAdapter {
   public:
+    /**
+     * @brief MostConfigAdapter.
+     */
     MostConfigAdapter () = delete;
+    /**
+     * @brief MostConfigAdapter.
+     * @param writer writer.
+     * @return explicit.
+     */
     explicit MostConfigAdapter ( const MdfWriter& writer );
 
+    /**
+     * @brief CreateConfig.
+     * @param dg_block dg_block.
+     */
     void CreateConfig ( IDataGroup& dg_block ) override;
 
   protected:
@@ -68,6 +71,10 @@ namespace mdf {
      * </table>
      * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateMostMessage.
+     * @param data_group data_group.
+     */
     void CreateMostMessage ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_EthernetPacket channel group.
@@ -102,6 +109,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateMostEthernetPacket.
+     * @param data_group data_group.
+     */
     void CreateMostEthernetPacket ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_Packet channel group.
@@ -134,6 +145,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateMostPacket.
+     * @param data_group data_group.
+     */
     void CreateMostPacket ( IDataGroup& data_group ) const ;
 
     /** \brief Creates the MOST_SignalState channel group.
@@ -151,6 +166,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
       */
+    /**
+     * @brief CreateMostSignalState.
+     * @param data_group data_group.
+     */
     void CreateMostSignalState ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_MaxPosInfo channel group.
@@ -168,6 +187,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateMostMaxPosInfo.
+     * @param data_group data_group.
+     */
     void CreateMostMaxPosInfo ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_BoundDesc channel group.
@@ -184,6 +207,10 @@ namespace mdf {
     * <tr><td>9-10</td><td>SBC [bytes] (16-bits) </td></tr>
     * </table>
     * @param data_group Reference to the data group.
+     */
+    /**
+     * @brief CreateMostBoundDesc.
+     * @param data_group data_group.
      */
     void CreateMostBoundDesc ( IDataGroup& data_group ) const ;
 
@@ -205,6 +232,10 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateMostAllocTable.
+     * @param data_group data_group.
+     */
     void CreateMostAllocTable ( IDataGroup& data_group ) const ;
 
     /** \brief Creates the MOST_SysLockState channel group.
@@ -221,6 +252,10 @@ namespace mdf {
     * <tr><td>9</td><td>SysLockState (enumerate)</td></tr>
     * </table>
     * @param data_group Reference to the data group.
+     */
+    /**
+     * @brief CreateMostSysLockState.
+     * @param data_group data_group.
      */
     void CreateMostSysLockState ( IDataGroup& data_group ) const;
 
@@ -239,71 +274,242 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
+    /**
+     * @brief CreateMostShutdownFlag.
+     * @param data_group data_group.
+     */
     void CreateMostShutdownFlag ( IDataGroup& data_group ) const;
 
   private:
+    /**
+     * @brief CreateEthernetPacketChannel.
+     * @param channel_group channel_group.
+     */
     void CreateEthernetPacketChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreatePacketChannel.
+     * @param channel_group channel_group.
+     */
     void CreatePacketChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateMessageChannel.
+     * @param channel_group channel_group.
+     */
     void CreateMessageChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateSignalStateChannel.
+     * @param channel_group channel_group.
+     */
     void CreateSignalStateChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateMaxPosInfoChannel.
+     * @param channel_group channel_group.
+     */
     void CreateMaxPosInfoChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateBoundDescChannel.
+     * @param channel_group channel_group.
+     */
     void CreateBoundDescChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateAllocTableChannel.
+     * @param channel_group channel_group.
+     */
     void CreateAllocTableChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateSysLockStateChannel.
+     * @param channel_group channel_group.
+     */
     void CreateSysLockStateChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateShutdownFlagChannel.
+     * @param channel_group channel_group.
+     */
     void CreateShutdownFlagChannel ( IChannelGroup& channel_group ) const;
+    /**
+     * @brief CreateMandatoryMembers.
+     * @param parent_frame parent_frame.
+     */
     void CreateMandatoryMembers ( IChannel& parent_frame ) const;
 
+    /**
+     * @brief CreateSpeedChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateSpeedChannel ( IChannel& parent_channel,
                               uint32_t byte_offset ) const;
+    /**
+     * @brief CreateStateChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateStateChannel ( IChannel& parent_channel,
                               uint32_t byte_offset ) const;
+    /**
+     * @brief CreateDeviceCountChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateDeviceCountChannel ( IChannel& parent_channel,
                                     uint32_t byte_offset ) const;
+    /**
+     * @brief CreateSbcChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateSbcChannel ( IChannel& parent_channel,
                             uint32_t byte_offset ) const;
+    /**
+     * @brief CreateFreeBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateFreeBytesChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset ) const;
+    /**
+     * @brief CreateTableLayoutChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateTableLayoutChannel ( IChannel& parent_channel,
                                     uint32_t byte_offset ) const;
+    /**
+     * @brief CreateTableLengthChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateTableLengthChannel ( IChannel& parent_channel,
                                     uint32_t byte_offset ) const;
+    /**
+     * @brief CreateTableDataChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateTableDataChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset ) const;
+    /**
+     * @brief CreateLockStateChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateLockStateChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset ) const;
+    /**
+     * @brief CreateShutdownChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateShutdownChannel ( IChannel& parent_channel,
                                  uint32_t byte_offset ) const;
+    /**
+     * @brief CreateTransferTypeChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateTransferTypeChannel ( IChannel& parent_channel,
                                      uint32_t byte_offset ) const;
+    /**
+     * @brief CreateDirectionChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateDirectionChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset ) const;
+    /**
+     * @brief CreateSourceChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param nof_bits nof_bits.
+     */
     void CreateSourceChannel ( IChannel& parent_channel,
                                uint32_t byte_offset, uint32_t nof_bits ) const;
+    /**
+     * @brief CreateDestinationChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param nof_bits nof_bits.
+     */
     void CreateDestinationChannel ( IChannel& parent_channel,
                                     uint32_t byte_offset, uint32_t nof_bits ) const;
+    /**
+     * @brief CreateSpecifiedBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateSpecifiedBytesChannel ( IChannel& parent_channel,
                                        uint32_t byte_offset ) const;
+    /**
+     * @brief CreateReceivedBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateReceivedBytesChannel ( IChannel& parent_channel,
                                       uint32_t byte_offset ) const;
+    /**
+     * @brief CreateDataLengthChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateDataLengthChannel ( IChannel& parent_channel,
                                    uint32_t byte_offset ) const;
+    /**
+     * @brief CreateDataBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateDataBytesChannel ( IChannel& parent_channel,
                                   uint32_t byte_offset ) const;
+    /**
+     * @brief CreateTxFailedChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateTxFailedChannel ( IChannel& parent_channel,
                                  uint32_t byte_offset ) const;
+    /**
+     * @brief CreateCrcChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param nof_bits nof_bits.
+     */
     void CreateCrcChannel ( IChannel& parent_channel,
                             uint32_t byte_offset, uint32_t nof_bits ) const;
+    /**
+     * @brief CreateCompleteAckChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateCompleteAckChannel ( IChannel& parent_channel,
                                     uint32_t byte_offset ) const;
+    /**
+     * @brief CreatePreemptiveAckChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreatePreemptiveAckChannel ( IChannel& parent_channel,
                                       uint32_t byte_offset ) const;
+    /**
+     * @brief CreateTxAckChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreateTxAckChannel ( IChannel& parent_channel,
                               uint32_t byte_offset ) const;
+    /**
+     * @brief CreatePacketIndexChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreatePacketIndexChannel ( IChannel& parent_channel,
                                     uint32_t byte_offset ) const;
+    /**
+     * @brief CreatePacketTypeChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     */
     void CreatePacketTypeChannel ( IChannel& parent_channel,
                                    uint32_t byte_offset ) const;
   };
 
 }  // namespace mdf
-

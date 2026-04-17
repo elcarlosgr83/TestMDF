@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file iblock.h
- * \brief All MDF blocks inherits from the IBlock class. The interface class
- * is used internally in lists. The user should not use this class.
- */
 #pragma once
 #include <cstdint>
 #include <string>
@@ -16,8 +12,12 @@ namespace mdf {
   /** \brief Base class for all MDF blocks.
    *
    */
+
   class IBlock {
   public:
+    /**
+     * @brief ~IBlock.
+     */
     virtual ~IBlock () = default; ///< Default destructor
 
     /** \brief File position within the file.
@@ -29,6 +29,10 @@ namespace mdf {
      * frequently used to detect if the block should be written or updated.
      * @return File position of the block.
      */
+    /**
+     * @brief Index.
+     * @return [ [ nodiscard ] ] virtual int64_t.
+     */
     [ [ nodiscard ] ] virtual int64_t Index () const = 0;
 
       /** \brief Returns the block type.
@@ -38,6 +42,10 @@ namespace mdf {
        * first two characters.
        * @return Block type string (2 characters).
        */
+    /**
+     * @brief BlockType.
+     * @return [ [ nodiscard ] ] virtual std::string.
+     */
     [ [ nodiscard ] ] virtual std::string BlockType () const = 0;
 
   };

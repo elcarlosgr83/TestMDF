@@ -5,12 +5,6 @@
  * @ingroup mdf
  */
 
-/**
- * \file imdftimestamp.h
- * \brief MDF core API header for timestamp utilities.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -19,6 +13,9 @@
 namespace mdf {
 
   namespace timetype {
+    /**
+     * @brief enum MdfTimestampType enumeration.
+     */
     enum MdfTimestampType {
       kUtcTime, /**< Represents the UTC time. */
       kLocalTime, /**< Represents the local time. */
@@ -27,11 +24,15 @@ namespace mdf {
     };
   }
 
+  /**
+   * @brief ITimestamp class definition.
+   */
   class ITimestamp;
 
   /**
    * \brief Interface for MDF timestamp handling.
    */
+
   class IMdfTimestamp {
   public:
     /**

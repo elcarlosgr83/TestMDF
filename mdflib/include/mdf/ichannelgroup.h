@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file ichannelgroup.h
- * \brief Defines an interface against a channel group (CG) block.
- */
 #pragma once
 #include <algorithm>
 #include <string>
@@ -64,38 +61,92 @@ namespace mdf {
    * signals, it stores some other data which typical is used when logging bus
    * messages.
    */
+
   class IChannelGroup : public IBlock {
 
   public:
 
+    /**
+     * @brief RecordId.
+     * @param record_id record_id.
+     * @return virtual void.
+     */
     virtual void RecordId ( uint64_t record_id ) = 0; ///< Sets the record identity.
+    /**
+     * @brief RecordId.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
     [ [ nodiscard ] ] virtual uint64_t RecordId () const = 0; ///< Record identity.
 
+      /**
+       * @brief Name.
+       * @param name name.
+       * @return virtual void.
+       */
       virtual void Name ( const std::string& name ) = 0; ///< Sets the name.
+    /**
+     * @brief Name.
+     * @return [ [ nodiscard ] ] virtual std::string.
+     */
     [ [ nodiscard ] ] virtual std::string Name () const = 0; ///< CG name.
 
+      /**
+       * @brief Description.
+       * @param description description.
+       * @return virtual void.
+       */
       virtual void Description ( const std::string& description )
       = 0; ///< Sets a descriptive text.
+    /**
+     * @brief Description.
+     * @return [ [ nodiscard ] ] virtual std::string.
+     */
     [ [ nodiscard ] ] virtual std::string Description () const =
       0; ///< Description.
 
+    /**
+     * @brief NofSamples.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
     [ [ nodiscard ] ] virtual uint64_t NofSamples () const
       = 0; ///< Number of samples.
       /** \brief Sets the number of samples.
        * @param nof_samples Number of samples.
        */
+      /**
+       * @brief NofSamples.
+       * @param nof_samples nof_samples.
+       * @return virtual void.
+       */
       virtual void NofSamples ( uint64_t nof_samples ) = 0;
 
+    /**
+     * @brief Flags.
+     * @return [ [ nodiscard ] ] virtual uint16_t.
+     */
     [ [ nodiscard ] ] virtual uint16_t Flags () const; ///< Returns CgFlag.
       /** \brief Sets the channel group flags.
        * @param flags Flags from the CgFlag namespace.
        */
+      /**
+       * @brief Flags.
+       * @param flags flags.
+       * @return virtual void.
+       */
       virtual void Flags ( uint16_t flags );
 
     [ [ nodiscard ] ] virtual char16_t
+      /**
+       * @brief PathSeparator.
+       */
       PathSeparator (); ///< Returns the path separator.
       /** \brief Sets the path separator.
        * @param path_separator Character used as path separator.
+       */
+      /**
+       * @brief PathSeparator.
+       * @param path_separator path_separator.
+       * @return virtual void.
        */
       virtual void PathSeparator ( char16_t path_separator );
 
@@ -109,6 +160,11 @@ namespace mdf {
        * @param name Name of the channel to create or locate.
        * @return Existing or newly created channel.
        */
+    /**
+     * @brief CreateChannel.
+     * @param name name.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
     [ [ nodiscard ] ] virtual IChannel* CreateChannel ( const std::string_view& 
       name );
 
@@ -120,6 +176,11 @@ namespace mdf {
        * @param name Channel name or substring.
        * @return Pointer to the matching channel or nullptr.
        */
+    /**
+     * @brief GetChannel.
+     * @param name name.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
     [ [ nodiscard ] ] virtual IChannel* GetChannel ( const std::string_view& name ) const;
 
       /** \brief Returns an existing channel by part of its name.
@@ -130,12 +191,21 @@ namespace mdf {
        * @param name Channel name or substring.
        * @return Pointer to the matching channel or nullptr.
        */
+    /**
+     * @brief GetMasterChannel.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
     [ [ nodiscard ] ] virtual IChannel* GetMasterChannel () const;
 
       /** \brief Returns an external reference channel.
        * @param reference Reference channel used for lookup.
        * @return Pointer to the referenced external channel or nullptr.
        */
+    /**
+     * @brief GetXChannel.
+     * @param reference reference.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
     [ [ nodiscard ] ] virtual const IChannel* GetXChannel (
       const IChannel& reference ) const = 0;
 
@@ -145,8 +215,16 @@ namespace mdf {
        * for the channel group.
        * @return Pointer to a source information (SI) block.
        */
+    /**
+     * @brief CreateSourceInformation.
+     * @return [ [ nodiscard ] ] virtual ISourceInformation*.
+     */
     [ [ nodiscard ] ] virtual ISourceInformation* CreateSourceInformation ();
 
+    /**
+     * @brief SourceInformation.
+     * @return [ [ nodiscard ] ] virtual ISourceInformation*.
+     */
     [ [ nodiscard ] ] virtual ISourceInformation* SourceInformation ()
       const; ///< Returns the source information (SI) block if it exist.
 
@@ -158,19 +236,38 @@ namespace mdf {
        * @return The type of bus. Note that it returns 'None' if it isn't a bus
        * channel group.
        */
+    /**
+     * @brief GetBusType.
+     * @return [ [ nodiscard ] ] BusType.
+     */
     [ [ nodiscard ] ] BusType GetBusType () const;
 
       /** \brief Support function that creates a sample record.
        * @return Sample record object.
        */
+    /**
+     * @brief GetSampleRecord.
+     * @return [ [ nodiscard ] ] SampleRecord.
+     */
     [ [ nodiscard ] ] SampleRecord GetSampleRecord () const;
 
       /** \brief Resets the internal sample counter. Internal use only. */
     void ResetSampleCounter () const { sample_ = 0;}
 
+    /**
+     * @brief ClearData.
+     * @return virtual void.
+     */
     virtual void ClearData (); ///< Resets all temporary stored samples.
+    /**
+     * @brief IncrementSample.
+     */
     void IncrementSample () const; ///< Add a sample
 
+    /**
+     * @brief Sample.
+     * @return [ [ nodiscard ] ] size_t.
+     */
     [ [ nodiscard ] ] size_t Sample () const; ///< Returns number of samples.
 
       /** \brief Creates a meta-data (MD) block. */
@@ -185,22 +282,46 @@ namespace mdf {
       /** \brief Sets the channel group comment.
        * @param cg_comment Channel group comment object.
        */
+      /**
+       * @brief SetCgComment.
+       * @param cg_comment cg_comment.
+       */
       void SetCgComment ( const CgComment& cg_comment );
       /** \brief Retrieves the channel group comment.
        * @param cg_comment Receives the channel group comment object.
        */
+      /**
+       * @brief GetCgComment.
+       * @param cg_comment cg_comment.
+       */
       void GetCgComment ( CgComment& cg_comment ) const;
 
+      /**
+       * @brief StorageType.
+       * @param storage_type storage_type.
+       */
       void StorageType ( MdfStorageType storage_type ) {
         storage_type_ = storage_type;
     }
+    /**
+     * @brief StorageType.
+     * @return [ [ nodiscard ] ] MdfStorageType.
+     */
     [ [ nodiscard ] ] MdfStorageType StorageType () const {
         return storage_type_;
     }
+    /**
+     * @brief MaxLength.
+     * @param max_length max_length.
+     */
     void MaxLength ( uint32_t max_length ) {
       max_length_ = max_length < 8 ? 8 : max_length;
     }
 
+    /**
+     * @brief MaxLength.
+     * @return [ [ nodiscard ] ] uint32_t.
+     */
     [ [ nodiscard ] ] uint32_t MaxLength () const {
         return max_length_;
     }

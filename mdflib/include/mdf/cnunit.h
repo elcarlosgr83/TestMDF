@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file cnunit.h
- * \brief MDF core API header for unit definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file cnunit.h
- * \brief MDF core API header for unit definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 #include <string>
@@ -25,11 +13,21 @@
 
 namespace mdf {
 
+  /**
+   * @brief CnUnit class definition.
+   */
   class CnUnit : public CcUnit {
   public:
+    /**
+     * @brief CnUnit.
+     */
     CnUnit ();
+    /**
+     * @brief CnUnit.
+     * @param unit unit.
+     * @return explicit.
+     */
     explicit CnUnit ( std::string unit );
   };
 
 }  // namespace mdf
-

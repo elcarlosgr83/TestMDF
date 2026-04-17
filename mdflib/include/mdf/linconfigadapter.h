@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file linconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file linconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -23,11 +11,26 @@
 
 namespace mdf {
 
+  /**
+   * @brief LinConfigAdapter class definition.
+   */
   class LinConfigAdapter: public IConfigAdapter {
   public:
+    /**
+     * @brief LinConfigAdapter.
+     */
     LinConfigAdapter () = delete;
+    /**
+     * @brief LinConfigAdapter.
+     * @param writer writer.
+     * @return explicit.
+     */
     explicit LinConfigAdapter ( const MdfWriter& writer );
 
+    /**
+     * @brief CreateConfig.
+     * @param dg_block dg_block.
+     */
     void CreateConfig ( IDataGroup& dg_block ) override;
   protected:
 
@@ -56,6 +59,10 @@ namespace mdf {
     * </table>
     * @param group The The LIN Data Frame channel group object.
      */
+    /**
+     * @brief CreateFrameChannels.
+     * @param group group.
+     */
     void CreateFrameChannels ( IChannelGroup& group ) const;
 
     /** \brief Creates the channels for a LIN Checksum Error message.
@@ -83,6 +90,10 @@ namespace mdf {
     * </table>
     * @param group The The LIN ErrorChecksum channel group object.
      */
+    /**
+     * @brief CreateChecksumErrorChannels.
+     * @param group group.
+     */
     void CreateChecksumErrorChannels ( IChannelGroup& group ) const;
 
     /** \brief Creates the channels for a LIN Receive Error message.
@@ -108,6 +119,10 @@ namespace mdf {
     * </table>
     * @param group The The LIN Receive Error channel group object.
     */
+    /**
+     * @brief CreateReceiveErrorChannels.
+     * @param group group.
+     */
     void CreateReceiveErrorChannels ( IChannelGroup& group ) const;
 
     /** \brief Creates the channels for a LIN Sync Error message.
@@ -126,6 +141,10 @@ namespace mdf {
     * </table>
     * @param group The The LIN SyncError channel group object.
      */
+    /**
+     * @brief CreateSyncChannels.
+     * @param group group.
+     */
     void CreateSyncChannels ( IChannelGroup& group ) const;
 
     /** \brief Creates the channels for a LIN Wake Up message..
@@ -141,6 +160,10 @@ namespace mdf {
     * <tr><td>13-20</td><td>Start of Frame 64-bit (ns)</td></tr>
     * </table>
     * @param group The The CAN Data Frame channel group object.
+     */
+    /**
+     * @brief CreateWakeUpChannels.
+     * @param group group.
      */
     void CreateWakeUpChannels ( IChannelGroup& group ) const;
 
@@ -164,6 +187,10 @@ namespace mdf {
     * </table>
     * @param group The The LIN ErrorChecksum channel group object.
      */
+    /**
+     * @brief CreateTransmissionErrorChannels.
+     * @param group group.
+     */
     void CreateTransmissionErrorChannels ( IChannelGroup& group ) const;
 
     /** \brief Creates the channels for a LIN Spike message.
@@ -180,6 +207,10 @@ namespace mdf {
     * </table>
     * @param group The The LIN Spike channel group object.
     */
+    /**
+     * @brief CreateSpikeChannels.
+     * @param group group.
+     */
     void CreateSpikeChannels ( IChannelGroup& group ) const;
 
     /** \brief Creates the channels for a LIN Long Dominant Signal message.
@@ -198,8 +229,11 @@ namespace mdf {
     * </table>
     * @param group The The LIN Spike channel group object.
     */
+    /**
+     * @brief CreateLongDominantChannels.
+     * @param group group.
+     */
     void CreateLongDominantChannels ( IChannelGroup& group ) const;
   };
 
 }  // namespace mdf
-

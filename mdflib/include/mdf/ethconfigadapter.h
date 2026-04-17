@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file ethconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file ethconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -23,11 +11,26 @@
 
 namespace mdf {
 
+  /**
+   * @brief EthConfigAdapter class definition.
+   */
   class EthConfigAdapter : public IConfigAdapter {
   public:
+    /**
+     * @brief EthConfigAdapter.
+     */
     EthConfigAdapter () = delete;
+    /**
+     * @brief EthConfigAdapter.
+     * @param writer writer.
+     * @return explicit.
+     */
     explicit EthConfigAdapter ( const MdfWriter& writer );
 
+    /**
+     * @brief CreateConfig.
+     * @param dg_block dg_block.
+     */
     void CreateConfig ( IDataGroup& dg_block ) override;
   protected:
 
@@ -53,6 +56,10 @@ namespace mdf {
     * </table>
     * @param group The The ETH Frame channel group object.
      */
+    /**
+     * @brief CreateFrameChannels.
+     * @param group group.
+     */
     void CreateFrameChannels ( IChannelGroup& group ) const;
 
     /** \brief Create the composition channels for an Ethernet Checksum Error frame.
@@ -77,6 +84,10 @@ namespace mdf {
     * </table>
     * @param group The The ETH Checksum Error channel group object.
     */
+    /**
+     * @brief CreateChecksumErrorChannels.
+     * @param group group.
+     */
     void CreateChecksumErrorChannels ( IChannelGroup& group ) const;
 
     /** \brief Create the composition channels for an Ethernet Length Error frame.
@@ -100,6 +111,10 @@ namespace mdf {
     * </table>
     * @param group The The ETH Length Error channel group object.
     */
+    /**
+     * @brief CreateLengthErrorChannels.
+     * @param group group.
+     */
     void CreateLengthErrorChannels ( IChannelGroup& group ) const;
 
 
@@ -125,8 +140,11 @@ namespace mdf {
     * </table>
     * @param group The The ETH Receive Error channel group object.
     */
+    /**
+     * @brief CreateReceiveErrorChannels.
+     * @param group group.
+     */
     void CreateReceiveErrorChannels ( IChannelGroup& group ) const;
   };
 
 }  // namespace mdf
-

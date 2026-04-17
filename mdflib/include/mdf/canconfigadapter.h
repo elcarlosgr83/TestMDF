@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file canconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file canconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -24,11 +12,26 @@
 namespace mdf {
 
 
+  /**
+   * @brief CanConfigAdapter class definition.
+   */
   class CanConfigAdapter : public IConfigAdapter {
   public:
+    /**
+     * @brief CanConfigAdapter.
+     */
     CanConfigAdapter () = delete;
+    /**
+     * @brief CanConfigAdapter.
+     * @param writer writer.
+     * @return explicit.
+     */
     explicit CanConfigAdapter ( const MdfWriter& writer );
 
+    /**
+     * @brief CreateConfig.
+     * @param dg_block dg_block.
+     */
     void CreateConfig ( IDataGroup& dg_block ) override;
   protected:
 
@@ -61,6 +64,11 @@ namespace mdf {
     * </table>
     * @param group The The CAN Data Frame channel group object.
      */
+    /**
+     * @brief CreateCanDataFrameChannel.
+     * @param group group.
+     * @return virtual void.
+     */
     virtual void CreateCanDataFrameChannel ( IChannelGroup& group ) const;
 
     /** \brief Create the composition channels for a remote frame
@@ -84,6 +92,11 @@ namespace mdf {
     * <tr><td>16-19</td><td>Frame Length in ns (32-bit)</td></tr>
     * </table>
     * @param group The The CAN Remote Frame channel group object.
+     */
+    /**
+     * @brief CreateCanRemoteFrameChannel.
+     * @param group group.
+     * @return virtual void.
      */
     virtual void CreateCanRemoteFrameChannel ( IChannelGroup& group ) const;
 
@@ -115,6 +128,11 @@ namespace mdf {
      * </table>
     * @param group The The CAN Error Frame channel group object.
      */
+    /**
+     * @brief CreateCanErrorFrameChannel.
+     * @param group group.
+     * @return virtual void.
+     */
     virtual void CreateCanErrorFrameChannel ( IChannelGroup& group ) const;
 
     /** \brief Create the composition channels for an error frame
@@ -129,16 +147,40 @@ namespace mdf {
     * </table>
     * @param group The The CAN Overload Frame channel group object.
      */
+    /**
+     * @brief CreateCanOverloadFrameChannel.
+     * @param group group.
+     * @return virtual void.
+     */
     virtual void CreateCanOverloadFrameChannel ( IChannelGroup& group );
 
   private:
+    /**
+     * @brief CreateDataBytesChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @return IChannel*.
+     */
     IChannel* CreateDataBytesChannel ( IChannel& parent_channel,
                                        uint16_t byte_offset ) const;
+    /**
+     * @brief CreateDirChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     * @return IChannel*.
+     */
     IChannel* CreateDirChannel ( IChannel& parent_channel,
                                  uint16_t byte_offset, uint8_t bit_offset ) const;
+    /**
+     * @brief CreateErrorTypeChannel.
+     * @param parent_channel parent_channel.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     * @return IChannel*.
+     */
     IChannel* CreateErrorTypeChannel ( IChannel& parent_channel,
                                        uint16_t byte_offset, uint8_t bit_offset ) const;
   };
 
 }  // namespace mdf
-

@@ -3,11 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file mdflogstream.h
- * \brief The mdf log stream file is intended to isolate the logging so
- * the library can be built without dependency of the util and boost libraries.
- * The applications in the library do however include the above libraries.
- */
 #pragma once
 
 #include <sstream>
@@ -17,6 +12,7 @@
  * The standard source_location library cannot be used due to user requirement
  * of C++ 17 version.
  */
+
 struct MdfLocation {
   int line = 0;      ///< Source code line.
   int column = 0;    ///< Source code column.
@@ -50,28 +46,61 @@ namespace mdf {
    *
    *
    */
+
   class MdfLogStream : public std::ostringstream {
   public:
     /** \brief Creates a log stream for a location and severity.
      * @param location Source location of the log message.
      * @param severity Severity level of the log message.
      */
+    /**
+     * @brief MdfLogStream.
+     * @param location location.
+     * @param severity severity.
+     */
     MdfLogStream ( MdfLocation location, MdfLogSeverity severity );
     /** \brief Destructor that flushes the log stream. */
     ~MdfLogStream () override;
 
+    /**
+     * @brief MdfLogStream.
+     */
     MdfLogStream () = delete;
+    /**
+     * @brief MdfLogStream.
+     */
     MdfLogStream ( const MdfLogStream& ) = delete;
+    /**
+     * @brief MdfLogStream.
+     */
     MdfLogStream ( MdfLogStream&& ) = delete;
+    /**
+     * @brief operator=.
+     * @return MdfLogStream&.
+     */
     MdfLogStream& operator= ( const MdfLogStream& ) = delete;
+    /**
+     * @brief operator=.
+     * @return MdfLogStream&.
+     */
     MdfLogStream& operator= ( MdfLogStream&& ) = delete;
 
     /** \brief Sets a log function.
      * @param func Log callback.
      */
+    /**
+     * @brief SetLogFunction1.
+     * @param func func.
+     * @return static void.
+     */
     static void SetLogFunction1 ( const MdfLogFunction1& func );
     /** \brief Sets a log function.
      * @param func Log callback.
+     */
+    /**
+     * @brief SetLogFunction2.
+     * @param func func.
+     * @return static void.
      */
     static void SetLogFunction2 ( const MdfLogFunction2& func );
     /** \brief Resets the current log function to the default behavior. */
@@ -80,6 +109,13 @@ namespace mdf {
      * @param location Source location of the log message.
      * @param severity Severity level.
      * @param text Message text.
+     */
+    /**
+     * @brief LogToConsole.
+     * @param location location.
+     * @param severity severity.
+     * @param text text.
+     * @return static void.
      */
     static void LogToConsole ( const MdfLocation& location,
                                MdfLogSeverity severity,

@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file iconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file iconfigadapter.h
- * \brief MDF core API header for configuration adapter definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -27,53 +15,166 @@
 
 namespace mdf {
 
+  /**
+   * @brief MdfWriter class definition.
+   */
   class MdfWriter;
+  /**
+   * @brief IChannel class definition.
+   */
   class IChannel;
+  /**
+   * @brief IChannelGroup class definition.
+   */
   class IChannelGroup;
+  /**
+   * @brief IDataGroup class definition.
+   */
   class IDataGroup;
+  /**
+   * @brief ISourceInformation class definition.
+   */
   class ISourceInformation;
 
+  /**
+   * @brief enum class MessageFilter enumeration.
+   */
   enum class MessageFilter : int {
     NoFilter = 0,
     ChannelFilter,
     MessageIdFilter
   };
 
+  /**
+   * @brief IConfigAdapter class definition.
+   */
   class IConfigAdapter {
   public:
+    /**
+     * @brief ~IConfigAdapter.
+     */
     virtual ~IConfigAdapter () = default;
+    /**
+     * @brief IConfigAdapter.
+     */
     IConfigAdapter () = delete;
+    /**
+     * @brief IConfigAdapter.
+     * @param writer writer.
+     * @return explicit.
+     */
     explicit IConfigAdapter ( const MdfWriter& writer );
 
+    /**
+     * @brief BusType.
+     * @param bus_type bus_type.
+     */
     void BusType ( uint16_t bus_type );
+    /**
+     * @brief BusType.
+     * @return [ [ nodiscard ] ] uint16_t.
+     */
     [ [ nodiscard ] ] uint16_t BusType () const;
 
+    /**
+     * @brief BusName.
+     * @return [ [ nodiscard ] ] std::string&.
+     */
     [ [ nodiscard ] ] const std::string& BusName () const;
 
+      /**
+       * @brief Protocol.
+       * @param protocol protocol.
+       */
       void Protocol ( std::string protocol );
+    /**
+     * @brief Protocol.
+     * @return [ [ nodiscard ] ] std::string&.
+     */
     [ [ nodiscard ] ] const std::string& Protocol () const;
 
+      /**
+       * @brief FilterType.
+       * @param type type.
+       */
       void FilterType ( MessageFilter type );
+    /**
+     * @brief FilterType.
+     * @return [ [ nodiscard ] ] MessageFilter.
+     */
     [ [ nodiscard ] ] MessageFilter FilterType () const;
 
+      /**
+       * @brief ChannelFilter.
+       * @param channel channel.
+       */
       void ChannelFilter ( uint8_t channel );
+    /**
+     * @brief ChannelFilter.
+     * @return [ [ nodiscard ] ] uint8_t.
+     */
     [ [ nodiscard ] ] uint8_t ChannelFilter () const;
 
+      /**
+       * @brief IdFilter.
+       * @param message_id message_id.
+       */
       void IdFilter ( uint64_t message_id );
+    /**
+     * @brief IdFilter.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t IdFilter () const;
 
+      /**
+       * @brief MessageName.
+       * @param message_name message_name.
+       */
       void MessageName ( std::string message_name );
+    /**
+     * @brief MessageName.
+     * @return [ [ nodiscard ] ] std::string&.
+     */
     [ [ nodiscard ] ] const std::string& MessageName () const;
 
+      /**
+       * @brief MessageLength.
+       * @param message_length message_length.
+       */
       void MessageLength ( uint64_t message_length );
+    /**
+     * @brief MessageLength.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t MessageLength () const;
 
+      /**
+       * @brief NetworkName.
+       * @param network_name network_name.
+       */
       void NetworkName ( std::string network_name );
+    /**
+     * @brief NetworkName.
+     * @return [ [ nodiscard ] ] std::string&.
+     */
     [ [ nodiscard ] ] const std::string& NetworkName () const;
 
+      /**
+       * @brief DeviceName.
+       * @param device_name device_name.
+       */
       void DeviceName ( std::string device_name );
+    /**
+     * @brief DeviceName.
+     * @return [ [ nodiscard ] ] std::string&.
+     */
     [ [ nodiscard ] ] const std::string& DeviceName () const;
 
+      /**
+       * @brief CreateConfig.
+       * @param dg_block dg_block.
+       * @return virtual void.
+       */
       virtual void CreateConfig ( IDataGroup& dg_block ) = 0;
 
       /** \brief Defines the type of variable length storage.
@@ -98,6 +199,10 @@ namespace mdf {
        * bytes and the number of bytes in a separate channel.
        * @param storage_type Type of storage.
        */
+      /**
+       * @brief StorageType.
+       * @param storage_type storage_type.
+       */
       void StorageType ( MdfStorageType storage_type ) {
         storage_type_ = storage_type;
     }
@@ -114,9 +219,17 @@ namespace mdf {
      * property can be set to true.
      * @param mandatory_only If set true, only mandatory members are created.
      */
+    /**
+     * @brief MandatoryMembersOnly.
+     * @param mandatory_only mandatory_only.
+     */
     void MandatoryMembersOnly ( bool mandatory_only ) {
       mandatory_members_only_ = mandatory_only;
       }
+    /**
+     * @brief MandatoryMembersOnly.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool MandatoryMembersOnly () const {
         return mandatory_members_only_;
     }
@@ -132,6 +245,10 @@ namespace mdf {
      * 64 data bytes.
      * @param max_length Maximum number of payload data bytes.
      */
+      /**
+       * @brief MaxLength.
+       * @param max_length max_length.
+       */
       void MaxLength ( uint32_t max_length ) {max_length_ = max_length;};
 
       /** \brief Returns maximum number of data bytes. */
@@ -154,28 +271,74 @@ namespace mdf {
     std::string network_name_;
     std::string device_name_;
 
+    /**
+     * @brief BusName.
+     * @param bus_name bus_name.
+     */
     void BusName ( std::string bus_name );
 
+    /**
+     * @brief StorageType.
+     * @return [ [ nodiscard ] ] MdfStorageType.
+     */
     [ [ nodiscard ] ] MdfStorageType StorageType () const {
         return storage_type_;
     }
 
+    /**
+     * @brief CreateTimeChannel.
+     * @param group group.
+     * @param name name.
+     * @return virtual IChannel*.
+     */
     virtual IChannel* CreateTimeChannel ( IChannelGroup& group,
     const std::string_view& name ) const;
+    /**
+     * @brief CreateSourceInformation.
+     * @param group group.
+     * @return virtual ISourceInformation*.
+     */
     virtual ISourceInformation* CreateSourceInformation ( IChannelGroup& group )
     const;
+    /**
+     * @brief CreateSourceInformation.
+     * @param channel channel.
+     * @return virtual ISourceInformation*.
+     */
     virtual ISourceInformation* CreateSourceInformation ( IChannel& channel ) const;
+    /**
+     * @brief CreateBitChannel.
+     * @param parent parent.
+     * @param name name.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     * @return virtual IChannel*.
+     */
     virtual IChannel* CreateBitChannel ( IChannel& parent,
     const std::string_view& name,
     uint32_t byte_offset,
     uint16_t bit_offset ) const;
 
+    /**
+     * @brief CreateBitsChannel.
+     * @param parent parent.
+     * @param name name.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     * @param nof_bits nof_bits.
+     * @return virtual IChannel*.
+     */
     virtual IChannel* CreateBitsChannel ( IChannel& parent,
     const std::string_view& name,
     uint32_t byte_offset,
     uint16_t bit_offset,
     uint32_t nof_bits ) const;
 
+    /**
+     * @brief CreateBusChannel.
+     * @param parent_channel parent_channel.
+     * @return virtual IChannel*.
+     */
     virtual IChannel* CreateBusChannel ( IChannel& parent_channel ) const;
 
     /** \brief Creates a sub-channel (composite) channel (unsigned)
@@ -191,6 +354,15 @@ namespace mdf {
      * @param nof_bits Number of bits
      * @return Returns a pointer to the created channel or null on failure.
      */
+    /**
+     * @brief CreateSubChannel.
+     * @param parent_channel parent_channel.
+     * @param sub_name sub_name.
+     * @param byte_offset byte_offset.
+     * @param bit_offset bit_offset.
+     * @param nof_bits nof_bits.
+     * @return IChannel*.
+     */
     IChannel* CreateSubChannel ( IChannel& parent_channel,
     const std::string_view& sub_name,
     uint32_t byte_offset,
@@ -205,6 +377,11 @@ namespace mdf {
     * @param base_name Defines what basic type of message.
     * @return A standard group name.
      */
+    /**
+     * @brief MakeGroupName.
+     * @param base_name base_name.
+     * @return [ [ nodiscard ] ] virtual std::string.
+     */
     [ [ nodiscard ] ] virtual std::string MakeGroupName (
       const std::string_view& base_name ) const;
 
@@ -213,4 +390,3 @@ namespace mdf {
   };
 
 }  // namespace mdf
-

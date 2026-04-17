@@ -3,15 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file ichannelarray.h
- * \brief Defines a channel array (CA) block.
- *
- * The interface class define a channel array definition. The channel array (CA)
- * is appended to an channel block (CN). The channel shall now be treated an
- * array channel.
- *
- * Note that only simple single arrays are supported.
- */
 #pragma once
 #include <cstdint>
 #include <vector>
@@ -20,9 +11,21 @@
 
 namespace mdf {
 
+  /**
+   * @brief IChannel class definition.
+   */
   class IChannel;
+  /**
+   * @brief IChannelConversion class definition.
+   */
   class IChannelConversion;
+  /**
+   * @brief IChannelGroup class definition.
+   */
   class IChannelGroup;
+  /**
+   * @brief IDataGroup class definition.
+   */
   class IDataGroup;
 
   /** \brief Type of array.
@@ -73,18 +76,50 @@ namespace mdf {
    * CN block defines an array value while the CA block defines the array
    * dimension and its size(s).
    */
+
   class IChannelArray : public IBlock {
   public:
 
+    /**
+     * @brief Type.
+     * @param type type.
+     * @return virtual void.
+     */
     virtual void Type ( ArrayType type ) = 0; ///< Sets the type of array..
+    /**
+     * @brief Type.
+     * @return [ [ nodiscard ] ] virtual ArrayType.
+     */
     [ [ nodiscard ] ] virtual ArrayType Type () const = 0; ///< Type of array.
 
+      /**
+       * @brief Storage.
+       * @param storage storage.
+       * @return virtual void.
+       */
       virtual void Storage ( ArrayStorage storage ) = 0; ///< Storage type
+    /**
+     * @brief Storage.
+     * @return [ [ nodiscard ] ] virtual ArrayStorage.
+     */
     [ [ nodiscard ] ] virtual ArrayStorage Storage () const = 0; ///< Storage type
 
+      /**
+       * @brief Flags.
+       * @param flags flags.
+       * @return virtual void.
+       */
       virtual void Flags ( uint32_t flags ) = 0; ///< Flags
+    /**
+     * @brief Flags.
+     * @return [ [ nodiscard ] ] virtual uint32_t.
+     */
     [ [ nodiscard ] ] virtual uint32_t Flags () const = 0; ///< Flags
 
+    /**
+     * @brief Dimensions.
+     * @return [ [ nodiscard ] ] virtual size_t.
+     */
     [ [ nodiscard ] ] virtual size_t Dimensions () const =
       0; ///< Number of dimensions.
 
@@ -93,23 +128,41 @@ namespace mdf {
        * The function sets the number of dimensions and each dimension size.
        * @param dim_sizes Array of dimension sizes.
        */
+      /**
+       * @brief Shape.
+       * @param dim_sizes dim_sizes.
+       * @return virtual void.
+       */
       virtual void Shape ( const std::vector<uint64_t>& dim_sizes ) = 0;
 
       /** \brief Returns the dimension and each dimension size.
        *
        * @return Array of dimension sizes.
        */
+    /**
+     * @brief Shape.
+     * @return [ [ nodiscard ] ] virtual std::vector<uint64_t>&.
+     */
     [ [ nodiscard ] ] virtual const std::vector<uint64_t>& Shape () const = 0;
 
       /** \brief Returns a dimension size.
        * @param dimension Dimension index.
        * @return Size of the requested dimension.
        */
+    /**
+     * @brief DimensionSize.
+     * @param dimension dimension.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
     [ [ nodiscard ] ] virtual uint64_t DimensionSize ( size_t dimension ) const = 0;
 
       /** \brief Returns the fixed axis value list for reading only.
        * @return Axis values for read access.
        */
+    /**
+     * @brief AxisValues.
+     * @return [ [ nodiscard ] ] virtual std::vector<double>&.
+     */
     [ [ nodiscard ] ] virtual const std::vector<double>& AxisValues () const = 0;
 
       /** \brief Returns the fixed axis value list for write. */
@@ -125,12 +178,20 @@ namespace mdf {
        *
        * @return Number of values in the array
        */
+    /**
+     * @brief NofArrayValues.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t NofArrayValues () const;
 
       /** \brief Returns the array dimensions as string ("N[2][3]")
        *
        * @return Array dimension as a string.
        */
+    /**
+     * @brief DimensionAsString.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string DimensionAsString () const;
 
       /** \brief Converts the array link indexes into pointers.
@@ -141,6 +202,10 @@ namespace mdf {
        *
        * Note that this is a convenient function. It is possible to do it manual
        * as well.
+       */
+      /**
+       * @brief ResizeArrays.
+       * @return virtual void.
        */
       virtual void ResizeArrays ();
 
@@ -187,6 +252,9 @@ namespace mdf {
 
     /** \brief Returns the axis conversion list. */
     [ [ nodiscard ] ] const std::vector<const IChannelConversion*>&
+      /**
+       * @brief AxisConversionList.
+       */
       AxisConversionList () const {
         return axis_conversion_list_;
     }
@@ -206,6 +274,10 @@ namespace mdf {
        * function is mainly used internally to size buffers and arrays.
        * @return Sum of all array dimensions.
        */
+    /**
+     * @brief SumOfArray.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
     [ [ nodiscard ] ] virtual uint64_t SumOfArray () const = 0;
 
       /** \brief Calculates the product of array dimension sizes.
@@ -214,6 +286,10 @@ namespace mdf {
        * values in an array sample.
        * @return Number of array values in a sample.
        */
+    /**
+     * @brief ProductOfArray.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
     [ [ nodiscard ] ] virtual uint64_t ProductOfArray () const = 0;
     protected:
       std::vector<int64_t> data_links_; ///< List of index to data blocks.

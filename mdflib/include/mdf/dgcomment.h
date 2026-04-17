@@ -3,19 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 
-/**
- * \file dgcomment.h
- * \brief MDF core API header for comment block definitions.
- *
- * @ingroup mdf
- */
 
-/**
- * \file dgcomment.h
- * \brief MDF core API header for comment block definitions.
- *
- * @ingroup mdf
- */
 
 #pragma once
 
@@ -25,11 +13,21 @@
 
 namespace mdf {
 
+  /**
+   * @brief DgComment class definition.
+   */
   class DgComment : public MdComment {
   public:
+    /**
+     * @brief DgComment.
+     */
     DgComment ();
+    /**
+     * @brief DgComment.
+     * @param comment comment.
+     * @return explicit.
+     */
     explicit DgComment ( std::string comment );
   };
 
 }  // namespace mdf
-

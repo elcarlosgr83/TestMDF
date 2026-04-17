@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-/** \file ichannelobserver.h
- * \brief A channel observer is holds a list of channel samples for a
- * channel.
- */
 #pragma once
 #include <string>
 #include <vector>
@@ -22,6 +18,7 @@ namespace mdf {
    * The main purpose for a channel observer is to store all channel samples for
    * a channel. This object is used when reading data from a MDF file.
    */
+
   class IChannelObserver : public ISampleObserver {
   protected:
     const IChannel& channel_; ///< Reference to the channel (CN) block.
@@ -30,38 +27,110 @@ namespace mdf {
     std::vector<uint64_t> offset_list_; ///< Only used for VLSD channels.
     std::vector<bool> valid_list_; ///< List of valid samples.
 
+    /**
+     * @brief GetSampleUnsigned.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return virtual bool.
+     */
     virtual bool GetSampleUnsigned ( uint64_t sample, uint64_t& value,
                                      uint64_t array_index )
     const = 0; ///< Returns a unsigned  sample value.
+    /**
+     * @brief GetSampleSigned.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return virtual bool.
+     */
     virtual bool GetSampleSigned ( uint64_t sample, int64_t& value,
                                    uint64_t array_index )
     const = 0; ///< Returns a signed sample value.
+    /**
+     * @brief GetSampleFloat.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return virtual bool.
+     */
     virtual bool GetSampleFloat ( uint64_t sample, double& value,
                                   uint64_t array_index )
     const = 0; ///< Returns a float sample value.
+    /**
+     * @brief GetSampleText.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return virtual bool.
+     */
     virtual bool GetSampleText ( uint64_t sample, std::string& value,
                                  uint64_t array_index )
     const = 0; ///< Returns a string sample value.
+    /**
+     * @brief GetSampleByteArray.
+     * @param sample sample.
+     * @param value value.
+     * @return virtual bool.
+     */
     virtual bool GetSampleByteArray ( uint64_t sample, std::vector<uint8_t>& value )
     const = 0; ///< Returns a byte array sample value.
 
   public:
+    /**
+     * @brief IChannelObserver.
+     * @param dataGroup dataGroup.
+     * @param channel channel.
+     * @return explicit.
+     */
     explicit IChannelObserver ( const IDataGroup& dataGroup,
                                 const IChannel& channel ); ///< Constructor.
 
+    /**
+     * @brief ~IChannelObserver.
+     */
     ~IChannelObserver () override = default; ///< Default destructor.
 
+    /**
+     * @brief IChannelObserver.
+     */
     IChannelObserver () = delete;
+    /**
+     * @brief IChannelObserver.
+     */
     IChannelObserver ( const IChannelObserver& ) = delete;
+    /**
+     * @brief IChannelObserver.
+     */
     IChannelObserver ( IChannelObserver&& ) = delete;
+    /**
+     * @brief operator=.
+     * @return IChannelObserver&.
+     */
     IChannelObserver& operator= ( const IChannelObserver& ) = delete;
+    /**
+     * @brief operator=.
+     * @return IChannelObserver&.
+     */
     IChannelObserver& operator= ( IChannelObserver&& ) = delete;
 
+    /**
+     * @brief NofSamples.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
     [ [ nodiscard ] ] virtual uint64_t NofSamples ()
       const = 0; ///< Returns number of samples.
 
+    /**
+     * @brief Name.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string Name () const; ///< Channel name
 
+    /**
+     * @brief Unit.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string Unit () const; ///< Channel unit.
 
       /** \brief Returns the channel object.
@@ -71,11 +140,23 @@ namespace mdf {
        * channels are seldom used and are complex to handle.
        * @return Returns the channel object.
        */
+    /**
+     * @brief Channel.
+     * @return [ [ nodiscard ] ] IChannel&.
+     */
     [ [ nodiscard ] ] const IChannel& Channel () const;
 
+    /**
+     * @brief IsMaster.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool IsMaster ()
       const; ///< True if this is the master channel.
 
+    /**
+     * @brief IsArray.
+     * @return [ [ nodiscard ] ] bool.
+     */
     [ [ nodiscard ] ] bool IsArray ()
       const; ///< True if this channel is an array channel.
 
@@ -86,6 +167,10 @@ namespace mdf {
        *
        * @return Shape vector that describes an array dimension.
        */
+    /**
+     * @brief Shape.
+     * @return [ [ nodiscard ] ] std::vector<uint64_t>.
+     */
     [ [ nodiscard ] ] std::vector<uint64_t> Shape () const;
 
       /** \brief Property interface that defines if the VLSD raw data should be read
@@ -99,6 +184,10 @@ namespace mdf {
        * memory.
        * @param read_vlsd_data Set to false if VLSD bytes shouldn't be read.
        */
+      /**
+       * @brief ReadVlsdData.
+       * @param read_vlsd_data read_vlsd_data.
+       */
       void ReadVlsdData ( bool read_vlsd_data );
 
       /** \brief Returns the read VLSD bytes property. */
@@ -110,6 +199,10 @@ namespace mdf {
        * returns 1 if the channel is not an array channel.
        * @return Number of elements in the array channel or 1 for scalar channels.
        */
+    /**
+     * @brief ArraySize.
+     * @return [ [ nodiscard ] ] uint64_t.
+     */
     [ [ nodiscard ] ] uint64_t ArraySize () const;
 
       /** \brief Returns the channel value for a sample.
@@ -122,6 +215,13 @@ namespace mdf {
        * @return True if value is valid.
        */
       template <typename V>
+      /**
+       * @brief GetChannelValue.
+       * @param sample sample.
+       * @param value value.
+       * @param array_index array_index.
+       * @return bool.
+       */
       bool GetChannelValue ( uint64_t sample, V& value,
       uint64_t array_index = 0 ) const;
 
@@ -135,6 +235,11 @@ namespace mdf {
        * @return Returns a list of valid booleans.
        */
       template<typename V>
+      /**
+       * @brief GetChannelSamples.
+       * @param values values.
+       * @return std::vector<bool>.
+       */
       std::vector<bool> GetChannelSamples ( std::vector<V>& values ) const;
 
       /** \brief Returns a vector of array channel values for a specific sample.
@@ -152,6 +257,12 @@ namespace mdf {
        * @return Returns a vector of valid booleans.
        */
       template<typename V>
+      /**
+       * @brief GetChannelValues.
+       * @param sample sample.
+       * @param values values.
+       * @return std::vector<bool>.
+       */
       std::vector<bool> GetChannelValues ( uint64_t sample,
       std::vector<V>& values ) const;
 
@@ -165,6 +276,13 @@ namespace mdf {
        * @return True if the value is valid.
        */
       template <typename V>
+      /**
+       * @brief GetEngValue.
+       * @param sample sample.
+       * @param value value.
+       * @param array_index array_index.
+       * @return bool.
+       */
       bool GetEngValue ( uint64_t sample, V& value, uint64_t array_index = 0 ) const;
 
       /** \brief Simple function that returns all scaled samples.
@@ -177,6 +295,11 @@ namespace mdf {
        * @return Returns a list of valid booleans.
        */
       template<typename V>
+      /**
+       * @brief GetEngSamples.
+       * @param values values.
+       * @return std::vector<bool>.
+       */
       std::vector<bool> GetEngSamples ( std::vector<V>& values ) const;
 
       /** \brief Returns a vector of array values for a specific sample.
@@ -192,6 +315,12 @@ namespace mdf {
        * @return Returns a list of valid/invalid flags (boolean).
        */
       template<typename V>
+      /**
+       * @brief GetEngValues.
+       * @param sample sample.
+       * @param values values.
+       * @return std::vector<bool>.
+       */
       std::vector<bool> GetEngValues ( uint64_t sample,
       std::vector<V>& values ) const;
 
@@ -203,6 +332,11 @@ namespace mdf {
        * @param sample Sample index
        * @return JSON formatted string
        */
+    /**
+     * @brief EngValueToString.
+     * @param sample sample.
+     * @return [ [ nodiscard ] ] std::string.
+     */
     [ [ nodiscard ] ] std::string EngValueToString ( uint64_t sample ) const;
 
       /** \brief Returns the sample to VLSD offset list.
@@ -213,6 +347,10 @@ namespace mdf {
        * saves primary memory and is much faster when only some samples are needed.
        * @return Reference to the VLSD sample offset list.
        */
+    /**
+     * @brief GetOffsetList.
+     * @return [ [ nodiscard ] ] std::vector<uint64_t>&.
+     */
     [ [ nodiscard ] ] const std::vector<uint64_t>& GetOffsetList () const {
         return offset_list_;
     }
@@ -222,6 +360,10 @@ namespace mdf {
      * Each entry in the vector corresponds to whether a sample is valid.
      * @return Reference to the valid sample list.
      */
+    /**
+     * @brief GetValidList.
+     * @return [ [ nodiscard ] ] std::vector<bool>&.
+     */
     [ [ nodiscard ] ] const std::vector<bool>& GetValidList () const {
         return valid_list_;
     }
@@ -229,6 +371,13 @@ namespace mdf {
   };
 
   template <typename V>
+  /**
+   * @brief IChannelObserver::GetChannelValue.
+   * @param sample sample.
+   * @param value value.
+   * @param array_index array_index.
+   * @return bool.
+   */
   bool IChannelObserver::GetChannelValue ( uint64_t sample, V& value,
   uint64_t array_index ) const {
     bool valid = false;
@@ -239,7 +388,19 @@ namespace mdf {
       case ChannelDataType::CanOpenTime: {
         // All times are stored as ns since 1970 (uint64_t)
         uint64_t v = 0;  // ns since 1970
+        /**
+         * @brief GetSampleUnsigned.
+         * @param sample sample.
+         * @param v v.
+         * @param array_index array_index.
+         * @return valid =.
+         */
         valid = GetSampleUnsigned ( sample, v, array_index );
+        /**
+         * @brief static_cast<V>.
+         * @param v v.
+         * @return value =.
+         */
         value = static_cast<V> ( v );
         break;
         }
@@ -247,7 +408,19 @@ namespace mdf {
         case ChannelDataType::UnsignedIntegerLe:
         case ChannelDataType::UnsignedIntegerBe: {
           uint64_t v = 0;
+          /**
+           * @brief GetSampleUnsigned.
+           * @param sample sample.
+           * @param v v.
+           * @param array_index array_index.
+           * @return valid =.
+           */
           valid = GetSampleUnsigned ( sample, v, array_index );
+          /**
+           * @brief static_cast<V>.
+           * @param v v.
+           * @return value =.
+           */
           value = static_cast<V> ( v );
           break;
       }
@@ -255,7 +428,19 @@ namespace mdf {
       case ChannelDataType::SignedIntegerLe:
       case ChannelDataType::SignedIntegerBe: {
         int64_t v = 0;
+        /**
+         * @brief GetSampleSigned.
+         * @param sample sample.
+         * @param v v.
+         * @param array_index array_index.
+         * @return valid =.
+         */
         valid = GetSampleSigned ( sample, v, array_index );
+        /**
+         * @brief static_cast<V>.
+         * @param v v.
+         * @return value =.
+         */
         value = static_cast<V> ( v );
         break;
         }
@@ -263,7 +448,19 @@ namespace mdf {
         case ChannelDataType::FloatLe:
         case ChannelDataType::FloatBe: {
           double v = 0.0;
+          /**
+           * @brief GetSampleFloat.
+           * @param sample sample.
+           * @param v v.
+           * @param array_index array_index.
+           * @return valid =.
+           */
           valid = GetSampleFloat ( sample, v, array_index );
+          /**
+           * @brief static_cast<V>.
+           * @param v v.
+           * @return value =.
+           */
           value = static_cast<V> ( v );
           break;
       }
@@ -273,7 +470,19 @@ namespace mdf {
       case ChannelDataType::StringUTF16Le:
       case ChannelDataType::StringUTF16Be: {
         std::string v;
+        /**
+         * @brief GetSampleText.
+         * @param sample sample.
+         * @param v v.
+         * @param array_index array_index.
+         * @return valid =.
+         */
         valid = GetSampleText ( sample, v, array_index );
+        /**
+         * @brief s.
+         * @param v v.
+         * @return std::istringstream.
+         */
         std::istringstream s ( v );
         s >> value;
         break;
@@ -283,7 +492,17 @@ namespace mdf {
       case ChannelDataType::MimeSample:
       case ChannelDataType::ByteArray: {
         std::vector<uint8_t> v;
+        /**
+         * @brief GetSampleByteArray.
+         * @param sample sample.
+         * @param v v.
+         * @return valid =.
+         */
         valid = GetSampleByteArray ( sample, v );
+        /**
+         * @brief static_cast<V>.
+         * @return value =.
+         */
         value = static_cast<V> ( v.empty () ? V{} : v [ 0 ] );
         break;
         }
@@ -297,23 +516,62 @@ namespace mdf {
 
     /** \brief Returns the sample channel value as a string. */
     template <>
+    /**
+     * @brief IChannelObserver::GetChannelValue.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return bool.
+     */
     bool IChannelObserver::GetChannelValue ( uint64_t sample,
     std::string& value, uint64_t array_index ) const;
 
     /** \brief Returns the sample channel value as a byte array. */
     template <>
+    /**
+     * @brief IChannelObserver::GetChannelValue.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return bool.
+     */
     bool IChannelObserver::GetChannelValue ( uint64_t sample,
     std::vector<uint8_t>& value, uint64_t array_index ) const;
 
     template <typename V>
+    /**
+     * @brief IChannelObserver::GetChannelSamples.
+     * @param values values.
+     * @return std::vector<bool>.
+     */
     std::vector<bool> IChannelObserver::GetChannelSamples (
     std::vector<V>& values ) const {
+      /**
+       * @brief NofSamples.
+       * @return uint64_t nof_samples =.
+       */
       const uint64_t nof_samples = NofSamples ();
+      /**
+       * @brief valid_array.
+       * @param nof_samples nof_samples.
+       * @param false false.
+       * @return std::vector<bool>.
+       */
       std::vector<bool> valid_array ( nof_samples, false );
+      /**
+       * @brief values.resize.
+       * @param nof_samples nof_samples.
+       */
       values.resize ( nof_samples, {} );
       uint64_t sample = 0;
 
       for ( auto& value : values ) {
+        /**
+         * @brief GetChannelValue.
+         * @param sample sample.
+         * @param value value.
+         * @return valid_array [ sample ] =.
+         */
         valid_array [ sample ] = GetChannelValue ( sample, value, 0 );
         ++sample;
     }
@@ -322,14 +580,41 @@ namespace mdf {
     }
 
     template <typename V>
+    /**
+     * @brief IChannelObserver::GetChannelValues.
+     * @param sample sample.
+     * @param values values.
+     * @return std::vector<bool>.
+     */
     std::vector<bool> IChannelObserver::GetChannelValues ( uint64_t sample,
     std::vector<V>& values ) const {
+      /**
+       * @brief ArraySize.
+       * @return auto array_size =.
+       */
       const auto array_size = ArraySize ();
+      /**
+       * @brief valid_array.
+       * @param array_size array_size.
+       * @param false false.
+       * @return std::vector<bool>.
+       */
       std::vector<bool> valid_array ( array_size, false );
+      /**
+       * @brief values.resize.
+       * @param array_size array_size.
+       */
       values.resize ( array_size, {} );
       uint64_t index = 0;
 
       for ( auto& value : values ) {
+        /**
+         * @brief GetChannelValue.
+         * @param sample sample.
+         * @param value value.
+         * @param index index.
+         * @return valid_array [ index ] =.
+         */
         valid_array [ index ] = GetChannelValue ( sample, value, index );
         ++index;
     }
@@ -338,13 +623,20 @@ namespace mdf {
     }
 
     template <typename V>
+    /**
+     * @brief IChannelObserver::GetEngValue.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return bool.
+     */
     bool IChannelObserver::GetEngValue ( uint64_t sample, V& value,
     uint64_t array_index ) const {
       const auto* conversion = channel_.ChannelConversion ();
 
       if ( conversion == nullptr ) {
         return GetChannelValue ( sample, value, array_index );
-    }
+      }
 
     bool valid = false;
     value = {};
@@ -353,9 +645,22 @@ namespace mdf {
       case ChannelDataType::UnsignedIntegerLe:
       case ChannelDataType::UnsignedIntegerBe: {
         uint64_t v = 0;
+        /**
+         * @brief GetSampleUnsigned.
+         * @param sample sample.
+         * @param v v.
+         * @param array_index array_index.
+         * @return valid =.
+         */
         valid = GetSampleUnsigned ( sample, v, array_index );
 
         if ( valid ) {
+          /**
+           * @brief conversion->Convert.
+           * @param v v.
+           * @param value value.
+           * @return valid =.
+           */
           valid = conversion->Convert ( v, value );
           }
 
@@ -365,7 +670,20 @@ namespace mdf {
       case ChannelDataType::SignedIntegerLe:
       case ChannelDataType::SignedIntegerBe: {
         int64_t v = 0;
+        /**
+         * @brief GetSampleSigned.
+         * @param sample sample.
+         * @param v v.
+         * @param array_index array_index.
+         * @return valid =.
+         */
         valid = GetSampleSigned ( sample, v, array_index )
+        /**
+         * @brief conversion->Convert.
+         * @param v v.
+         * @param value value.
+         * @return &&.
+         */
         && conversion->Convert ( v, value );
         break;
         }
@@ -373,7 +691,20 @@ namespace mdf {
         case ChannelDataType::FloatLe:
         case ChannelDataType::FloatBe: {
           double v = 0.0;
+          /**
+           * @brief GetSampleFloat.
+           * @param sample sample.
+           * @param v v.
+           * @param array_index array_index.
+           * @return valid =.
+           */
           valid = GetSampleFloat ( sample, v, array_index )
+          /**
+           * @brief conversion->Convert.
+           * @param v v.
+           * @param value value.
+           * @return &&.
+           */
           && conversion->Convert ( v, value );
           break;
       }
@@ -383,15 +714,38 @@ namespace mdf {
       case ChannelDataType::StringUTF16Le:
       case ChannelDataType::StringUTF8: {
         std::string v;
+        /**
+         * @brief GetSampleText.
+         * @param sample sample.
+         * @param v v.
+         * @param array_index array_index.
+         * @return valid =.
+         */
         valid = GetSampleText ( sample, v, array_index );
         std::string temp;
+        /**
+         * @brief conversion->Convert.
+         * @param v v.
+         * @param temp temp.
+         */
         conversion->Convert ( v, temp );
+        /**
+         * @brief temp1.
+         * @param temp temp.
+         * @return std::istringstream.
+         */
         std::istringstream temp1 ( temp );
         temp1 >> value;
         break;
         }
 
         default:
+          /**
+           * @brief GetChannelValue.
+           * @param sample sample.
+           * @param value value.
+           * @return valid =.
+           */
           valid = GetChannelValue ( sample, value ); // No conversion is allowed;
           break;
     }
@@ -401,18 +755,50 @@ namespace mdf {
 
     /** \brief Returns the sample engineering (channel) value as a byte array. */
     template <>
+    /**
+     * @brief IChannelObserver::GetEngValue.
+     * @param sample sample.
+     * @param value value.
+     * @param array_index array_index.
+     * @return bool.
+     */
     bool IChannelObserver::GetEngValue ( uint64_t sample,
     std::vector<uint8_t>& value,
     uint64_t array_index ) const;
   template <typename V>
+  /**
+   * @brief IChannelObserver::GetEngSamples.
+   * @param values values.
+   * @return std::vector<bool>.
+   */
   std::vector<bool> IChannelObserver::GetEngSamples (
     std::vector<V>& values ) const {
+    /**
+     * @brief NofSamples.
+     * @return uint64_t nof_samples =.
+     */
     const uint64_t nof_samples = NofSamples ();
+    /**
+     * @brief valid_array.
+     * @param nof_samples nof_samples.
+     * @param false false.
+     * @return std::vector<bool>.
+     */
     std::vector<bool> valid_array ( nof_samples, false );
+    /**
+     * @brief values.resize.
+     * @param nof_samples nof_samples.
+     */
     values.resize ( nof_samples, {} );
     uint64_t sample = 0;
 
     for ( auto& value : values ) {
+      /**
+       * @brief GetEngValue.
+       * @param sample sample.
+       * @param value value.
+       * @return valid_array [ sample ] =.
+       */
       valid_array [ sample ] = GetEngValue ( sample, value, 0 );
       ++sample;
     }
@@ -421,14 +807,41 @@ namespace mdf {
   }
 
   template <typename V>
+  /**
+   * @brief IChannelObserver::GetEngValues.
+   * @param sample sample.
+   * @param values values.
+   * @return std::vector<bool>.
+   */
   std::vector<bool> IChannelObserver::GetEngValues ( uint64_t sample,
       std::vector<V>& values ) const {
+    /**
+     * @brief ArraySize.
+     * @return auto array_size =.
+     */
     const auto array_size = ArraySize ();
+    /**
+     * @brief valid_array.
+     * @param array_size array_size.
+     * @param false false.
+     * @return std::vector<bool>.
+     */
     std::vector<bool> valid_array ( array_size, false );
+    /**
+     * @brief values.resize.
+     * @param array_size array_size.
+     */
     values.resize ( array_size, {} );
     uint64_t index = 0;
 
     for ( auto& value : values ) {
+      /**
+       * @brief GetEngValue.
+       * @param sample sample.
+       * @param value value.
+       * @param index index.
+       * @return valid_array [ index ] =.
+       */
       valid_array [ index ] = GetEngValue ( sample, value, index );
       ++index;
     }

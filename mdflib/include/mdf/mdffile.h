@@ -2,17 +2,6 @@
  * Copyright 2021 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
  */
-/**
- * @file mdffile.h
- * @brief MDF file interface.
- *
- * The `mdf::MdfFile` interface represents a MDF file object and exposes the
- * primary operations for metadata, attachments, measurement groups and file
- * I/O. It is the entry point for both reading existing MDF files and creating
- * new ones.
- *
- * @ingroup mdf
- */
 #pragma once
 #include <cstdio>
 
@@ -23,8 +12,17 @@
 
 namespace mdf {
 
+  /**
+   * @brief IAttachment class definition.
+   */
   class IAttachment;
+  /**
+   * @brief IDataGroup class definition.
+   */
   class IDataGroup;
+  /**
+   * @brief IChannel class definition.
+   */
   class IChannel;
 
   /** @brief List of pointers to attachments.
@@ -43,8 +41,12 @@ namespace mdf {
    * The `MdfFile` class provides a common interface for accessing MDF file
    * metadata, attachments, measurements and writer/read operations.
    */
+
   class MdfFile {
   public:
+    /**
+     * @brief ~MdfFile.
+     */
     virtual ~MdfFile () = default; ///< Default destructor
 
     /** @brief Request the file attachments.
@@ -54,12 +56,22 @@ namespace mdf {
      * not support attachments.
      * @param dest Destination list to receive attachment pointers.
      */
+    /**
+     * @brief Attachments.
+     * @param dest dest.
+     * @return virtual void.
+     */
     virtual void Attachments ( AttachmentList& dest ) const = 0;
 
     /** @brief Request the measurement groups.
      *
      * Fetches all measurement groups (DG blocks) contained in the file.
      * @param dest Destination list to receive measurement group pointers.
+     */
+    /**
+     * @brief DataGroups.
+     * @param dest dest.
+     * @return virtual void.
      */
     virtual void DataGroups ( DataGroupList& dest ) const = 0;
 
@@ -68,12 +80,20 @@ namespace mdf {
      * Returns the full MDF version string, for example "4.11".
      * @return MDF version string.
      */
+    /**
+     * @brief Version.
+     * @return virtual std::string.
+     */
     [[nodiscard]] virtual std::string Version () const = 0;
 
     /** @brief Returns the major MDF version.
      *
      * Returns the major version number for the file, for example 4 for MDF4.
      * @return Major version number.
+     */
+    /**
+     * @brief MainVersion.
+     * @return int.
      */
     [[nodiscard]] int MainVersion () const;
 
@@ -82,6 +102,11 @@ namespace mdf {
        * Sets the minor version number used in the MDF version string.
        * @param minor Minor version number.
        */
+      /**
+       * @brief MinorVersion.
+       * @param minor minor.
+       * @return virtual void.
+       */
       virtual void MinorVersion ( int minor ) = 0;
 
       /** @brief Returns the minor MDF version number.
@@ -89,6 +114,10 @@ namespace mdf {
        * Returns the minor part of the version, for example 11 for 4.11.
        * @return Minor version number.
        */
+    /**
+     * @brief MinorVersion.
+     * @return int.
+     */
     [[nodiscard]] int MinorVersion () const;
 
       /** @brief Set the program identifier in the ID block.
@@ -97,6 +126,11 @@ namespace mdf {
        * the software that created the file.
        * @param program_id Program identifier.
        */
+      /**
+       * @brief ProgramId.
+       * @param program_id program_id.
+       * @return virtual void.
+       */
       virtual void ProgramId ( const std::string& program_id ) = 0;
 
       /** @brief Returns the program identifier.
@@ -104,6 +138,10 @@ namespace mdf {
        * Returns the identifier of the program that created the MDF file.
        * @return Program identifier string.
        */
+    /**
+     * @brief ProgramId.
+     * @return virtual std::string.
+     */
     [[nodiscard]] virtual std::string ProgramId () const = 0;
 
       /** @brief Returns the header object.
@@ -112,6 +150,10 @@ namespace mdf {
        * the root objects for the file contents.
        * @return Pointer to the header object.
        */
+    /**
+     * @brief Header.
+     * @return virtual IHeader*.
+     */
     [[nodiscard]] virtual IHeader* Header () const = 0;
 
       /** @brief Creates a new attachment (AT block).
@@ -121,6 +163,10 @@ namespace mdf {
        * MDF3 files do not support attachments.
        * @return Pointer to the newly created attachment.
        */
+    /**
+     * @brief CreateAttachment.
+     * @return virtual IAttachment*.
+     */
     [[nodiscard]] virtual IAttachment* CreateAttachment ();
 
       /** \brief Creates a new measurement (DG block).
@@ -130,6 +176,10 @@ namespace mdf {
        * block). The new DG block is always put last in the file.
        * @return Pointer to the new measurement.
        */
+    /**
+     * @brief CreateDataGroup.
+     * @return [ [ nodiscard ] ] virtual IDataGroup*.
+     */
     [ [ nodiscard ] ] virtual IDataGroup* CreateDataGroup () = 0;
 
       /** @brief Returns true if this is a MDF4 file.
@@ -137,6 +187,10 @@ namespace mdf {
        * Returns true when the file is in the MDF4 family.
        * @return `true` for MDF4, otherwise `false`.
        */
+    /**
+     * @brief IsMdf4.
+     * @return virtual bool.
+     */
     [[nodiscard]] virtual bool IsMdf4 () const = 0;
 
       /** @brief Reads the MDF file header.
@@ -144,6 +198,11 @@ namespace mdf {
        * Reads the file metadata blocks such as ID and HD. This function does
        * not load measurement or channel data.
        * @param buffer Stream buffer for the open file.
+       */
+      /**
+       * @brief ReadHeader.
+       * @param buffer buffer.
+       * @return virtual void.
        */
       virtual void ReadHeader ( std::streambuf& buffer ) = 0;
 
@@ -154,6 +213,11 @@ namespace mdf {
        *
        * This function may be used without calling `ReadHeader()` first.
        * @param buffer Stream buffer for the open file.
+       */
+      /**
+       * @brief ReadMeasurementInfo.
+       * @param buffer buffer.
+       * @return virtual void.
        */
       virtual void ReadMeasurementInfo ( std::streambuf& buffer ) = 0;
 
@@ -167,6 +231,10 @@ namespace mdf {
        * @param buffer Stream buffer for the open file.
        */
       virtual void
+      /**
+       * @brief ReadEverythingButData.
+       * @param buffer buffer.
+       */
       ReadEverythingButData ( std::streambuf& buffer ) = 0;
 
       /** @brief Writes all file blocks to the output stream.
@@ -176,6 +244,11 @@ namespace mdf {
        * as long as the `MdfFile` instance remains valid.
        * @param buffer Stream buffer for the output file.
        * @return `true` on success, otherwise `false`.
+       */
+      /**
+       * @brief Write.
+       * @param buffer buffer.
+       * @return virtual bool.
        */
       virtual bool Write ( std::streambuf& buffer ) = 0;
 
@@ -193,6 +266,10 @@ namespace mdf {
      * set to the file name without path and extension (stem).
      * @param name Short name of the file.
      */
+      /**
+       * @brief Name.
+       * @param name name.
+       */
       void Name ( const std::string& name ) { name_ = name; }
 
       /** \brief Returns the full name of the file.
@@ -207,6 +284,10 @@ namespace mdf {
      * Sets the file name and the short name of the object.
      * @param filename File name with path and extension.
      */
+    /**
+     * @brief FileName.
+     * @param filename filename.
+     */
     void FileName ( const std::string& filename );
 
 /** @brief Set the file finalized state.
@@ -218,6 +299,14 @@ namespace mdf {
        * @param standard_flags Standard finalize flags.
        * @param custom_flags Custom finalize flags.
        */
+    /**
+     * @brief IsFinalized.
+     * @param finalized finalized.
+     * @param buffer buffer.
+     * @param standard_flags standard_flags.
+     * @param custom_flags custom_flags.
+     * @return virtual void.
+     */
     virtual void IsFinalized ( bool finalized, std::streambuf& buffer,
     uint16_t standard_flags, uint16_t custom_flags ) = 0;
 
@@ -228,6 +317,12 @@ namespace mdf {
      * @param custom_flags Receives custom finalize flags.
      * @return `true` if the file is finalized.
      */
+    /**
+     * @brief IsFinalized.
+     * @param standard_flags standard_flags.
+     * @param custom_flags custom_flags.
+     * @return virtual bool.
+     */
     [[nodiscard]] virtual bool IsFinalized ( uint16_t& standard_flags,
       uint16_t& custom_flags ) const = 0;
 
@@ -236,6 +331,10 @@ namespace mdf {
        * Checks if the file has been finalized successfully.
        * @return `true` when finalization is complete.
        */
+    /**
+     * @brief IsFinalizedDone.
+     * @return virtual bool.
+     */
     [[nodiscard]] virtual bool IsFinalizedDone () const;
 
       /** @brief Find the parent data group for a channel.
@@ -245,9 +344,17 @@ namespace mdf {
        * @param channel Channel object to search for.
        * @return Pointer to the parent data group, or `nullptr` if not found.
        */
+    /**
+     * @brief FindParentDataGroup.
+     * @param channel channel.
+     * @return virtual IDataGroup*.
+     */
     [[nodiscard]] virtual IDataGroup* FindParentDataGroup (
       const IChannel &channel ) const = 0;
     protected:
+      /**
+       * @brief MdfFile.
+       */
       MdfFile () = default; ///< Default constructor
     private:
       std::string name_;      ///< File name without path and extension.
