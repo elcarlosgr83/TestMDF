@@ -36,7 +36,6 @@ namespace mdf {
     /**
      * @brief HdComment.
      * @param comment comment.
-     * @return explicit.
      */
     explicit HdComment ( std::string comment );
 

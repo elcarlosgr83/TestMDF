@@ -24,7 +24,6 @@ namespace mdf {
     /**
      * @brief CanConfigAdapter.
      * @param writer writer.
-     * @return explicit.
      */
     explicit CanConfigAdapter ( const MdfWriter& writer );
 
@@ -64,11 +63,6 @@ namespace mdf {
     * </table>
     * @param group The The CAN Data Frame channel group object.
      */
-    /**
-     * @brief CreateCanDataFrameChannel.
-     * @param group group.
-     * @return virtual void.
-     */
     virtual void CreateCanDataFrameChannel ( IChannelGroup& group ) const;
 
     /** \brief Create the composition channels for a remote frame
@@ -92,11 +86,6 @@ namespace mdf {
     * <tr><td>16-19</td><td>Frame Length in ns (32-bit)</td></tr>
     * </table>
     * @param group The The CAN Remote Frame channel group object.
-     */
-    /**
-     * @brief CreateCanRemoteFrameChannel.
-     * @param group group.
-     * @return virtual void.
      */
     virtual void CreateCanRemoteFrameChannel ( IChannelGroup& group ) const;
 
@@ -128,11 +117,6 @@ namespace mdf {
      * </table>
     * @param group The The CAN Error Frame channel group object.
      */
-    /**
-     * @brief CreateCanErrorFrameChannel.
-     * @param group group.
-     * @return virtual void.
-     */
     virtual void CreateCanErrorFrameChannel ( IChannelGroup& group ) const;
 
     /** \brief Create the composition channels for an error frame
@@ -146,11 +130,6 @@ namespace mdf {
     * <tr><td>9:0</td><td>Direction (enumerate)</td></tr>
     * </table>
     * @param group The The CAN Overload Frame channel group object.
-     */
-    /**
-     * @brief CreateCanOverloadFrameChannel.
-     * @param group group.
-     * @return virtual void.
      */
     virtual void CreateCanOverloadFrameChannel ( IChannelGroup& group );
 

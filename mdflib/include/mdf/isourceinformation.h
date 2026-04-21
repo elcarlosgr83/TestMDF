@@ -49,26 +49,28 @@ namespace mdf {
   class ISourceInformation : public IBlock {
   public:
     /**
-     * @brief Name.
-     * @param name name.
-     * @return virtual void.
+     * @brief Sets source name.
+     * @param name Source name.
+     * @see Name() const
      */
     virtual void Name ( const std::string& name ) = 0; ///< Sets the name.
     /**
-     * @brief Name.
-     * @return [ [ nodiscard ] ] virtual std::string&.
+     * @brief Returns source name.
+     * @return Source name.
+     * @see Name(const std::string&)
      */
     [ [ nodiscard ] ] virtual const std::string& Name () const = 0; ///< Name.
 
       /**
-       * @brief Path.
-       * @param path path.
-       * @return virtual void.
+       * @brief Sets source path.
+       * @param path Source path.
+       * @see Path() const
        */
       virtual void Path ( const std::string& path ) = 0; ///< Sets the path.
     /**
-     * @brief Path.
-     * @return [ [ nodiscard ] ] virtual std::string&.
+     * @brief Returns source path.
+     * @return Source path.
+     * @see Path(const std::string&)
      */
     [ [ nodiscard ] ] virtual const std::string& Path () const = 0; ///< Path.
 
@@ -78,38 +80,41 @@ namespace mdf {
     [ [ nodiscard ] ] virtual std::string Description () const = 0;
 
       /**
-       * @brief Type.
-       * @param type type.
-       * @return virtual void.
+       * @brief Sets source type.
+       * @param type Source type.
+       * @see Type() const
        */
       virtual void Type ( SourceType type ) = 0; ///< Sets the type of source.
     /**
-     * @brief Type.
-     * @return [ [ nodiscard ] ] virtual SourceType.
+     * @brief Returns source type.
+     * @return Source type.
+     * @see Type(SourceType)
      */
     [ [ nodiscard ] ] virtual SourceType Type () const = 0; ///< Type of source.
 
       /**
-       * @brief Bus.
-       * @param type type.
-       * @return virtual void.
+       * @brief Sets bus type associated with source.
+       * @param type Bus type.
+       * @see Bus() const
        */
       virtual void Bus ( BusType type ) = 0; ///< Set the type of bus.
     /**
-     * @brief Bus.
-     * @return [ [ nodiscard ] ] virtual BusType.
+     * @brief Returns bus type associated with source.
+     * @return Bus type.
+     * @see Bus(BusType)
      */
     [ [ nodiscard ] ] virtual BusType Bus () const = 0; ///< Type of bus.
 
       /**
-       * @brief Flags.
-       * @param flags flags.
-       * @return virtual void.
+       * @brief Sets source information flags.
+       * @param flags Flag bit mask.
+       * @see Flags() const
        */
       virtual void Flags ( uint8_t flags ) = 0; ///< Set the SiFlag.
     /**
-     * @brief Flags.
-     * @return [ [ nodiscard ] ] virtual uint8_t.
+     * @brief Returns source information flags.
+     * @return Flag bit mask.
+     * @see Flags(uint8_t)
      */
     [ [ nodiscard ] ] virtual uint8_t Flags () const = 0; ///< Returns SiFlag.
 
@@ -118,20 +123,16 @@ namespace mdf {
       /** \brief Returns an existing meta-data (MD) block. */
     [ [ nodiscard ] ] virtual const IMetaData* MetaData () const = 0;
 
-      /** \brief Sets the source information comment.
-       * @param si_comment Source information comment object.
-       */
       /**
-       * @brief SetSiComment.
-       * @param si_comment si_comment.
+       * @brief Sets SI comment content.
+       * @param si_comment SI comment object.
+       * @see GetSiComment
        */
       void SetSiComment ( const SiComment& si_comment );
-      /** \brief Retrieves the source information comment.
-       * @param si_comment Receives the source information comment object.
-       */
       /**
-       * @brief GetSiComment.
-       * @param si_comment si_comment.
+       * @brief Retrieves SI comment content.
+       * @param si_comment Receives SI comment object.
+       * @see SetSiComment
        */
       void GetSiComment ( SiComment& si_comment ) const;
   };

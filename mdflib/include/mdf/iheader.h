@@ -44,7 +44,10 @@ namespace mdf {
    * \brief Interface class against an MDF HD block
    *
    * Interface class against a header block (HD) in a MDF file. The header
-   * block is the main root that holds all other blocks except the ID block.
+  * block is the main root that holds all other blocks except the ID block.
+  *
+  * Typical flow: set measurement metadata (author/project/time), then build
+  * attachments, events, channel hierarchies and data groups.
    */
 
   class IHeader : public IBlock {
@@ -54,21 +57,12 @@ namespace mdf {
      * Sets the author of the files.
      * @param author Author of the file.
      */
-    /**
-     * @brief Author.
-     * @param author author.
-     * @return virtual void.
-     */
     virtual void Author ( const std::string& author ) = 0;
 
     /** \brief Returns the author of the file.
      *
      * Returns the author of the file.
      * @return Author of the file.
-     */
-    /**
-     * @brief Author.
-     * @return [ [ nodiscard ] ] virtual std::string.
      */
     [ [ nodiscard ] ] virtual std::string Author () const = 0;
 
@@ -77,11 +71,6 @@ namespace mdf {
        * Sets the department name.
        * @param department Department name.
        */
-      /**
-       * @brief Department.
-       * @param department department.
-       * @return virtual void.
-       */
       virtual void Department ( const std::string& department ) = 0;
 
       /** \brief Returns the department.
@@ -89,21 +78,12 @@ namespace mdf {
        * Returns the department name.
        * @return Department name.
        */
-    /**
-     * @brief Department.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Department () const = 0;
 
       /** \brief Sets the project name.
        *
        * Sets the project name.
        * @param name Project name.
-       */
-      /**
-       * @brief Project.
-       * @param name name.
-       * @return virtual void.
        */
       virtual void Project ( const std::string& name ) = 0;
 
@@ -112,21 +92,12 @@ namespace mdf {
        * Returns the project name.
        * @return Project name
        */
-    /**
-     * @brief Project.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Project () const = 0;
 
       /** \brief Sets the subject of the file.
        *
        * Sets the subject of the file.
        * @param subject Subject of the file.
-       */
-      /**
-       * @brief Subject.
-       * @param subject subject.
-       * @return virtual void.
        */
       virtual void Subject ( const std::string& subject ) = 0;
 
@@ -135,21 +106,12 @@ namespace mdf {
        * Returns the subject of the file
        * @return Subject of the file.
        */
-    /**
-     * @brief Subject.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Subject () const = 0;
 
       /** \brief Sets the description of the file.
        *
        * Sets the description of the file.
        * @param description Description of the file.
-       */
-      /**
-       * @brief Description.
-       * @param description description.
-       * @return virtual void.
        */
       virtual void Description ( const std::string& description ) = 0;
 
@@ -158,10 +120,6 @@ namespace mdf {
        * Returns the description of the file.
        * @return Description of the file.
        */
-    /**
-     * @brief Description.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Description () const = 0;
 
       /** \brief Sets a unique identifier for the measurement.
@@ -170,11 +128,6 @@ namespace mdf {
        * from the same measurement.
        * @param uuid Unique identifier (UUID).
        */
-      /**
-       * @brief MeasurementId.
-       * @param uuid uuid.
-       * @return virtual void.
-       */
       virtual void MeasurementId ( const std::string& uuid );
 
       /** \brief Returns the unique measurement identifier.
@@ -182,10 +135,6 @@ namespace mdf {
        * Returns the unique measurement identifier of the file.
        * @return Unique identifier (UUID) of the measurement.
        */
-    /**
-     * @brief MeasurementId.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string MeasurementId () const;
 
       /** \brief Sets a unique identifier for the recorder.
@@ -194,11 +143,6 @@ namespace mdf {
        * recorder.
        * @param uuid Unique identifier (UUID).
        */
-      /**
-       * @brief RecorderId.
-       * @param uuid uuid.
-       * @return virtual void.
-       */
       virtual void RecorderId ( const std::string& uuid );
 
       /** \brief Returns the unique recorder identifier.
@@ -206,21 +150,12 @@ namespace mdf {
        * Returns the unique recorder identifier of the file.
        * @return Unique identifier (UUID) of the recorder.
        */
-    /**
-     * @brief RecorderId.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string RecorderId () const;
 
       /** \brief Sets the recorder order number.
        *
        * Sets the recorder order number.
        * @param index Order number
-       */
-      /**
-       * @brief RecorderIndex.
-       * @param index index.
-       * @return virtual void.
        */
       virtual void RecorderIndex ( int64_t index );
 
@@ -229,21 +164,12 @@ namespace mdf {
        * Returns the recorder order number.
        * @return Order number.
        */
-    /**
-     * @brief RecorderIndex.
-     * @return [ [ nodiscard ] ] virtual int64_t.
-     */
     [ [ nodiscard ] ] virtual int64_t RecorderIndex () const;
 
       /** \brief Sets the absolute measurement time for the file.
        *
        * Sets the absolute start time for the measurement file.
        * @param ns_since_1970 Nanoseconds since 1970.
-       */
-      /**
-       * @brief StartTime.
-       * @param ns_since_1970 ns_since_1970.
-       * @return virtual void.
        */
       virtual void StartTime ( uint64_t ns_since_1970 ) = 0;
 
@@ -253,11 +179,6 @@ namespace mdf {
        * object.
        * @param timestamp An ITimestamp object representing the start time.
        */
-      /**
-       * @brief StartTime.
-       * @param timestamp timestamp.
-       * @return virtual void.
-       */
       virtual void StartTime ( ITimestamp& timestamp ) = 0;
 
       /** \brief Returns the absolute measurement time for the file.
@@ -265,10 +186,6 @@ namespace mdf {
        * Returns the absolute start time for the measurement file.
        * @return Nanoseconds since 1970.
        */
-    /**
-     * @brief StartTime.
-     * @return [ [ nodiscard ] ] virtual uint64_t.
-     */
     [ [ nodiscard ] ] virtual uint64_t StartTime () const = 0;
 
       /** \brief Returns the start timestamp of the measurement.
@@ -291,8 +208,11 @@ namespace mdf {
        * @return Returns meta data.
        */
     /**
-     * @brief CreateMetaData.
-     * @return [ [ nodiscard ] ] virtual IMetaData*.
+     * @brief Creates or returns the metadata (MD) block.
+     * @return Metadata interface pointer.
+     * @details Ensures an MD block exists, then returns it for editing.
+     * @see MetaData
+     * @see SetHdComment
      */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData ();
 
@@ -302,8 +222,10 @@ namespace mdf {
        * @return Returns meta data or a null pointer if no MD block.
        */
     /**
-     * @brief MetaData.
-     * @return [ [ nodiscard ] ] virtual IMetaData*.
+     * @brief Returns the metadata (MD) block if present.
+     * @return Metadata pointer or `nullptr` when absent.
+     * @see CreateMetaData
+     * @see GetHdComment
      */
     [ [ nodiscard ] ] virtual IMetaData* MetaData () const;
 
@@ -316,8 +238,10 @@ namespace mdf {
        * @return An attachment interface pointer.
        */
     /**
-     * @brief CreateAttachment.
-     * @return [ [ nodiscard ] ] virtual IAttachment*.
+     * @brief Creates a new attachment block.
+     * @return Attachment interface pointer.
+     * @see Attachments
+     * @see CreateFileHistory
      */
     [ [ nodiscard ] ] virtual IAttachment* CreateAttachment ();
 
@@ -327,8 +251,9 @@ namespace mdf {
        * @return list of attachments
        */
     /**
-     * @brief Attachments.
-     * @return [ [ nodiscard ] ] virtual std::vector<IAttachment*>.
+     * @brief Returns all attachment blocks under this header.
+     * @return List of attachment pointers.
+     * @see CreateAttachment
      */
     [ [ nodiscard ] ] virtual std::vector<IAttachment*> Attachments () const;
 
@@ -339,8 +264,10 @@ namespace mdf {
        * @return A file history  interface pointer.
        */
     /**
-     * @brief CreateFileHistory.
-     * @return [ [ nodiscard ] ] virtual IFileHistory*.
+     * @brief Creates a new file-history (FH) block.
+     * @return File-history interface pointer.
+     * @see FileHistories
+     * @see CreateEvent
      */
     [ [ nodiscard ] ] virtual IFileHistory* CreateFileHistory ();
 
@@ -350,8 +277,9 @@ namespace mdf {
        * @return List of event interface pointers.
        */
     /**
-     * @brief FileHistories.
-     * @return [ [ nodiscard ] ] virtual std::vector<IFileHistory*>.
+     * @brief Returns all file-history blocks under this header.
+     * @return List of file-history pointers.
+     * @see CreateFileHistory
      */
     [ [ nodiscard ] ] virtual std::vector<IFileHistory*> FileHistories () const;
 
@@ -362,8 +290,10 @@ namespace mdf {
        * @return An event interface pointer.
        */
     /**
-     * @brief CreateEvent.
-     * @return [ [ nodiscard ] ] virtual IEvent*.
+     * @brief Creates a new event (EV) block.
+     * @return Event interface pointer.
+     * @see Events
+     * @see CreateDataGroup
      */
     [ [ nodiscard ] ] virtual IEvent* CreateEvent ();
 
@@ -373,8 +303,9 @@ namespace mdf {
        * @return List of event interface pointers.
        */
     /**
-     * @brief Events.
-     * @return [ [ nodiscard ] ] virtual std::vector<IEvent*>.
+     * @brief Returns all event blocks under this header.
+     * @return List of event pointers.
+     * @see CreateEvent
      */
     [ [ nodiscard ] ] virtual std::vector<IEvent*> Events () const;
 
@@ -384,8 +315,9 @@ namespace mdf {
        * @return Returns a channel hierarchy interface pointer.
        */
     /**
-     * @brief CreateChannelHierarchy.
-     * @return [ [ nodiscard ] ] virtual IChannelHierarchy*.
+     * @brief Creates a new channel-hierarchy (CH) block.
+     * @return Channel-hierarchy interface pointer.
+     * @see ChannelHierarchies
      */
     [ [ nodiscard ] ] virtual IChannelHierarchy* CreateChannelHierarchy ();
 
@@ -395,8 +327,9 @@ namespace mdf {
        * @return List of interface pointers.
        */
     /**
-     * @brief ChannelHierarchies.
-     * @return [ [ nodiscard ] ] virtual std::vector<IChannelHierarchy*>.
+     * @brief Returns all channel-hierarchy blocks.
+     * @return List of hierarchy pointers.
+     * @see CreateChannelHierarchy
      */
     [ [ nodiscard ] ] virtual std::vector<IChannelHierarchy*> ChannelHierarchies ()
       const;
@@ -407,8 +340,10 @@ namespace mdf {
        * @return Returns a data group interface pointer.
        */
     /**
-     * @brief CreateDataGroup.
-     * @return [ [ nodiscard ] ] virtual IDataGroup*.
+     * @brief Creates a new data-group (DG) block.
+     * @return Data-group interface pointer.
+     * @see DataGroups
+     * @see LastDataGroup
      */
     [ [ nodiscard ] ] virtual IDataGroup* CreateDataGroup () = 0;
 
@@ -418,8 +353,10 @@ namespace mdf {
        * @return List of measurements.
        */
     /**
-     * @brief DataGroups.
-     * @return [ [ nodiscard ] ] virtual std::vector<IDataGroup*>.
+     * @brief Returns all data-group blocks.
+     * @return List of DG pointers.
+     * @see CreateDataGroup
+     * @see LastDataGroup
      */
     [ [ nodiscard ] ] virtual std::vector<IDataGroup*> DataGroups () const = 0;
 
@@ -429,8 +366,10 @@ namespace mdf {
        * @return Last DG block.
        */
     /**
-     * @brief LastDataGroup.
-     * @return [ [ nodiscard ] ] virtual IDataGroup*.
+     * @brief Returns the last data-group block.
+     * @return Pointer to the last DG block, or `nullptr` if none exist.
+     * @see DataGroups
+     * @see CreateDataGroup
      */
     [ [ nodiscard ] ] virtual IDataGroup* LastDataGroup () const = 0;
 
@@ -439,11 +378,6 @@ namespace mdf {
        * Sets the start angle for the measurements in radians.
        * @param angle Start angle.
        */
-      /**
-       * @brief StartAngle.
-       * @param angle angle.
-       * @return virtual void.
-       */
       virtual void StartAngle ( double angle );
 
       /** Returns the start angle.
@@ -451,21 +385,12 @@ namespace mdf {
        * Returns the start angle of the measurement in radians.
        * @return Start angle in radians.
        */
-    /**
-     * @brief StartAngle.
-     * @return [ [ nodiscard ] ] virtual std::optional<double>.
-     */
     [ [ nodiscard ] ] virtual std::optional<double> StartAngle () const;
 
       /** \brief Sets the start distance.
        *
        * Sets the start distance in meter for all measurements.
        * @param distance Start distance in meters.
-       */
-      /**
-       * @brief StartDistance.
-       * @param distance distance.
-       * @return virtual void.
        */
       virtual void StartDistance ( double distance );
 
@@ -474,26 +399,20 @@ namespace mdf {
        * Sets the start distance in meters.
        * @return Start distance in meters.
        */
-    /**
-     * @brief StartDistance.
-     * @return [ [ nodiscard ] ] virtual std::optional<double>.
-     */
     [ [ nodiscard ] ] virtual std::optional<double> StartDistance () const;
 
-      /** \brief Sets the header comment block.
-       * @param hd_comment HD comment object.
-       */
       /**
-       * @brief SetHdComment.
-       * @param hd_comment hd_comment.
+       * @brief Sets the header comment payload.
+       * @param hd_comment Header comment value object.
+       * @see GetHdComment
+       * @see CreateMetaData
        */
       void SetHdComment ( const HdComment& hd_comment );
-      /** \brief Retrieves the header comment block.
-       * @param hd_comment Receives the HD comment object.
-       */
       /**
-       * @brief GetHdComment.
-       * @param hd_comment hd_comment.
+       * @brief Retrieves the header comment payload.
+       * @param hd_comment Receives header comment value object.
+       * @see SetHdComment
+       * @see MetaData
        */
       void GetHdComment ( HdComment& hd_comment ) const;
 

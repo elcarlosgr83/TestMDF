@@ -53,11 +53,6 @@ namespace mdf {
      * @param location Source location of the log message.
      * @param severity Severity level of the log message.
      */
-    /**
-     * @brief MdfLogStream.
-     * @param location location.
-     * @param severity severity.
-     */
     MdfLogStream ( MdfLocation location, MdfLogSeverity severity );
     /** \brief Destructor that flushes the log stream. */
     ~MdfLogStream () override;
@@ -88,19 +83,9 @@ namespace mdf {
     /** \brief Sets a log function.
      * @param func Log callback.
      */
-    /**
-     * @brief SetLogFunction1.
-     * @param func func.
-     * @return static void.
-     */
     static void SetLogFunction1 ( const MdfLogFunction1& func );
     /** \brief Sets a log function.
      * @param func Log callback.
-     */
-    /**
-     * @brief SetLogFunction2.
-     * @param func func.
-     * @return static void.
      */
     static void SetLogFunction2 ( const MdfLogFunction2& func );
     /** \brief Resets the current log function to the default behavior. */
@@ -109,13 +94,6 @@ namespace mdf {
      * @param location Source location of the log message.
      * @param severity Severity level.
      * @param text Message text.
-     */
-    /**
-     * @brief LogToConsole.
-     * @param location location.
-     * @param severity severity.
-     * @param text text.
-     * @return static void.
      */
     static void LogToConsole ( const MdfLocation& location,
                                MdfLogSeverity severity,

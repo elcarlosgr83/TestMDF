@@ -24,7 +24,6 @@ namespace mdf {
     /**
      * @brief EvComment.
      * @param comment comment.
-     * @return explicit.
      */
     explicit EvComment ( std::string comment );
     /**

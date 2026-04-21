@@ -20,9 +20,6 @@ namespace mdf {
 
   class IAttachment : public IBlock {
   public:
-    /**
-     * @brief ~IAttachment.
-     */
     ~IAttachment () override = default; ///< Default destructor
 
     /** \brief Sets the Creator index. */
@@ -34,30 +31,13 @@ namespace mdf {
      * The first FH block has index 0 while the next has index 1 and so on.
      * @return Index to FH block.
      */
-    /**
-     * @brief CreatorIndex.
-     * @return [ [ nodiscard ] ] virtual uint16_t.
-     */
     [ [ nodiscard ] ] virtual uint16_t CreatorIndex () const = 0;
 
 
-      /**
-       * @brief IsEmbedded.
-       * @param embed embed.
-       */
       virtual void IsEmbedded ( bool embed ) = 0; ///< Set true if embedded.
     [ [ nodiscard ] ] virtual bool IsEmbedded () const = 0; ///< True if embedded.
 
-      /**
-       * @brief IsCompressed.
-       * @param compress compress.
-       * @return virtual void.
-       */
       virtual void IsCompressed ( bool compress ) = 0; ///< Set true tp compress.
-    /**
-     * @brief IsCompressed.
-     * @return [ [ nodiscard ] ] virtual bool.
-     */
     [ [ nodiscard ] ] virtual bool IsCompressed () const =
       0; ///< True if compressed.
 
@@ -66,10 +46,6 @@ namespace mdf {
        * Returns the MD5 checksum string if it is supplied.
        * @return MD5 checksum string.
        */
-    /**
-     * @brief Md5.
-     * @return [ [ nodiscard ] ] virtual std::optional<std::string>.
-     */
     [ [ nodiscard ] ] virtual std::optional<std::string> Md5 () const = 0;
 
       /** \brief Sets the filename. Include path.
@@ -78,11 +54,6 @@ namespace mdf {
        * included.
        * @param filename Filename with valid path.
        */
-      /**
-       * @brief FileName.
-       * @param filename filename.
-       * @return virtual void.
-       */
       virtual void FileName ( const std::string& filename ) = 0;
 
       /** \brief Returns the filename.
@@ -90,21 +61,12 @@ namespace mdf {
        * Returns the filename.
        * @return Filename.
        */
-    /**
-     * @brief FileName.
-     * @return [ [ nodiscard ] ] virtual std::string&.
-     */
     [ [ nodiscard ] ] virtual const std::string& FileName () const = 0;
 
       /** \brief Sets the MIME type of the file.
        *
        * The file type should be a MIME type string.
        * @param file_type MIME type string.
-       */
-      /**
-       * @brief FileType.
-       * @param file_type file_type.
-       * @return virtual void.
        */
       virtual void FileType ( const std::string& file_type ) = 0;
 
@@ -113,10 +75,6 @@ namespace mdf {
        * Returns the MIME type string.
        * @return MIME type string.
        */
-    /**
-     * @brief FileType.
-     * @return [ [ nodiscard ] ] virtual std::string&.
-     */
     [ [ nodiscard ] ] virtual const std::string& FileType () const = 0;
 
       /** \brief Create a meta-data (MD) block.
@@ -125,10 +83,6 @@ namespace mdf {
        * has the description TX-tag included. See also IMetaData class.
        * @return Pointer to the created IMetaData block.
        */
-    /**
-     * @brief CreateMetaData.
-     * @return [ [ nodiscard ] ] virtual IMetaData*.
-     */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData () = 0;
 
       /** \brief Returns the meta-data (MD) block.
@@ -136,29 +90,17 @@ namespace mdf {
        * Returns existing meta-data block. Note, may return nullptr.
        * @return Pointer to an IMetaData block or nullptr if it does not exist.
        */
-    /**
-     * @brief MetaData.
-     * @return [ [ nodiscard ] ] virtual IMetaData*.
-     */
     [ [ nodiscard ] ] virtual IMetaData* MetaData () const = 0;
 
       /** \brief Sets the attachment comment metadata.
        *
        * @param at_comment Attachment comment object.
        */
-      /**
-       * @brief SetAtComment.
-       * @param at_comment at_comment.
-       */
       void SetAtComment ( const AtComment& at_comment );
 
       /** \brief Retrieves the attachment comment metadata.
        *
        * @param at_comment Receives the attachment comment object.
-       */
-      /**
-       * @brief GetAtComment.
-       * @param at_comment at_comment.
        */
       void GetAtComment ( AtComment& at_comment ) const;
   };

@@ -28,11 +28,6 @@ namespace mdf {
     kNotice,     ///< Notice message. Notify the user.
     kWarning,    ///< Warning message
     kError,      ///< Error message
-    /**
-     * @brief message.
-     * @param error error.
-     * @return kCritical, ///< Critical.
-     */
     kCritical,   ///< Critical message (device error)
     kAlert,      ///< Alert or alarm message
     kEmergency   ///< Fatal error message
@@ -62,20 +57,10 @@ namespace mdf {
      * @param type Writer type to create.
      * @return Unique pointer to the created writer.
      */
-    /**
-     * @brief CreateMdfWriter.
-     * @param type type.
-     * @return static std::unique_ptr<MdfWriter>.
-     */
     static std::unique_ptr<MdfWriter> CreateMdfWriter ( MdfWriterType type );
     /** \brief Create an MDF file object.
      * @param type File type to create.
      * @return Unique pointer to the created file object.
-     */
-    /**
-     * @brief CreateMdfFile.
-     * @param type type.
-     * @return static std::unique_ptr<MdfFile>.
      */
     static std::unique_ptr<MdfFile> CreateMdfFile ( MdfFileType type );
 
@@ -83,30 +68,15 @@ namespace mdf {
      * @param type Writer type to create.
      * @return Pointer to the created writer.
      */
-    /**
-     * @brief CreateMdfWriterEx.
-     * @param type type.
-     * @return static MdfWriter*.
-     */
     static MdfWriter* CreateMdfWriterEx ( MdfWriterType type );
     /** \brief Create an MDF file object.
      * @param type File type to create.
      * @return Pointer to the created file object.
      */
-    /**
-     * @brief CreateMdfFileEx.
-     * @param type type.
-     * @return static MdfFile*.
-     */
     static MdfFile* CreateMdfFileEx ( MdfFileType type );
 
     /** \brief Sets the log function.
      * @param func Log callback function.
-     */
-    /**
-     * @brief SetLogFunction2.
-     * @param func func.
-     * @return static void.
      */
     static void SetLogFunction2 ( const MdfLogFunction2& func );
 
@@ -115,13 +85,6 @@ namespace mdf {
      * @param channel_group Channel group containing the channel.
      * @param channel Channel to observe.
      * @return Smart pointer to the created observer.
-     */
-    /**
-     * @brief CreateChannelObserver.
-     * @param data_group data_group.
-     * @param channel_group channel_group.
-     * @param channel channel.
-     * @return static std::unique_ptr<IChannelObserver>.
      */
     static std::unique_ptr<IChannelObserver> CreateChannelObserver (
       const IDataGroup& data_group, const IChannelGroup& channel_group,

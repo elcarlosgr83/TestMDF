@@ -23,7 +23,6 @@ namespace mdf {
     /**
      * @brief MostConfigAdapter.
      * @param writer writer.
-     * @return explicit.
      */
     explicit MostConfigAdapter ( const MdfWriter& writer );
 
@@ -46,7 +45,7 @@ namespace mdf {
      * is an internal design requirement as this offset is updated when the sample
      * is written to th the file.
      * <table>
-     * <caption id="multi_row">MOST_Message Layout</caption>
+    * <caption>MOST_Message Layout</caption>
      * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
      * <tr><td>0-7</td><td>Time [s]</td></tr>
      * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -71,10 +70,6 @@ namespace mdf {
      * </table>
      * @param data_group Reference to the data group.
      */
-    /**
-     * @brief CreateMostMessage.
-     * @param data_group data_group.
-     */
     void CreateMostMessage ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_EthernetPacket channel group.
@@ -87,7 +82,7 @@ namespace mdf {
      * Note that that the VLSD offset must be the last 8 byte in the record
      * buffer. This is an internal requirement.
     * <table>
-    * <caption id="multi_row">MOST_EthernetPacket Layout</caption>
+    * <caption>MOST_EthernetPacket Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -109,10 +104,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
-    /**
-     * @brief CreateMostEthernetPacket.
-     * @param data_group data_group.
-     */
     void CreateMostEthernetPacket ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_Packet channel group.
@@ -122,7 +113,7 @@ namespace mdf {
     * composite channel a.k.a as sub-channels and below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_Packet Layout</caption>
+    * <caption>MOST_Packet Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -145,10 +136,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
-    /**
-     * @brief CreateMostPacket.
-     * @param data_group data_group.
-     */
     void CreateMostPacket ( IDataGroup& data_group ) const ;
 
     /** \brief Creates the MOST_SignalState channel group.
@@ -158,7 +145,7 @@ namespace mdf {
     * composite channels a.k.a as sub-channels. Below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_SignalState Layout</caption>
+    * <caption>MOST_SignalState Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -166,10 +153,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
       */
-    /**
-     * @brief CreateMostSignalState.
-     * @param data_group data_group.
-     */
     void CreateMostSignalState ( IDataGroup& data_group ) const;
 
     /** \brief Creates the MOST_MaxPosInfo channel group.
@@ -179,17 +162,13 @@ namespace mdf {
     * composite channels a.k.a as sub-channels. Below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_MaxPosInfo Layout</caption>
+    * <caption>MOST_MaxPosInfo Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
     * <tr><td>9</td><td>DeviceCount</td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateMostMaxPosInfo.
-     * @param data_group data_group.
      */
     void CreateMostMaxPosInfo ( IDataGroup& data_group ) const;
 
@@ -200,17 +179,13 @@ namespace mdf {
     * composite channels a.k.a as sub-channels. Below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_BoundDesc Layout</caption>
+    * <caption>MOST_BoundDesc Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
     * <tr><td>9-10</td><td>SBC [bytes] (16-bits) </td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateMostBoundDesc.
-     * @param data_group data_group.
      */
     void CreateMostBoundDesc ( IDataGroup& data_group ) const ;
 
@@ -221,7 +196,7 @@ namespace mdf {
     * composite channels a.k.a as sub-channels. Below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_AllocTable Layout</caption>
+    * <caption>MOST_AllocTable Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -232,10 +207,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
-    /**
-     * @brief CreateMostAllocTable.
-     * @param data_group data_group.
-     */
     void CreateMostAllocTable ( IDataGroup& data_group ) const ;
 
     /** \brief Creates the MOST_SysLockState channel group.
@@ -245,17 +216,13 @@ namespace mdf {
     * composite channels a.k.a as sub-channels. Below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_SysLockState Layout</caption>
+    * <caption>MOST_SysLockState Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
     * <tr><td>9</td><td>SysLockState (enumerate)</td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateMostSysLockState.
-     * @param data_group data_group.
      */
     void CreateMostSysLockState ( IDataGroup& data_group ) const;
 
@@ -266,17 +233,13 @@ namespace mdf {
     * composite channels a.k.a as sub-channels. Below is the channel group
     * layout.
     * <table>
-    * <caption id="multi_row">MOST_ShutdownFlag Layout</caption>
+    * <caption>MOST_ShutdownFlag Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
     * <tr><td>9</td><td>Shutdown Flag (enumerate)</td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateMostShutdownFlag.
-     * @param data_group data_group.
      */
     void CreateMostShutdownFlag ( IDataGroup& data_group ) const;
 

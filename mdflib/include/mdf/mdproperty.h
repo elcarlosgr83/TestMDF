@@ -178,45 +178,20 @@ namespace mdf {
   };
 
   template <typename T>
-  /**
-   * @brief MdProperty::Value.
-   * @param value value.
-   */
   void MdProperty::Value ( T value ) {
-    /**
-     * @brief std::to_string.
-     * @param value value.
-     * @return value_ =.
-     */
     value_ = std::to_string ( value );
     }
 
     template <>
-    /**
-     * @brief MdProperty::Value.
-     * @param value value.
-     */
     void MdProperty::Value ( std::string value );
 
     template <>
-    /**
-     * @brief MdProperty::Value.
-     * @param value value.
-     */
     void MdProperty::Value ( bool value );
 
     template <>
-    /**
-     * @brief MdProperty::Value.
-     * @param value value.
-     */
     void MdProperty::Value ( uint64_t value );
 
     template <typename T>
-    /**
-     * @brief MdProperty::Value.
-     * @return T.
-     */
     T MdProperty::Value () const {
       T output = {};
 
@@ -224,34 +199,17 @@ namespace mdf {
         return output;
     }
 
-    /**
-     * @brief temp.
-     * @param value_ value_.
-     * @return std::istringstream.
-     */
     std::istringstream temp ( value_ );
     temp >> output;
     return output;
     }
 
     template <>
-    /**
-     * @brief MdProperty::Value.
-     * @return std::string.
-     */
     std::string MdProperty::Value () const;
 
     template <>
-    /**
-     * @brief MdProperty::Value.
-     * @return uint64_t.
-     */
     uint64_t MdProperty::Value () const;
 
     template <>
-    /**
-     * @brief MdProperty::Value.
-     * @return bool.
-     */
     bool MdProperty::Value () const;
 }  // namespace mdf

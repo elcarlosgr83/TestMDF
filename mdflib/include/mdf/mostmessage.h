@@ -156,7 +156,6 @@ namespace mdf {
     /**
      * @brief ToRaw.
      * @param sample sample.
-     * @return virtual void.
      */
     virtual void ToRaw ( SampleRecord& sample ) const = 0;
 
@@ -175,7 +174,6 @@ namespace mdf {
       /**
        * @brief IMostEvent.
        * @param type type.
-       * @return explicit.
        */
       explicit IMostEvent ( MostMessageType type );
       mutable const IDataGroup* data_group_ = nullptr;
@@ -294,7 +292,6 @@ namespace mdf {
     /**
      * @brief MostEthernetPacket.
      * @param type type.
-     * @return explicit.
      */
     explicit MostEthernetPacket ( MostMessageType type );
 
@@ -335,7 +332,6 @@ namespace mdf {
     /**
      * @brief MostPacket.
      * @param type type.
-     * @return explicit.
      */
     explicit MostPacket ( MostMessageType type );
     /**

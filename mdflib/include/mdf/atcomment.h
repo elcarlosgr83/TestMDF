@@ -23,7 +23,6 @@ namespace mdf {
     /**
      * @brief AtComment.
      * @param comment comment.
-     * @return explicit.
      */
     explicit AtComment ( std::string comment );
   private:

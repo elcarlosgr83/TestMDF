@@ -25,7 +25,6 @@ namespace mdf {
     /**
      * @brief FhComment.
      * @param comment comment.
-     * @return explicit.
      */
     explicit FhComment ( std::string comment );
 

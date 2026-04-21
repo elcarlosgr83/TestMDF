@@ -18,6 +18,24 @@
  * - `IDataGroup`: measurement group (DG) container.
  * - `IChannel`: channel description and sample access.
  *
+ * Typical read flow:
+ * `MdfReader::Open()` -> `MdfReader::ReadHeader()` ->
+ * `MdfReader::ReadMeasurementInfo()` -> `MdfReader::ReadData()` ->
+ * `IChannelObserver::GetEngValue()`.
+ *
+ * Typical write flow:
+ * `MdfWriter::Init()` -> `MdfWriter::CreateBusLogConfiguration()` ->
+ * `MdfWriter::InitMeasurement()` -> sample save calls ->
+ * `MdfWriter::FinalizeMeasurement()`.
+ *
+ * ASAM MDF reference (public):
+ * https://www.asam.net/standards/detail/mdf/wiki/
+ *
+ * @see MdfFile
+ * @see MdfReader
+ * @see MdfWriter
+ * @see IChannelObserver
+ *
  * @}
  */
 #pragma once

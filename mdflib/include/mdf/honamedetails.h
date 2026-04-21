@@ -75,13 +75,11 @@ namespace mdf {
       /**
        * @brief ToXml.
        * @param root_node root_node.
-       * @return virtual void.
        */
       virtual void ToXml ( IXmlNode& root_node ) const;
       /**
        * @brief FromXml.
        * @param root_node root_node.
-       * @return virtual void.
        */
       virtual void FromXml ( const IXmlNode& root_node );
     protected:

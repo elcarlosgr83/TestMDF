@@ -18,21 +18,12 @@ namespace mdf {
      * @param [in] ns_since_1970 Nano-seconds since 1970
      * @return local time = system time + time zone offset
      */
-    /**
-     * @brief NanoSecToLocal.
-     * @param ns_since_1970 ns_since_1970.
-     * @return static uint64_t.
-     */
     static uint64_t NanoSecToLocal ( uint64_t ns_since_1970 );
 
     /** \brief return the time zone offset in seconds.
      *
      * Returns the current used time zone offset in seconds
      * @return Time offset in seconds
-     */
-    /**
-     * @brief TimeZoneOffset.
-     * @return static int64_t.
      */
     static int64_t TimeZoneOffset ();
 
@@ -59,11 +50,6 @@ namespace mdf {
      * @param [in] ns_since_1970 Nanosecond since 1970
      * @return Return a date and time string in format YYYY-MM-DD hh:mm:ss.ms
      */
-    /**
-     * @brief NsToLocalIsoTime.
-     * @param ns_since_1970 ns_since_1970.
-     * @return static std::string.
-     */
     static std::string NsToLocalIsoTime ( uint64_t ns_since_1970 );
 
     /** \brief Converts from nanoseconds to CANopen 7 byte Date array.
@@ -81,11 +67,6 @@ namespace mdf {
      * @param [in] ns_since_1970 Nanoseconds since 1970-01-01
      * @return 7-byte CANopen date array
      */
-    /**
-     * @brief NsToCanOpenDateArray.
-     * @param ns_since_1970 ns_since_1970.
-     * @return static std::vector<uint8_t>.
-     */
     static std::vector<uint8_t> NsToCanOpenDateArray ( uint64_t ns_since_1970 );
 
     /** \brief Converts from nanoseconds to CANopen 6 byte Time array.
@@ -100,11 +81,6 @@ namespace mdf {
     * @param [in] ns_since_1970 Nanoseconds since 1970-01-01
     * @return 6-byte CANopen date array
     */
-    /**
-     * @brief NsToCanOpenTimeArray.
-     * @param ns_since_1970 ns_since_1970.
-     * @return static std::vector<uint8_t>.
-     */
     static std::vector<uint8_t> NsToCanOpenTimeArray ( uint64_t ns_since_1970 );
 
     /** \brief Converts from a CANopen 7 byte Date array to nanoseconds since
@@ -123,11 +99,6 @@ namespace mdf {
      * @param [in] buffer 7-byte CANopen date array
      * @return Nanoseconds since 1970-01-01
      */
-    /**
-     * @brief CanOpenDateArrayToNs.
-     * @param buffer buffer.
-     * @return static uint64_t.
-     */
     static uint64_t CanOpenDateArrayToNs ( const std::vector<uint8_t>& buffer );
 
     /** \brief Converts from a CANopen 6 byte Time array to nanoseconds since
@@ -143,11 +114,6 @@ namespace mdf {
     * @param [in] buffer  6-byte CANopen time array
     * @return Nanoseconds since 1970-01-01
     */
-    /**
-     * @brief CanOpenTimeArrayToNs.
-     * @param buffer buffer.
-     * @return static uint64_t.
-     */
     static uint64_t CanOpenTimeArrayToNs ( const std::vector<uint8_t>& buffer );
 
     /** \brief Converts ns since 1970 UTC to local date DD:MM:YYYY string
@@ -159,11 +125,6 @@ namespace mdf {
      *
      * @param [in] ns_since_1970 Nanoseconds since 1970 UTC
      * @return Local date format 'DD:MM:YYYY'
-     */
-    /**
-     * @brief NanoSecToDDMMYYYY.
-     * @param ns_since_1970 ns_since_1970.
-     * @return static std::string.
      */
     static std::string NanoSecToDDMMYYYY ( uint64_t ns_since_1970 );
 
@@ -177,11 +138,6 @@ namespace mdf {
      * @param [in] ns_since_1970 Nanoseconds since 1970 UTC
      * @return Local date format 'HH:MM:SS'
      */
-    /**
-     * @brief NanoSecToHHMMSS.
-     * @param ns_since_1970 ns_since_1970.
-     * @return static std::string.
-     */
     static std::string NanoSecToHHMMSS ( uint64_t ns_since_1970 );
 
     /** \brief Converts ns since 1970 UTC to UTC time in 'HH:MM:SS' format.
@@ -193,11 +149,6 @@ namespace mdf {
     * @param [in] timestamp_ns Nanoseconds since 1970 UTC.
     * @return UTC time format 'HH:MM:SS'.
      */
-    /**
-     * @brief NanoSecUtcToHHMMSS.
-     * @param timestamp_ns timestamp_ns.
-     * @return static std::string.
-     */
     static std::string NanoSecUtcToHHMMSS ( uint64_t timestamp_ns );
 
     /** \brief Converts ns since 1970 UTC to UTC date in 'DD/MM/YYYY' format.
@@ -208,11 +159,6 @@ namespace mdf {
     *
     * @param [in] timestamp_ns Nanoseconds since 1970 UTC.
     * @return UTC date format 'DD/MM/YYYY'.
-     */
-    /**
-     * @brief NanoSecUtcToDDMMYYYY.
-     * @param timestamp_ns timestamp_ns.
-     * @return static std::string.
      */
     static std::string NanoSecUtcToDDMMYYYY ( uint64_t timestamp_ns );
 
@@ -228,13 +174,6 @@ namespace mdf {
     * @param [in] tz_offset_min Timezone offset in minutes from UTC.
     * @param [in] dst_offset_min Daylight saving time (DST) offset in minutes.
     * @return Time format 'HH:MM:SS' adjusted for the specified timezone and DST offset.
-     */
-    /**
-     * @brief NanoSecTzToHHMMSS.
-     * @param timestamp_ns timestamp_ns.
-     * @param tz_offset_min tz_offset_min.
-     * @param dst_offset_min dst_offset_min.
-     * @return static std::string.
      */
     static std::string NanoSecTzToHHMMSS ( uint64_t timestamp_ns,
                                            int16_t tz_offset_min, int16_t dst_offset_min );
@@ -252,13 +191,6 @@ namespace mdf {
     * @param [in] dst_offset_min Daylight saving time (DST) offset in minutes.
     * @return Date format 'DD/MM/YYYY' adjusted for the specified timezone and DST offset.
      */
-    /**
-     * @brief NanoSecTzToDDMMYYYY.
-     * @param timestamp_ns timestamp_ns.
-     * @param tz_offset_min tz_offset_min.
-     * @param dst_offset_min dst_offset_min.
-     * @return static std::string.
-     */
     static std::string NanoSecTzToDDMMYYYY ( uint64_t timestamp_ns,
         int16_t tz_offset_min, int16_t dst_offset_min );
 
@@ -266,11 +198,6 @@ namespace mdf {
      *
      * Removes white spaces from the begin and end of the string
      * @param text String to trim
-     */
-    /**
-     * @brief Trim.
-     * @param text text.
-     * @return static void.
      */
     static void Trim ( std::string &text );
 
@@ -286,24 +213,12 @@ namespace mdf {
      * @param unit Optional unit string appended to the output string.
      * @return The formatted string.
      */
-    /**
-     * @brief FormatDouble.
-     * @param value value.
-     * @param decimals decimals.
-     * @param fixed fixed.
-     * @param unit unit.
-     * @return static std::string.
-     */
     static std::string FormatDouble (
       double value, uint8_t decimals, bool fixed = false,
       const std::string &unit = {} ); ///< Converts a float to a string.
 
     /** \brief Returns the current UTC time in nanoseconds since 1970.
      * @return Nano-seconds since 1970.
-     */
-    /**
-     * @brief NowNs.
-     * @return static uint64_t.
      */
     static uint64_t NowNs (); ///< Return nano-seconds since 1970.
 
@@ -320,15 +235,6 @@ namespace mdf {
     static std::vector<uint8_t> TextToByteArray ( const std::string& text );
 
 
-    /**
-     * @brief UnsignedToRaw.
-     * @param little_endian little_endian.
-     * @param start start.
-     * @param length length.
-     * @param value value.
-     * @param raw raw.
-     * @return static void.
-     */
     static void UnsignedToRaw ( bool little_endian, size_t start, size_t length,
                                 uint64_t value, uint8_t* raw );
 

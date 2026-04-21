@@ -75,10 +75,6 @@ namespace mdf {
      * CAN ID uses a 29-bit address.
      * @return DBC message ID.
      */
-    /**
-     * @brief MessageId.
-     * @return [ [ nodiscard ] ] uint32_t.
-     */
     [ [ nodiscard ] ] uint32_t MessageId () const;
 
       /** \brief 29/11 bit CAN message ID. Note that bit 31 is not used.
@@ -89,19 +85,11 @@ namespace mdf {
        *  that causes invalid handling of messages.
        * @return 29-bit CAN ID.
        */
-    /**
-     * @brief CanId.
-     * @return [ [ nodiscard ] ] uint32_t.
-     */
     [ [ nodiscard ] ] uint32_t CanId () const;
 
       /** \brief Set true if the CAN ID uses 20-bit addressing.
        *
        * @param extended True if CAN ID uses 29-bit addressing.
-       */
-      /**
-       * @brief ExtendedId.
-       * @param extended extended.
        */
       void ExtendedId ( bool extended );
 
@@ -109,10 +97,6 @@ namespace mdf {
        *
        * @return True if CAN ID uses extended addressing.
        */
-    /**
-     * @brief ExtendedId.
-     * @return [ [ nodiscard ] ] bool.
-     */
     [ [ nodiscard ] ] bool ExtendedId () const; ///< Returns the extended CAN ID.
 
       /** \brief Sets the CAN message data length code.
@@ -121,10 +105,6 @@ namespace mdf {
        * CAN but not for CAN FD. Note that the DataBytes() function fix both data
        * length and the DLC code so this function is normally not used.
        * @param dlc Data length code.
-       */
-      /**
-       * @brief Dlc.
-       * @param dlc dlc.
        */
       void Dlc ( uint8_t dlc );
 
@@ -135,10 +115,6 @@ namespace mdf {
        *
        * @return Data length code for the message.
        */
-    /**
-     * @brief Dlc.
-     * @return [ [ nodiscard ] ] uint8_t.
-     */
     [ [ nodiscard ] ] uint8_t Dlc ()
       const; ///< Returns the CAN message length code.
 
@@ -149,15 +125,7 @@ namespace mdf {
        * length and the DLC code so this function is normally not used.
        * @param data_length Number of payload data bytes.
        */
-      /**
-       * @brief DataLength.
-       * @param data_length data_length.
-       */
       void DataLength ( uint8_t data_length );
-    /**
-     * @brief DataLength.
-     * @return [ [ nodiscard ] ] uint8_t.
-     */
     [ [ nodiscard ] ] uint8_t DataLength ()
       const; ///< Returns number of data bytes.
 
@@ -166,10 +134,6 @@ namespace mdf {
        * This function sets the payload data bytes in the message. Note that this
        * function also set the data length and DLC code.
        * @param data
-       */
-      /**
-       * @brief DataBytes.
-       * @param data data.
        */
       void DataBytes ( std::vector<uint8_t> data );
 
@@ -192,16 +156,7 @@ namespace mdf {
      */
     [ [ nodiscard ] ] bool Srr () const; ///< Returns the SRR bit
 
-      /**
-       * @brief Edl.
-       * @param FD FD.
-       */
       void Edl ( bool edl ); ///< Extended (CAN FD) data length.
-    /**
-     * @brief Edl.
-     * @param FD FD.
-     * @return [ [ nodiscard ] ] bool.
-     */
     [ [ nodiscard ] ] bool Edl () const; ///< Extended (CAN FD) data length.
 
       /**
@@ -215,22 +170,9 @@ namespace mdf {
      */
     [ [ nodiscard ] ] bool Brs () const; ///< Bit rate switch (CAN FD).
 
-      /**
-       * @brief Esi.
-       * @param FD FD.
-       */
       void Esi ( bool esi ); ///< Error state indicator (CAN FD).
-    /**
-     * @brief Esi.
-     * @param FD FD.
-     * @return [ [ nodiscard ] ] bool.
-     */
     [ [ nodiscard ] ] bool Esi () const; ///< Error state indicator (CAN FD).
 
-      /**
-       * @brief Rtr.
-       * @param frame frame.
-       */
       void Rtr ( bool rtr ); ///< Sets the RTR bit (remote frame).
     /**
      * @brief Rtr.
@@ -293,10 +235,6 @@ namespace mdf {
      */
     [ [ nodiscard ] ] uint8_t BusChannel () const; ///< Bus channel.
 
-      /**
-       * @brief BitPosition.
-       * @param frame frame.
-       */
       void BitPosition ( uint16_t position ); ///< Error bit position (error frame).
     /**
      * @brief BitPosition.
@@ -338,16 +276,7 @@ namespace mdf {
      */
     [ [ nodiscard ] ] uint32_t Crc () const; ///< Frame duration in nano-seconds.
 
-      /**
-       * @brief Timestamp.
-       * @param s s.
-       */
       void Timestamp ( double timestamp ); ///< Relative Timestamp (s)
-    /**
-     * @brief Timestamp.
-     * @param s s.
-     * @return [ [ nodiscard ] ] double.
-     */
     [ [ nodiscard ] ] double Timestamp () const; ///< Relative timestamp (s).
 
       /**

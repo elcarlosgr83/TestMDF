@@ -69,14 +69,9 @@ namespace mdf {
      */
     LinMessage () = default;
 
-    /**
-     * @brief deprecated.
-     * @return [ [.
-     */
     [ [ deprecated ( "Use the default LinMessage() constructor instead." ) ] ]
       /**
        * @brief LinMessage.
-       * @return explicit.
        */
       explicit LinMessage ( const MdfWriter& );
 

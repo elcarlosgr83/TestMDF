@@ -178,17 +178,7 @@ namespace mdf {
   };
 
   template< typename T>
-  /**
-   * @brief MdList::GetPropertyValue.
-   * @param name name.
-   * @return T.
-   */
   T MdList::GetPropertyValue ( const std::string& name ) const {
-    /**
-     * @brief GetProperty.
-     * @param name name.
-     * @return MdProperty* prop =.
-     */
     const MdProperty* prop = GetProperty ( name );
     return prop != nullptr ? prop->Value<T> () : T{};
     }

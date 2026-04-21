@@ -25,7 +25,6 @@ namespace mdf {
     /**
      * @brief SiComment.
      * @param comment comment.
-     * @return explicit.
      */
     explicit SiComment ( std::string comment );
 

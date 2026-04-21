@@ -299,10 +299,11 @@ namespace mdf {
     return channel_group_.GetChannel ( name.str () );
   }
 
-  /** \brief Converts the record and VLSD record to a CAN message.
+  /**
+   * @brief Converts the current record and VLSD record to a CAN message.
    *
-   * The function convert a CanSample byte buffer, to a CAN message.
-   * @param msg Returning bus message
+   * Converts the internal CAN sample byte buffer into a typed CAN message.
+   * @param msg Output CAN message.
    */
   void CanBusObserver::ParseCanMessage ( CanMessage& msg ) const {
     const auto& record = last_sample_.record;

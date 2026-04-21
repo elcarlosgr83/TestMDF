@@ -35,18 +35,11 @@ namespace mdf {
     /** \brief Sample observer constructor. */
     explicit ISampleObserver ( const IDataGroup& data_group );
 
-    /**
-     * @brief ~ISampleObserver.
-     */
     virtual ~ISampleObserver (); ///< Destructor
 
     /** \brief Sets the associated data group for this observer.
      *
      * @param data_group Pointer to the data group that owns the sample records.
-     */
-    /**
-     * @brief DataGroup.
-     * @param data_group data_group.
      */
     void DataGroup ( const IDataGroup* data_group ) const {
       data_group_ = data_group;
@@ -57,10 +50,6 @@ namespace mdf {
      * This function is normally called in the constructor of an observer,
      * so there is normally no need to call it.
      */
-    /**
-     * @brief AttachObserver.
-     * @return virtual void.
-     */
     virtual void AttachObserver ();
 
     /** \brief Detach the observer from an observer list
@@ -69,10 +58,6 @@ namespace mdf {
      * shall be called when OnSample() function is not needed anymore. This
      * function is needed to handle dangling pointers. For example it is
      * called after the ReadData() function in a reader.
-     */
-    /**
-     * @brief DetachObserver.
-     * @return virtual void.
      */
     virtual void DetachObserver ();
 
@@ -92,13 +77,6 @@ namespace mdf {
      * @param record Sample record (excluding the record ID.
      * @return If this function returns false it indicate that reading should be
      * aborted.
-     */
-    /**
-     * @brief OnSample.
-     * @param sample sample.
-     * @param record_id record_id.
-     * @param record record.
-     * @return virtual bool.
      */
     virtual bool OnSample ( uint64_t sample, uint64_t record_id,
                             const std::vector<uint8_t>& record );
@@ -136,15 +114,6 @@ namespace mdf {
      * @return True if the value is valid.
      */
     template <typename V>
-    /**
-     * @brief GetChannelValue.
-     * @param channel channel.
-     * @param sample sample.
-     * @param record record.
-     * @param value value.
-     * @param array_index array_index.
-     * @return bool.
-     */
     bool GetChannelValue ( const IChannel& channel,
     uint64_t sample,
     const std::vector<uint8_t>& record,
@@ -163,12 +132,6 @@ namespace mdf {
         switch ( channel.Type () ) {
           case ChannelType::VirtualMaster:
           case ChannelType::VirtualData:
-            /**
-             * @brief channel.GetVirtualSample.
-             * @param sample sample.
-             * @param value value.
-             * @return valid =.
-             */
             valid = channel.GetVirtualSample ( sample, value );
           break;
 
@@ -193,13 +156,6 @@ namespace mdf {
         case ChannelType::Master:
         case ChannelType::FixedLength:
         default:
-          /**
-           * @brief channel.GetChannelValue.
-           * @param record record.
-           * @param value value.
-           * @param array_index array_index.
-           * @return valid =.
-           */
           valid = channel.GetChannelValue ( record, value, array_index );
           break;
       }
@@ -225,25 +181,12 @@ namespace mdf {
      * @return Return true if the value is valid.
      */
     template <typename V>
-    /**
-     * @brief GetEngValue.
-     * @param channel channel.
-     * @param sample sample.
-     * @param record record.
-     * @param value value.
-     * @param array_index array_index.
-     * @return bool.
-     */
     bool GetEngValue ( const IChannel& channel,
                        uint64_t sample,
                        const std::vector<uint8_t>& record,
                        V& value,
                        uint64_t array_index = 0 ) const {
 
-      /**
-       * @brief channel.ChannelConversion.
-       * @return auto* conversion =.
-       */
       const auto* conversion = channel.ChannelConversion ();
 
       if ( conversion == nullptr ) {
@@ -301,10 +244,6 @@ namespace mdf {
   protected:
     std::set<uint64_t> record_id_list_; ///< List of subscribed channel groups.
 
-    /**
-     * @brief DataGroup.
-     * @return const IDataGroup*.
-     */
     const IDataGroup* DataGroup () const { return data_group_; } ///< Returns the data group.
   private:
     mutable const IDataGroup*

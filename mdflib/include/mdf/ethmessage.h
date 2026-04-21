@@ -57,15 +57,10 @@ namespace mdf {
      */
     EthMessage () = default;
 
-    /**
-     * @brief deprecated.
-     * @return [ [.
-     */
     [ [ deprecated ( "Use the default EthMessage() constructor instead." ) ] ]
       /**
        * @brief EthMessage.
        * @param writer writer.
-       * @return explicit.
        */
       explicit EthMessage ( const MdfWriter& writer );
 
@@ -101,10 +96,6 @@ namespace mdf {
      * @brief Source.
      */
     void Source ( const uint8_t source [ 6 ] ) {
-      /**
-       * @brief std::copy_n.
-       * @param source source.
-       */
       std::copy_n ( source, source_.size (), source_.data () );
     }
       /**
@@ -118,10 +109,6 @@ namespace mdf {
      * @brief Destination.
      */
     void Destination ( const uint8_t destination [ 6 ] ) {
-      /**
-       * @brief std::copy_n.
-       * @param destination destination.
-       */
       std::copy_n ( destination, destination_.size (), destination_.data () );
       }
       /**

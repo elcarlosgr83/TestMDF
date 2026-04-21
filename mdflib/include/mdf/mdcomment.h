@@ -44,7 +44,6 @@ namespace mdf {
     /**
      * @brief MdComment.
      * @param block_name block_name.
-     * @return explicit.
      */
     explicit MdComment ( std::string block_name );
     /**
@@ -214,7 +213,6 @@ namespace mdf {
       /**
        * @brief FromXml.
        * @param xml_snippet xml_snippet.
-       * @return virtual void.
        */
       virtual void FromXml ( const std::string& xml_snippet );
     protected:
@@ -268,11 +266,6 @@ namespace mdf {
   };
 
   template< typename T>
-  /**
-   * @brief MdComment::GetPropertyValue.
-   * @param name name.
-   * @return T.
-   */
   T MdComment::GetPropertyValue ( const std::string& name ) const {
     return common_property_.GetPropertyValue<T> ( name );
     }

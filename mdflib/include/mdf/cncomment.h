@@ -60,7 +60,6 @@ namespace mdf {
     /**
      * @brief CnComment.
      * @param comment comment.
-     * @return explicit.
      */
     explicit CnComment ( std::string comment );
 

@@ -53,11 +53,6 @@ namespace mdf {
    * data. Good luck to find a use of this type.
    */
   enum class ChannelType : uint8_t {
-    /**
-     * @brief data.
-     * @param type type.
-     * @return FixedLength , ///< Fixed length.
-     */
     FixedLength = 0,    ///< Fixed length data (default type)
     VariableLength = 1, ///< Variable length data
     Master = 2,         ///< Master channel
@@ -73,11 +68,6 @@ namespace mdf {
    * channel but should be set for master and synchronization channels.
    */
   enum class ChannelSyncType : uint8_t {
-    /**
-     * @brief synchronization.
-     * @param value value.
-     * @return None , ///< No.
-     */
     None = 0,     ///< No synchronization (default value)
     Time = 1,     ///< Time type
     Angle = 2,    ///< Angle type
@@ -144,36 +134,18 @@ namespace mdf {
     /** \brief Sets channel name.
      * @param name Channel name.
      */
-    /**
-     * @brief Name.
-     * @param name name.
-     * @return virtual void.
-     */
     virtual void Name ( const std::string &name ) = 0;
-    /**
-     * @brief Name.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Name () const =
       0; ///< Returns channel name.
 
       /** \brief Sets the display name. */
       virtual void DisplayName ( const std::string &name ) =
       0; ///< Sets display name.
-    /**
-     * @brief DisplayName.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string DisplayName () const =
       0; ///< Display name.
 
       /** \brief Sets the description.
        * @param description Channel description text.
-       */
-      /**
-       * @brief Description.
-       * @param description description.
-       * @return virtual void.
        */
       virtual void Description ( const std::string &description ) = 0;
 
@@ -188,11 +160,6 @@ namespace mdf {
        * Note that this unit belongs to the value after scaling (CC) i.e.
        * engineering value.
        * @param unit Unit string or MIME content type.
-       */
-      /**
-       * @brief Unit.
-       * @param unit unit.
-       * @return virtual void.
        */
       virtual void Unit ( const std::string &unit ) = 0;
 
@@ -209,100 +176,46 @@ namespace mdf {
        * For MIME streams this unit is actually the type of stream content.
        * @return Unit or MIME content string.
        */
-    /**
-     * @brief Unit.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Unit () const = 0; ///< Returns the unit
 
       /** \brief Sets the channel unit block.
        * @param unit Channel unit object.
        */
-      /**
-       * @brief SetCnUnit.
-       * @param unit unit.
-       * @return virtual void.
-       */
       virtual void SetCnUnit ( const CnUnit& unit );
       /** \brief Retrieves the channel unit block.
        * @param unit Receives the channel unit object.
-       */
-      /**
-       * @brief GetCnUnit.
-       * @param unit unit.
-       * @return virtual void.
        */
       virtual void GetCnUnit ( CnUnit& unit ) const;
 
       /** \brief Sets channel flags. Flags are defined in the CnFlag namespace.
        * @param flags Flag bits.
        */
-      /**
-       * @brief Flags.
-       * @param flags flags.
-       * @return virtual void.
-       */
       virtual void Flags ( uint32_t flags );
 
       /** \brief Channel flags are defined in the CnFlag namespace.
        * @return Current channel flag bits.
        */
-    /**
-     * @brief Flags.
-     * @return [ [ nodiscard ] ] virtual uint32_t.
-     */
     [ [ nodiscard ] ] virtual uint32_t Flags () const;
 
-    /**
-     * @brief IsUnitValid.
-     * @return [ [ nodiscard ] ] virtual bool.
-     */
     [ [ nodiscard ] ] virtual bool IsUnitValid () const =
       0; ///< True if unit exists.
 
       /** \brief Sets the channel type.
        * @param type Channel type.
        */
-      /**
-       * @brief Type.
-       * @param type type.
-       * @return virtual void.
-       */
       virtual void Type ( ChannelType type ) = 0;
-    /**
-     * @brief Type.
-     * @return [ [ nodiscard ] ] virtual ChannelType.
-     */
     [ [ nodiscard ] ] virtual ChannelType Type () const = 0; ///< Type of channel.
 
       /** \brief Sets the channel synchronization type.
        * @param type Synchronization type.
        */
-      /**
-       * @brief Sync.
-       * @param type type.
-       * @return virtual void.
-       */
       virtual void Sync ( ChannelSyncType type );
-    /**
-     * @brief Sync.
-     * @return [ [ nodiscard ] ] virtual ChannelSyncType.
-     */
     [ [ nodiscard ] ] virtual ChannelSyncType Sync () const; ///< Type of sync.
 
       /** \brief Sets the channel data type.
        * @param type Channel data type.
        */
-      /**
-       * @brief DataType.
-       * @param type type.
-       * @return virtual void.
-       */
       virtual void DataType ( ChannelDataType type ) = 0;
-    /**
-     * @brief DataType.
-     * @return [ [ nodiscard ] ] virtual ChannelDataType.
-     */
     [ [ nodiscard ] ] virtual ChannelDataType DataType () const = 0; ///< Data type.
 
       /** \brief Sets the data size in bytes.
@@ -310,25 +223,11 @@ namespace mdf {
        */
       virtual void DataBytes ( uint64_t nof_bytes ) =
       0;
-    /**
-     * @brief DataBytes.
-     * @return [ [ nodiscard ] ] virtual uint64_t.
-     */
     [ [ nodiscard ] ] virtual uint64_t DataBytes () const =
-      /**
-       * @brief size.
-       * @param bytes bytes.
-       * @return 0; ///< Data.
-       */
       0; ///< Data size (bytes);
 
       /** \brief Sets number of decimals for floating point values.
        * @param precision Number of decimals.
-       */
-      /**
-       * @brief Decimals.
-       * @param precision precision.
-       * @return virtual void.
        */
       virtual void Decimals ( uint8_t precision );
       /** \brief Number of decimals (floating points)  */
@@ -341,12 +240,6 @@ namespace mdf {
        * @param min Minimum value.
        * @param max Maximum value.
        */
-      /**
-       * @brief Range.
-       * @param min min.
-       * @param max max.
-       * @return virtual void.
-       */
       virtual void Range ( double min, double max );
 
       /** \brief Returns the valid value range. */
@@ -356,12 +249,6 @@ namespace mdf {
       /** \brief Sets the limits.
        * @param min Minimum limit.
        * @param max Maximum limit.
-       */
-      /**
-       * @brief Limit.
-       * @param min min.
-       * @param max max.
-       * @return virtual void.
        */
       virtual void Limit ( double min, double max );
 
@@ -373,12 +260,6 @@ namespace mdf {
        * @param min Minimum extended limit.
        * @param max Maximum extended limit.
        */
-      /**
-       * @brief ExtLimit.
-       * @param min min.
-       * @param max max.
-       * @return virtual void.
-       */
       virtual void ExtLimit ( double min, double max );
 
       /** \brief Returns the extended limits. */
@@ -387,11 +268,6 @@ namespace mdf {
 
       /** \brief Sets the sample rate in seconds.
        * @param sampling_rate Sample period in seconds.
-       */
-      /**
-       * @brief SamplingRate.
-       * @param sampling_rate sampling_rate.
-       * @return virtual void.
        */
       virtual void SamplingRate ( double sampling_rate ) = 0;
 
@@ -410,10 +286,6 @@ namespace mdf {
        * SI blocks only exist in MDF 4 files.
        * @return Existing or a new source information (SI) block.
        */
-    /**
-     * @brief CreateSourceInformation.
-     * @return [ [ nodiscard ] ] virtual ISourceInformation*.
-     */
     [ [ nodiscard ] ] virtual ISourceInformation* CreateSourceInformation ();
 
       /** \brief Returns the channel array object if any exist in this channel.
@@ -429,11 +301,6 @@ namespace mdf {
        * @param index Index of the channel array.
        * @return Pointer to the CA block or nullptr.
        */
-    /**
-     * @brief ChannelArray.
-     * @param index index.
-     * @return [ [ nodiscard ] ] virtual IChannelArray*.
-     */
     [ [ nodiscard ] ] virtual IChannelArray* ChannelArray ( size_t index ) const;
 
       /** \brief Create or returns an existing channel array (CA) block.
@@ -444,15 +311,7 @@ namespace mdf {
        * @return A new or existing channel array (CA) block.
        */
 
-    /**
-     * @brief ChannelArrays.
-     * @return [ [ nodiscard ] ] virtual std::vector<IChannelArray*>.
-     */
     [ [ nodiscard ] ] virtual std::vector<IChannelArray*> ChannelArrays () const;
-    /**
-     * @brief CreateChannelArray.
-     * @return [ [ nodiscard ] ] virtual IChannelArray*.
-     */
     [ [ nodiscard ] ] virtual IChannelArray* CreateChannelArray ();
 
       /** \brief Returns the conversion block, if any. */
@@ -467,10 +326,6 @@ namespace mdf {
        * bit length and bit offset to its parent channel. In reality, the parent
        * channel must be a byte array.
        */
-    /**
-     * @brief CreateChannelComposition.
-     * @return [ [ nodiscard ] ] virtual IChannel*.
-     */
     [ [ nodiscard ] ] virtual IChannel* CreateChannelComposition () = 0;
 
       /** \brief Creates a composition channel with a specific name or returns an
@@ -480,11 +335,6 @@ namespace mdf {
        * bit length and bit offset to its parent channel. In reality, the parent
        * channel must be a byte array.
        */
-    /**
-     * @brief CreateChannelComposition.
-     * @param name name.
-     * @return [ [ nodiscard ] ] virtual IChannel*.
-     */
     [ [ nodiscard ] ] virtual IChannel* CreateChannelComposition (
       const std::string_view& name );
       /** \brief Creates a composition channel.
@@ -493,10 +343,6 @@ namespace mdf {
        * bit length and bit offset to its parent channel. In reality, the parent
        * channel must be a byte array.
        */
-    /**
-     * @brief ChannelCompositions.
-     * @return [ [ nodiscard ] ] virtual std::vector<IChannel*>.
-     */
     [ [ nodiscard ] ] virtual std::vector<IChannel*> ChannelCompositions () = 0;
 
       /** \brief Returns true if the channel is a number. */
@@ -529,11 +375,6 @@ namespace mdf {
        * already exist when the measurement is started.
        * @param attachment Pointer to the attachment.
        */
-      /**
-       * @brief AddAttachmentReference.
-       * @param attachment attachment.
-       * @return virtual void.
-       */
       virtual void AddAttachmentReference ( const IAttachment* attachment );
 
       /** \brief Returns a list of attachment pointers */
@@ -547,10 +388,6 @@ namespace mdf {
        * of the VLSD block.
        * @param record_id Record id of the block storing the data bytes.
        */
-      /**
-       * @brief VlsdRecordId.
-       * @param record_id record_id.
-       */
       void VlsdRecordId ( uint64_t record_id ) const {
         vlsd_record_id_ = record_id;
     }
@@ -562,10 +399,6 @@ namespace mdf {
      * another (VLSD) channel group (CG). This property is set to the record ID
      * of the VLSD block.
      * @return Record id of the block storing the data bytes.
-     */
-    /**
-     * @brief VlsdRecordId.
-     * @return [ [ nodiscard ] ] uint64_t.
      */
     [ [ nodiscard ] ] uint64_t VlsdRecordId () const {
         return vlsd_record_id_;
@@ -583,13 +416,6 @@ namespace mdf {
      * @return True if the value is valid.
      */
     template <typename T>
-    /**
-     * @brief GetChannelValue.
-     * @param record_buffer record_buffer.
-     * @param dest dest.
-     * @param array_index array_index.
-     * @return bool.
-     */
     bool GetChannelValue ( const std::vector<uint8_t>& record_buffer,
     T &dest, uint64_t array_index = 0 ) const;
 
@@ -609,12 +435,6 @@ namespace mdf {
      * @param array_index Channel array index.
      */
     template <typename T>
-    /**
-     * @brief SetChannelValue.
-     * @param value value.
-     * @param valid valid.
-     * @param array_index array_index.
-     */
     void SetChannelValue ( const T &value, bool valid = true,
     uint64_t array_index = 0 );
 
@@ -628,10 +448,6 @@ namespace mdf {
      * @param values 1-Dimensional list of array values.
      */
     template<typename T>
-    /**
-     * @brief SetChannelValues.
-     * @param values values.
-     */
     void SetChannelValues ( const std::vector<T>& values );
 
     /** \brief Internally used function mainly for fetching VLSD index values.
@@ -641,13 +457,6 @@ namespace mdf {
      * @param array_index Array offset used by channel arrays.
      * @return True if the value is valid.
      */
-    /**
-     * @brief GetUnsignedValue.
-     * @param record_buffer record_buffer.
-     * @param dest dest.
-     * @param array_index array_index.
-     * @return bool.
-     */
     bool GetUnsignedValue ( const std::vector<uint8_t>& record_buffer,
     uint64_t& dest, uint64_t array_index = 0 ) const;
     /** \brief Internally used function mainly for fetching VLSD text values.
@@ -656,12 +465,6 @@ namespace mdf {
       * @param dest Destination value.
       * @return True if the value is valid.
       */
-    /**
-     * @brief GetTextValue.
-     * @param record_buffer record_buffer.
-     * @param dest dest.
-     * @return virtual bool.
-     */
     virtual bool GetTextValue ( const std::vector<uint8_t>& record_buffer,
     std::string &dest ) const;
     /** \brief The function change the supplied records time channel value.
@@ -673,11 +476,6 @@ namespace mdf {
      * @param timestamp Relative time in seconds.
      * @param record_buffer The record buffer to update.
      */
-    /**
-     * @brief SetTimestamp.
-     * @param timestamp timestamp.
-     * @param record_buffer record_buffer.
-     */
     void SetTimestamp ( double timestamp,
     std::vector<uint8_t>& record_buffer ) const;
 
@@ -688,11 +486,6 @@ namespace mdf {
      * For ordinary channels, the bit size and offset is calculated when the
      * measurement is initialized.
      * @param bits Number of bits.
-     */
-    /**
-     * @brief BitCount.
-     * @param bits bits.
-     * @return virtual void.
      */
     virtual void BitCount ( uint32_t bits ) = 0;
 
@@ -707,11 +500,6 @@ namespace mdf {
        * measurement is initialized.
        * @param bits Offset to data.
        */
-      /**
-       * @brief BitOffset.
-       * @param bits bits.
-       * @return virtual void.
-       */
       virtual void BitOffset ( uint16_t bits ) = 0;
 
       /** \brief Returns offset to data (0..7). */
@@ -724,11 +512,6 @@ namespace mdf {
        * For ordinary channels, the bit size and offset is calculated when the
        * measurement is initialized.
        * @param bytes Offset to data.
-       */
-      /**
-       * @brief ByteOffset.
-       * @param bytes bytes.
-       * @return virtual void.
        */
       virtual void ByteOffset ( uint32_t bytes ) = 0;
 
@@ -751,10 +534,6 @@ namespace mdf {
        * the channel belongs to.
        * @return Returns the record ID.
        */
-      /**
-       * @brief RecordId.
-       * @return uint64_t.
-       */
       uint64_t RecordId () const;
 
       /** \brief Returns the value for a virtual sample.
@@ -768,12 +547,6 @@ namespace mdf {
        * @return True if the value is valid.
        */
       template <typename V>
-      /**
-       * @brief GetVirtualSample.
-       * @param sample sample.
-       * @param value value.
-       * @return static bool.
-       */
       static bool GetVirtualSample ( uint64_t sample, V& value ) {
         // No need for array index here. Array is weird usage for virtual channels
         // as the channel value = sample.
@@ -789,18 +562,7 @@ namespace mdf {
      * @return True if the value is valid.
      */
     template <typename V = std::string>
-    /**
-     * @brief GetVirtualSample.
-     * @param sample sample.
-     * @param value value.
-     * @return static bool.
-     */
     static bool GetVirtualSample ( uint64_t sample, std::string& value ) {
-      /**
-       * @brief std::to_string.
-       * @param sample sample.
-       * @return value =.
-       */
       value = std::to_string ( sample );
       return true;
       }
@@ -816,10 +578,6 @@ namespace mdf {
        * it set to false, the user is responsible to set the channels value.
        * @param calculate_master If set tp false, the user must set the channel value.
        */
-      /**
-       * @brief CalculateMasterTime.
-       * @param calculate_master calculate_master.
-       */
       void CalculateMasterTime ( bool calculate_master ) {
         calculate_master_time_ = calculate_master;
     }
@@ -828,10 +586,6 @@ namespace mdf {
      *
      * @return True means that the master channel is calculated.
      */
-    /**
-     * @brief CalculateMasterTime.
-     * @return [ [ nodiscard ] ] bool.
-     */
     [ [ nodiscard ] ] bool CalculateMasterTime () const {
         return calculate_master_time_;
     }
@@ -839,10 +593,6 @@ namespace mdf {
     /** \brief Returns 1 if no array and > 1 if it is an array.
      *
      * @return Returns 1 for normal channel and array size for array channels
-     */
-    /**
-     * @brief ArraySize.
-     * @return [ [ nodiscard ] ] uint64_t.
      */
     [ [ nodiscard ] ] uint64_t ArraySize () const;
 
@@ -917,13 +667,6 @@ namespace mdf {
   };
 
   template <typename T>
-  /**
-   * @brief IChannel::GetChannelValue.
-   * @param record_buffer record_buffer.
-   * @param dest dest.
-   * @param array_index array_index.
-   * @return bool.
-   */
   bool IChannel::GetChannelValue ( const std::vector<uint8_t>& record_buffer,
   T &dest, uint64_t array_index ) const {
     bool valid = false;
@@ -932,19 +675,7 @@ namespace mdf {
       case ChannelDataType::UnsignedIntegerLe:
       case ChannelDataType::UnsignedIntegerBe: {
         uint64_t value = 0;
-        /**
-         * @brief GetUnsignedValue.
-         * @param record_buffer record_buffer.
-         * @param value value.
-         * @param array_index array_index.
-         * @return valid =.
-         */
         valid = GetUnsignedValue ( record_buffer, value, array_index );
-        /**
-         * @brief static_cast<T>.
-         * @param value value.
-         * @return dest =.
-         */
         dest = static_cast<T> ( value );
         break;
         }
@@ -952,19 +683,7 @@ namespace mdf {
         case ChannelDataType::SignedIntegerLe:
         case ChannelDataType::SignedIntegerBe: {
           int64_t value = 0;
-          /**
-           * @brief GetSignedValue.
-           * @param record_buffer record_buffer.
-           * @param value value.
-           * @param array_index array_index.
-           * @return valid =.
-           */
           valid = GetSignedValue ( record_buffer, value, array_index );
-          /**
-           * @brief static_cast<T>.
-           * @param value value.
-           * @return dest =.
-           */
           dest = static_cast<T> ( value );
           break;
       }
@@ -972,19 +691,7 @@ namespace mdf {
       case ChannelDataType::FloatLe:
       case ChannelDataType::FloatBe: {
         double value = 0;
-        /**
-         * @brief GetFloatValue.
-         * @param record_buffer record_buffer.
-         * @param value value.
-         * @param array_index array_index.
-         * @return valid =.
-         */
         valid = GetFloatValue ( record_buffer, value, array_index );
-        /**
-         * @brief static_cast<T>.
-         * @param value value.
-         * @return dest =.
-         */
         dest = static_cast<T> ( value );
         break;
       }
@@ -994,18 +701,7 @@ namespace mdf {
       case ChannelDataType::StringUTF8:
       case ChannelDataType::StringAscii: {
         std::string text;
-        /**
-         * @brief GetTextValue.
-         * @param record_buffer record_buffer.
-         * @param text text.
-         * @return valid =.
-         */
         valid = GetTextValue ( record_buffer, text );
-        /**
-         * @brief data.
-         * @param text text.
-         * @return std::istringstream.
-         */
         std::istringstream data ( text );
         data >> dest;
         break;
@@ -1016,27 +712,10 @@ namespace mdf {
       case ChannelDataType::ByteArray: {
         if ( Type () == ChannelType::VariableLength && VlsdRecordId () != 0 ) {
           uint64_t offset = 0;
-          /**
-           * @brief GetUnsignedValue.
-           * @param record_buffer record_buffer.
-           * @param offset offset.
-           * @return valid =.
-           */
           valid = GetUnsignedValue ( record_buffer, offset );
-          /**
-           * @brief static_cast<T>.
-           * @param offset offset.
-           * @return dest =.
-           */
           dest = static_cast<T> ( offset );
           } else {
             std::vector<uint8_t> list;
-            /**
-             * @brief GetByteArrayValue.
-             * @param record_buffer record_buffer.
-             * @param list list.
-             * @return valid =.
-             */
             valid = GetByteArrayValue ( record_buffer, list );
             dest = list.empty () ? T{} :
             list [ 0 ];
@@ -1047,36 +726,14 @@ namespace mdf {
 
       case ChannelDataType::CanOpenDate: {
         uint64_t ms_since_1970 = 0;
-        /**
-         * @brief GetCanOpenDate.
-         * @param record_buffer record_buffer.
-         * @param ms_since_1970 ms_since_1970.
-         * @return valid =.
-         */
         valid = GetCanOpenDate ( record_buffer, ms_since_1970 );
-        /**
-         * @brief static_cast<T>.
-         * @param ms_since_1970 ms_since_1970.
-         * @return dest =.
-         */
         dest = static_cast<T> ( ms_since_1970 );
         break;
       }
 
       case ChannelDataType::CanOpenTime: {
         uint64_t ms_since_1970 = 0;
-        /**
-         * @brief GetCanOpenTime.
-         * @param record_buffer record_buffer.
-         * @param ms_since_1970 ms_since_1970.
-         * @return valid =.
-         */
         valid = GetCanOpenTime ( record_buffer, ms_since_1970 );
-        /**
-         * @brief static_cast<T>.
-         * @param ms_since_1970 ms_since_1970.
-         * @return dest =.
-         */
         dest = static_cast<T> ( ms_since_1970 );
         break;
         }
@@ -1086,12 +743,6 @@ namespace mdf {
     }
 
     if ( valid ) {
-      /**
-       * @brief GetValid.
-       * @param record_buffer record_buffer.
-       * @param array_index array_index.
-       * @return valid =.
-       */
       valid = GetValid ( record_buffer, array_index );
       }
 
@@ -1123,66 +774,30 @@ namespace mdf {
   std::string &dest, uint64_t array_index ) const;
 
   template <typename T>
-  /**
-   * @brief IChannel::SetChannelValue.
-   * @param value value.
-   * @param valid valid.
-   * @param array_index array_index.
-   */
   void IChannel::SetChannelValue ( const T &value, bool valid,
   uint64_t array_index ) {
     switch ( DataType () ) {
       case ChannelDataType::UnsignedIntegerLe:
-        /**
-         * @brief SetUnsignedValueLe.
-         * @param valid valid.
-         * @param array_index array_index.
-         */
         SetUnsignedValueLe ( static_cast<uint64_t> ( value ), valid, array_index );
         break;
 
       case ChannelDataType::UnsignedIntegerBe:
-        /**
-         * @brief SetUnsignedValueBe.
-         * @param valid valid.
-         * @param array_index array_index.
-         */
         SetUnsignedValueBe ( static_cast<uint64_t> ( value ), valid, array_index );
         break;
 
       case ChannelDataType::SignedIntegerLe:
-        /**
-         * @brief SetSignedValueLe.
-         * @param valid valid.
-         * @param array_index array_index.
-         */
         SetSignedValueLe ( static_cast<int64_t> ( value ), valid, array_index );
         break;
 
       case ChannelDataType::SignedIntegerBe:
-        /**
-         * @brief SetSignedValueBe.
-         * @param valid valid.
-         * @param array_index array_index.
-         */
         SetSignedValueBe ( static_cast<int64_t> ( value ), valid, array_index );
         break;
 
       case ChannelDataType::FloatLe:
-        /**
-         * @brief SetFloatValueLe.
-         * @param valid valid.
-         * @param array_index array_index.
-         */
         SetFloatValueLe ( static_cast<double> ( value ), valid, array_index );
         break;
 
       case ChannelDataType::FloatBe:
-        /**
-         * @brief SetFloatValueBe.
-         * @param valid valid.
-         * @param array_index array_index.
-         */
         SetFloatValueBe ( static_cast<double> ( value ), valid, array_index );
         break;
 
@@ -1190,10 +805,6 @@ namespace mdf {
       case ChannelDataType::StringAscii:
       case ChannelDataType::StringUTF16Be:
       case ChannelDataType::StringUTF16Le:
-        /**
-         * @brief SetTextValue.
-         * @param valid valid.
-         */
         SetTextValue ( std::to_string ( value ), valid );
         break;
 
@@ -1206,22 +817,9 @@ namespace mdf {
       case ChannelDataType::CanOpenDate:
         if ( typeid ( T ) == typeid ( uint64_t ) && DataBytes () == 7 ) {
           const auto date_array =
-          /**
-           * @brief MdfHelper::NsToCanOpenDateArray.
-           */
           MdfHelper::NsToCanOpenDateArray ( static_cast<uint64_t> ( value ) );
-          /**
-           * @brief SetByteArray.
-           * @param date_array date_array.
-           * @param valid valid.
-           */
           SetByteArray ( date_array, valid );
           } else {
-            /**
-             * @brief SetValid.
-             * @param false false.
-             * @param array_index array_index.
-             */
             SetValid ( false, array_index );
         }
 
@@ -1230,33 +828,15 @@ namespace mdf {
       case ChannelDataType::CanOpenTime:
         if ( typeid ( T ) == typeid ( uint64_t ) && DataBytes () == 6 ) {
           const auto time_array =
-          /**
-           * @brief MdfHelper::NsToCanOpenTimeArray.
-           */
           MdfHelper::NsToCanOpenTimeArray ( static_cast<uint64_t> ( value ) );
-          /**
-           * @brief SetByteArray.
-           * @param time_array time_array.
-           * @param valid valid.
-           */
           SetByteArray ( time_array, valid );
           } else {
-            /**
-             * @brief SetValid.
-             * @param false false.
-             * @param array_index array_index.
-             */
             SetValid ( false, array_index );
         }
 
         break;
 
       default:
-        /**
-         * @brief SetValid.
-         * @param false false.
-         * @param array_index array_index.
-         */
         SetValid ( false, array_index );
         break;
       }
@@ -1285,26 +865,12 @@ namespace mdf {
   uint64_t array_index );
 
   template <typename T>
-  /**
-   * @brief IChannel::SetChannelValues.
-   * @param values values.
-   */
   void IChannel::SetChannelValues ( const std::vector<T>& values ) {
-    /**
-     * @brief ArraySize.
-     * @return auto array_size =.
-     */
     const auto array_size = ArraySize ();
     uint64_t index = 0;
 
     for ( const T& value : values ) {
       if ( index < array_size ) {
-        /**
-         * @brief SetChannelValue.
-         * @param value value.
-         * @param true true.
-         * @param index index.
-         */
         SetChannelValue ( value, true, index );
         }
 

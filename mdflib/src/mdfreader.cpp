@@ -83,11 +83,17 @@ namespace mdf {
     return false;
   }
 
-  /// Creates a channel sample observer. The sample observer creates internal
-  /// memory for all samples.\n The function also attach the observer to the
-  /// notifier (see observer pattern). The destructor of the channel observer
-  /// detach the observer. \param data_group \param group \param channel \return
-  /// Smart pointer to a channel observer
+  /**
+   * @brief Creates a channel sample observer.
+   *
+   * The observer allocates internal memory for samples and attaches itself
+   * to the notifier (observer pattern). The observer detaches automatically
+   * in its destructor.
+   * @param data_group Parent data group.
+   * @param group Parent channel group.
+   * @param channel Source channel.
+   * @return Smart pointer to a channel observer.
+   */
   ChannelObserverPtr CreateChannelObserver ( const IDataGroup &data_group,
       const IChannelGroup &group,
       const IChannel &channel ) {

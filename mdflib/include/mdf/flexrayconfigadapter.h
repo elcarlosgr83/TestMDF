@@ -23,7 +23,6 @@ namespace mdf {
     /**
      * @brief FlexRayConfigAdapter.
      * @param writer writer.
-     * @return explicit.
      */
     explicit FlexRayConfigAdapter ( const MdfWriter& writer );
 
@@ -46,7 +45,7 @@ namespace mdf {
     * is an internal design requirement as this offset is updated when the sample
     * is written to th the file.
     * <table>
-    * <caption id="multi_row">FLX_Frame Layout</caption>
+    * <caption>FLX_Frame Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -69,10 +68,6 @@ namespace mdf {
     * <tr><td>24-33</td><td>Offset to VLSD/SD (64-bit). Must be last</td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateFlxFrame.
-     * @param data_group data_group.
      */
     void CreateFlxFrame ( IDataGroup& data_group ) const;
 
@@ -108,10 +103,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
-    /**
-     * @brief CreateFlxPdu.
-     * @param data_group data_group.
-     */
     void CreateFlxPdu ( IDataGroup& data_group ) const;
 
     /** \brief Creates the FLX_FrameHeader channel group.
@@ -125,7 +116,7 @@ namespace mdf {
     * is an internal design requirement as this offset is updated when the sample
     * is written to th the file.
     * <table>
-    * <caption id="multi_row">FLX_FrameHeader Layout</caption>
+    * <caption>FLX_FrameHeader Layout</caption>
     * <tr><th>Byte:Bit Offset</th><th>Channel Description</th></tr>
     * <tr><td>0-7</td><td>Time [s]</td></tr>
     * <tr><td>8</td><td>Bus Channel</td></tr>
@@ -147,10 +138,6 @@ namespace mdf {
     * <tr><td>24-33</td><td>Offset to VLSD/SD (64-bit). Must be last</td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateFlxFrameHeader.
-     * @param data_group data_group.
      */
     void CreateFlxFrameHeader ( IDataGroup& data_group ) const;
 
@@ -189,10 +176,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
        */
-    /**
-     * @brief CreateFlxNullFrame.
-     * @param data_group data_group.
-     */
     void CreateFlxNullFrame ( IDataGroup& data_group ) const;
 
     /** \brief Creates the FLX_ErrorFrame channel group.
@@ -234,10 +217,6 @@ namespace mdf {
     * </table>
     * @param data_group Reference to the data group.
      */
-    /**
-     * @brief CreateFlxErrorFrame.
-     * @param data_group data_group.
-     */
     void CreateFlxErrorFrame ( IDataGroup& data_group ) const;
 
     /** \brief Creates the FLX_Symbol channel group.
@@ -262,10 +241,6 @@ namespace mdf {
     * <tr><td>11</td><td>Symbol Types (enumerate)</td></tr>
     * </table>
     * @param data_group Reference to the data group.
-     */
-    /**
-     * @brief CreateFlxSymbol.
-     * @param data_group data_group.
      */
     void CreateFlxSymbol ( IDataGroup& data_group ) const;
   private:

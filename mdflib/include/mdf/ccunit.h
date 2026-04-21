@@ -24,7 +24,6 @@ namespace mdf {
     /**
      * @brief CcUnit.
      * @param unit unit.
-     * @return explicit.
      */
     explicit CcUnit ( std::string unit );
 

@@ -38,28 +38,10 @@ namespace mdf {
   class IChannelHierarchy : public IBlock {
   public:
 
-    /**
-     * @brief Name.
-     * @param name name.
-     * @return virtual void.
-     */
     virtual void Name ( const std::string& name ) = 0; ///< Sets name.
-    /**
-     * @brief Name.
-     * @return [ [ nodiscard ] ] virtual std::string&.
-     */
     [ [ nodiscard ] ] virtual const std::string& Name () const = 0; ///< Name.
 
-      /**
-       * @brief Type.
-       * @param type type.
-       * @return virtual void.
-       */
       virtual void Type ( ChType type ) = 0; ///< Sets the block type.
-    /**
-     * @brief Type.
-     * @return [ [ nodiscard ] ] virtual ChType.
-     */
     [ [ nodiscard ] ] virtual ChType Type () const = 0; ///< Block type.
     /**
      * @brief TypeToString.
@@ -67,17 +49,8 @@ namespace mdf {
      */
     [ [ nodiscard ] ] std::string TypeToString () const; ///< Block type as text.
 
-      /**
-       * @brief Description.
-       * @param description description.
-       * @return virtual void.
-       */
       virtual void Description ( const std::string& description )
       = 0; ///< Sets the descriptive text.
-    /**
-     * @brief Description.
-     * @return [ [ nodiscard ] ] virtual std::string.
-     */
     [ [ nodiscard ] ] virtual std::string Description () const =
       0; ///< Description.
 
@@ -85,75 +58,42 @@ namespace mdf {
        *
        * @return Pointer to a meta data block.
        */
-    /**
-     * @brief CreateMetaData.
-     * @return [ [ nodiscard ] ] virtual IMetaData*.
-     */
     [ [ nodiscard ] ] virtual IMetaData* CreateMetaData () = 0;
 
       /** \brief Returns an constant interface against a MD4 block
        *
        * @return Pointer to a meta data block.
        */
-    /**
-     * @brief MetaData.
-     * @return [ [ nodiscard ] ] virtual IMetaData*.
-     */
     [ [ nodiscard ] ] virtual const IMetaData* MetaData () const = 0;
 
       /** \brief Adds an element link.
        * @param element Element link to add.
-       */
-      /**
-       * @brief AddElementLink.
-       * @param element element.
-       * @return virtual void.
        */
       virtual void AddElementLink ( const ElementLink& element ) = 0;
 
       /** \brief Returns a list of element links.
        * @return Element link list.
        */
-    /**
-     * @brief ElementLinks.
-     * @return [ [ nodiscard ] ] virtual std::vector<ElementLink>&.
-     */
     [ [ nodiscard ] ] virtual const std::vector<ElementLink>& ElementLinks ()
       const = 0;
 
       /** \brief Create a CH block.
        * @return New channel hierarchy block.
        */
-    /**
-     * @brief CreateChannelHierarchy.
-     * @return [ [ nodiscard ] ] virtual IChannelHierarchy*.
-     */
     [ [ nodiscard ] ] virtual IChannelHierarchy* CreateChannelHierarchy () = 0;
 
       /** \brief Returns a list of CH blocks.
        * @return List of channel hierarchy blocks.
        */
-    /**
-     * @brief ChannelHierarchies.
-     * @return [ [ nodiscard ] ] virtual std::vector<IChannelHierarchy*>.
-     */
     [ [ nodiscard ] ] virtual std::vector<IChannelHierarchy*> ChannelHierarchies ()
       const = 0;
 
       /** \brief Sets the channel hierarchy comment.
        * @param ch_comment Channel hierarchy comment object.
        */
-      /**
-       * @brief SetChComment.
-       * @param ch_comment ch_comment.
-       */
       void SetChComment ( const ChComment& ch_comment );
       /** \brief Retrieves the channel hierarchy comment.
        * @param ch_comment Receives the channel hierarchy comment object.
-       */
-      /**
-       * @brief GetChComment.
-       * @param ch_comment ch_comment.
        */
       void GetChComment ( ChComment& ch_comment ) const;
   };

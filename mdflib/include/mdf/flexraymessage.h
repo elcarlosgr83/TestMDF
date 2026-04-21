@@ -137,7 +137,6 @@ namespace mdf {
     /**
      * @brief ToRaw.
      * @param sample sample.
-     * @return virtual void.
      */
     virtual void ToRaw ( SampleRecord& sample ) const = 0;
 
@@ -156,14 +155,12 @@ namespace mdf {
       /**
        * @brief IFlexRayEvent.
        * @param type type.
-       * @return explicit.
        */
       explicit IFlexRayEvent ( FlexRayMessageType type );
 
       /**
        * @brief DataBytes.
        * @param bytes bytes.
-       * @return virtual void.
        */
       virtual void DataBytes ( std::vector<uint8_t> bytes );
     /**
@@ -273,7 +270,6 @@ namespace mdf {
     /**
      * @brief FlexRayFrame.
      * @param type type.
-     * @return explicit.
      */
     explicit FlexRayFrame ( FlexRayMessageType type );
     /**
