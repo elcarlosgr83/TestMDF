@@ -1,0 +1,255 @@
+VERSION ""
+
+
+NS_ :
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIG_TYPE_REF_
+    VAL_TABLE_
+    SIG_GROUP_
+    SIG_VALTYPE_
+    SIGTYPE_VALTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_DEF_DEF_REL_
+    BU_SG_REL_
+    BU_EV_REL_
+    BU_BO_REL_
+    SG_MUL_VAL_
+
+BS_:
+
+BU_: C248_1 C148_2 DP10 RADIO ECU CMCMU
+
+
+
+
+
+
+
+
+
+
+
+
+BO_ 2297431040 EEC1: 8 Vector__XXX
+ SG_ ECU_Engine_Torque : 16|8@1+ (1,-125) [-125|125] "%"  ECU
+ SG_ ECU_Engine_Speed : 24|16@1+ (0.125,0) [0|3000] "rpm"  ECU
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CM_  "File: B:/RiderProjects/CommonServiceTool/Tests/DBCConverter/hg4000.dbc.";
+CM_  " Description: CAN database for HG4000TR.";
+CM_  " Date Created: 9/18/2025.";
+CM_  " Protocol: J1939PG - ExtendedCAN.";
+CM_ BO_ 2297431040 "Electronic Engine Controller 1";
+CM_ SG_ 2298435806 LEFT_TRACK_REV_CURR_J1_4 "A previous signal had its length increased, interfering with the starting address of this signal. So, starting address has been moved from 8 to 16.";
+CM_ SG_ 2298435806 CREEP_DRIVE_FWD_CURR_J2_3 "A previous signal had its length increased, interfering with the starting address of this signal. So, starting address has been moved from 16 to 32.";
+CM_ SG_ 2298435806 CREEP_DRIVE_REV_CURR_J2_4 "A previous signal had its length increased, interfering with the starting address of this signal. So, starting address has been moved from 24 to 48.";
+CM_ SG_ 2298437376 FD_ROLL_UNLCK_CURR_J6_4 "A previous signal had its length increased, interfering with the starting address of this signal. So, starting address has been moved from 24 to 32.";
+CM_ SG_ 2566863360 IO_1_Failed_CRC "A previous signal had its length increased, interfering with the starting address of this signal. So, starting address has been moved from 16 to 24.";
+CM_ SG_ 2566863360 IO_1_Nacks "A previous signal had its length increased, interfering with the starting address of this signal. So, starting address has been moved from 24 to 40.";
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","J1939PG";
+BA_DEF_ SG_  "DisplayFormat" STRING;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_ BU_  "NmJ1939AAC" INT 0 1;
+BA_DEF_ BU_  "NmJ1939IndustryGroup" INT 0 7;
+BA_DEF_ BU_  "NmJ1939SystemInstance" INT 0 15;
+BA_DEF_ BU_  "NmJ1939System" INT 0 127;
+BA_DEF_ BU_  "NmJ1939Function" INT 0 255;
+BA_DEF_ BU_  "NmJ1939FunctionInstance" INT 0 7;
+BA_DEF_ BU_  "NmJ1939ECUInstance" INT 0 3;
+BA_DEF_ BU_  "NmJ1939ManufacturerCode" INT 0 2047;
+BA_DEF_ BU_  "NmJ1939IdentityNumber" INT 0 2097151;
+BA_DEF_ BU_  "NmStationAddress" INT 0 255;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "ProtocolType" STRING ;
+BA_DEF_ SG_  "SPN" INT 0 524287;
+BA_DEF_ SG_ "GenSigStartValue" FLOAT 0 1e+10;
+BA_DEF_ SG_  "SystemSignalLongSymbol" STRING ;
+BA_DEF_DEF_  "NmJ1939AAC" 0;
+BA_DEF_DEF_  "NmJ1939IndustryGroup" 0;
+BA_DEF_DEF_  "NmJ1939SystemInstance" 0;
+BA_DEF_DEF_  "NmJ1939System" 0;
+BA_DEF_DEF_  "NmJ1939Function" 0;
+BA_DEF_DEF_  "NmJ1939FunctionInstance" 0;
+BA_DEF_DEF_  "NmJ1939ECUInstance" 0;
+BA_DEF_DEF_  "NmJ1939ManufacturerCode" 0;
+BA_DEF_DEF_  "NmJ1939IdentityNumber" 0;
+BA_DEF_DEF_  "NmStationAddress" 254;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "ProtocolType" "J1939";
+BA_DEF_DEF_  "VFrameFormat" "J1939PG";
+BA_DEF_DEF_  "SPN" 0;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "SystemSignalLongSymbol" "";
+BA_ "DBName" "HG4000TR";
+BA_ "SPN" SG_ 2297431040 ECU_Engine_Speed 190;
+BA_ "GenSigStartValue" SG_ 2297431040 ECU_Engine_Torque 0;
+BA_ "GenSigStartValue" SG_ 2297431040 ECU_Engine_Speed 24000;
+BA_ "VFrameFormat" BO_ 2297431040 3;
+BA_ "NmStationAddress" BU_ C148_2 229;
+BA_ "NmStationAddress" BU_ C248_1 222;
+BA_ "NmStationAddress" BU_ CMCMU 235;
+BA_ "NmStationAddress" BU_ DP10 223;
+BA_ "NmStationAddress" BU_ ECU 0;
+BA_ "NmStationAddress" BU_ RADIO 224;
+VAL_ 2297421530 C1p06_PinStatus 0 " OK " 1 " Overload detected " ;
+VAL_ 2297421530 C1p07_PinStatus 0 " OK " 1 " Overload detected " ;
+VAL_ 2297421530 C1p08_PinStatus 0 " OK " 1 " Overload detected " ;
+VAL_ 2297421530 C1p09_PinStatus 0 " OK " 1 " Overload detected " ;
+VAL_ 2297421530 C1p10_PinStatus 0 " OK " 1 " Overload detected " ;
+VAL_ 2297421530 C1p11_PinStatus 0 " OK " 1 " Overload detected " ;
+VAL_ 2297421530 C1p12_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p01_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p02_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p03_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p04_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p05_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p06_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p07_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p08_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p09_PinStatus 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C1p12_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p01_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p02_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p03_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p04_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p05_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p06_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p07_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p08_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297421530 C2p09_PinStatus_2 0 " OK " 1 " Incorrect pin configuration " 2 " Overload detected " ;
+VAL_ 2297423104 MILL_LID_UP_CTRL_J8_6 0 " Off" 1 " On" ;
+VAL_ 2297423104 MILL_LID_DWN_CTRL_J8_7 0 " Off" 1 " On" ;
+VAL_ 2297423104 BLU_BEACON_CTRL_J8_2 0 "  Off" 250 "  On" ;
+VAL_ 2297423104 AUX_VALVE_CTRL_J7_3 0 " Off" 1 " On" ;
+VAL_ 2297423104 YLW_BEACON_CTRL_J8_3 0 " Off" 1 " On" ;
+VAL_ 2298417374 C248_SW_softwarejsym_match 67 "OK" 65535 "No data" ;
+VAL_ 2298417375 DP10_SW_softwarejsym_match 76 "OK" 65535 "No data" ;
+VAL_ 2298427103 AUTO_1_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 AUTO_2_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 AUTO_3_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 AUTO_4_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 THROTTLE_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 MENU_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 UP_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 DWN_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 FAN_REV_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 ENTER_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298427103 CONFIG_1 0 " Float" 1 " High" 2 " Low" ;
+VAL_ 2298427103 CONFIG_0 0 " Float" 1 " High" 2 " Low" ;
+VAL_ 2298427103 TOD_UP_J12_7 0 " Float" 1 " High" 2 " Low" ;
+VAL_ 2298427103 TOD_DWN_J12_8 0 " Float" 1 " High" 2 " Low" ;
+VAL_ 2298427103 CONV_RAISE_J11_10 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298427103 CONV_LOWER_J11_11 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298427103 TOD_UP_ST_J12_3 0 " Float" 1 " High" 2 " Low" ;
+VAL_ 2298427103 TOD_DWN_ST_J12_4 0 " Off - (GND)" 1 " On - (Batt)" 2 " Error" ;
+VAL_ 2298427359 HYD_FAULT_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 ENGINE_FAULT_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 CLUTCH_FAULT_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 STOP_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 RADIO_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 FR_CRUSH_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 ENGINE_DERATE_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 MILL_LID_OPEN_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 WARN_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 AUTO_FEED_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 MILL_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 CONVEYOR_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 CLUTCH_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 INFO_LIGHT 0 " Off" 1 " On" ;
+VAL_ 2298427359 TOD_UP_CTRL_J11_3 0 " Off" 1 " On" ;
+VAL_ 2298427359 TOD_DWN_CTRL_J11_4 0 " Off" 1 " On" ;
+VAL_ 2298427648 IO_1_Status 0 " SAUER_IO_DISABLED" 1 " SAUER_IO_VERSION_REQUEST" 2 " SAUER_IO_VERSION_PENDING" 3 " SAUER_IO_CRC_REQUEST" 4 " SAUER_IO_CRC_PENDING" 5 " SAUER_IO_NV_CONFIG" 6 " SAUER_IO_VOLATILE_CONFIG" 7 " SAUER_IO_CONFIGURED" 8 " SAUER_IO_CONFIG_CHANGED" 9 " SAUER_IO_CRC_FAILED" 10 " SAUER_IO_INCOMPATIBLE_PROTOCOL" 11 " SAUER_IO_INCOMPATIBLE_HW" ;
+VAL_ 2298427648 IO_1_HW_type 10105450 " IX12" 10105452 " IX24" 10102367 " IOX12" 10108168 " IOX24" 10102114 " OX12" 10102376 " OX24" 10105451 " UNKNOWN IO MODULE" ;
+VAL_ 2298428640 POWER_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 MENU_BUTTON_2 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 STOP_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 THROTTLE_BUTTON_2 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 UP_BUTTON_2 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 AUTO_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 FD_ROLL_RAISE_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 DOWN_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 FD_ROLL_CRSH_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 FD_ROLL_REV_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 ENTER_BUTTON_2 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 FD_ROLL_REV_BUTTON_2 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 TOD_UPDWN_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 CONV_BUTTON 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 FAN_REV_BUTTON_2 0 "Not Pressed" 1 "Pressed" ;
+VAL_ 2298428640 RADIO_TYPE 0 "Not Available" 1 "TV Remote" 2 "Track Remote" 3 "R224J" 4 "R209L" 5 "R324LK" 6 "R309LK" 7 "R424" 8 "R409" 9 "B424E" 10 "B409E" ;
+VAL_ 2298428640 RADIO_COUNTRY 0 "USA/Europe" 1 "France" 2 "Spain" 3 "Japan" 4 "Canada" 50 "Reg Plug Open" 51 "Not Avaliable" ;
+VAL_ 2298428640 REMOTE_IN_RANGE 0 "No" 1 "Yes" ;
+VAL_ 2298428640 REMOTE_ENABLED 0 "No" 1 "Yes" ;
+VAL_ 2298428640 REMOTE_REG_MODE 0 "Normal Operation" 1 "In Progress" ;
+VAL_ 2298428640 BASE_TYPE 0 "Not Available" 1 "B224" 2 "B424" 3 "B409" 15 "Not Available" ;
+VAL_ 2298429152 CONV_RAISE 1 " On - (Batt)" 0 " Off - (Low)" ;
+VAL_ 2298429152 CONV_LOWER 1 " On - (Batt)" 0 " Off - (Low)" ;
+VAL_ 2298429152 CONV_FOLD 1 " On - (Batt)" 0 " Off - (Low)" ;
+VAL_ 2298429152 CONV_UNFOLD 1 " On - (Batt)" 0 " Off - (Low)" ;
+VAL_ 2298429152 REMOTE_ACTIVATION 0 "Inactive" 1 "Activation" 2 "Active" ;
+VAL_ 2298433502 MILL_LID_SNS_J1_9 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298433502 DISCHRG_CONV_J1_10 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298433502 CLUTCH_ENG_J2_1 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298433502 CLUTCH_DSENG_J2_2 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298433502 HYD_LVL_LO_J3_08 0 " On - (Float)" 1 " Off - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298433502 Fuel_Press_J4_08 0 " Float" 1 " High" 2 " Low" ;
+VAL_ 2298435294 START_RLY_J3_6 1 " On - (Batt)" 0 " Off - (Low)" ;
+VAL_ 2298435294 ENGINE_RLY_J3_7 1 " On - (Batt)" 0 " Off - (Low)" ;
+VAL_ 2298436096 FAN_DIAG_SIG_J5_9 0 " On - (Float)" 1 " Off - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298436096 FD_ROLL_UP_J5_10 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298436096 FD_ROLL_CRSH_J5_11 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298436096 FD_ROLL_LCK_J6_1 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298436096 FD_ROLL_UNLCK_J6_2 0 " Off - (Float)" 1 " On - (Batt)" 2 " Error - (Gnd)" ;
+VAL_ 2298436096 FD_ROLL_LCK_SNS_J7_8 0 " On - (Float)" 1 " Off - (Batt)" 2 " Off - (Gnd)" ;
+VAL_ 2298436096 DISCHRG_STALL_J6_11 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298436096 FD_ROLL_STALL_J7_12 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298436096 FD_ROLL_REV_J7_11 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298436096 FD_ROLL_FWD_J7_10 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298436096 MILL_LID_DWN_J8_11 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298436096 MILL_LID_UP_J8_10 0 " Off - (GND)" 1 " On - (Batt)" ;
+VAL_ 2298436096 MILL_LID_UP_ST_J8_6 0 " Off - (GND)" 1 " On - (Batt)" 2 " Error" ;
+VAL_ 2298436096 MILL_LID_DWN_ST_J8_7 0 " Off - (GND)" 1 " On - (Batt)" 2 " Error" ;
