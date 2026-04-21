@@ -198,7 +198,10 @@ namespace mdf::detail {
     // calculated at this point as it have to be calculated before saving the
     // recording to disc. Instead, is the buffer temporary hold by the
     // SampleRecord struct and fixed just before saving to disc.
-    const bool save_index = group.StorageType () != MdfStorageType::MlsdStorage;
+    //
+    // For VlsdStorage: indices are used (save_index=true)
+    // For MlsdStorage and FixedLengthStorage: inline payloads (save_index=false)
+    const bool save_index = group.StorageType () == MdfStorageType::VlsdStorage;
     const uint32_t max_length = group.MaxLength ();
     const std::string& group_name = group.Name ();
 

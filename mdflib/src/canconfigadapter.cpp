@@ -134,11 +134,11 @@ namespace mdf {
     switch ( StorageType () ) {
       // In reality,  MLSD storage should have max length equal to 8.
       case MdfStorageType::MlsdStorage:
+      case MdfStorageType::FixedLengthStorage:
         cn_data_frame->DataBytes ( mandatory_only ? ( 23 - 16 ) + writer_.MaxLength () :
                                    ( 32 - 16 ) + writer_.MaxLength () );
         break;
 
-      case MdfStorageType::FixedLengthStorage:
       case MdfStorageType::VlsdStorage:
       default:
         cn_data_frame->DataBytes ( mandatory_only ? 23 - 8 : 32 -
@@ -254,7 +254,8 @@ namespace mdf {
     cn_error_frame->Flags ( CnFlag::BusEvent );
     cn_error_frame->DataType ( ChannelDataType::ByteArray );
 
-    if ( StorageType () == MdfStorageType::MlsdStorage ) {
+    if ( StorageType () == MdfStorageType::MlsdStorage
+         || StorageType () == MdfStorageType::FixedLengthStorage ) {
       cn_error_frame->DataBytes ( ( 34 - 16 ) + writer_.MaxLength () );
     } else {
       cn_error_frame->DataBytes ( 34 - 8 ); // Index into SD or VLSD
@@ -329,6 +330,7 @@ namespace mdf {
 
       switch ( StorageType () ) {
         case MdfStorageType::MlsdStorage:
+        case MdfStorageType::FixedLengthStorage:
           frame_bytes->Type ( ChannelType::MaxLength );
           frame_bytes->BitCount ( 8 * writer_.MaxLength () );
           break;

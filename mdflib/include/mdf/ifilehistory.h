@@ -100,11 +100,10 @@ namespace mdf {
      * @param tool_name Name of the tool.
      */
     void ToolName ( const std::string& tool_name ) {
-      auto* md4 = CreateMetaData ();
-
-      if ( md4 != nullptr ) {
-        md4->StringProperty ( "tool_id", tool_name );
-        }
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      fh_comment.ToolId ( tool_name );
+      SetFhComment ( fh_comment );
     }
 
     /** \brief Returns the tool name.
@@ -112,8 +111,9 @@ namespace mdf {
      * @return Tool name.
      */
     [ [ nodiscard ] ] std::string ToolName () const {
-        const auto* md4 = MetaData ();
-        return md4 != nullptr ? md4->StringProperty ( "tool_id" ) : std::string ();
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      return fh_comment.ToolId ().Text ();
     }
 
     /** \brief Sets the tool vendor.
@@ -122,11 +122,10 @@ namespace mdf {
      * @param tool_vendor Vendor name.
      */
     void ToolVendor ( const std::string& tool_vendor ) {
-      auto* md4 = CreateMetaData ();
-
-      if ( md4 != nullptr ) {
-        md4->StringProperty ( "tool_vendor", tool_vendor );
-      }
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      fh_comment.ToolVendor ( tool_vendor );
+      SetFhComment ( fh_comment );
       }
 
       /** \brief Returns the tool vendor.
@@ -134,8 +133,9 @@ namespace mdf {
        * @return Tool vendor.
        */
     [ [ nodiscard ] ] std::string ToolVendor () const {
-        const auto* md4 = MetaData ();
-        return md4 != nullptr ? md4->StringProperty ( "tool_vendor" ) : std::string ();
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      return fh_comment.ToolVendor ().Text ();
     }
 
     /** \brief Sets the tool version.
@@ -144,11 +144,10 @@ namespace mdf {
      * @param tool_version Version string.
      */
     void ToolVersion ( const std::string& tool_version ) {
-      auto* md4 = CreateMetaData ();
-
-      if ( md4 != nullptr ) {
-        md4->StringProperty ( "tool_version", tool_version );
-        }
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      fh_comment.ToolVersion ( tool_version );
+      SetFhComment ( fh_comment );
     }
 
     /** \brief Returns the tool version.
@@ -156,8 +155,9 @@ namespace mdf {
      * @return Tool version.
      */
     [ [ nodiscard ] ] std::string ToolVersion () const {
-        const auto* md4 = MetaData ();
-        return md4 != nullptr ? md4->StringProperty ( "tool_version" ) : std::string ();
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      return fh_comment.ToolVersion ().Text ();
     }
 
     /** \brief Sets the user name.
@@ -166,11 +166,10 @@ namespace mdf {
      * @param user User name.
      */
     void UserName ( const std::string& user ) {
-      auto* md4 = CreateMetaData ();
-
-      if ( md4 != nullptr ) {
-        md4->StringProperty ( "user_name", user );
-      }
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      fh_comment.UserName ( user );
+      SetFhComment ( fh_comment );
       }
 
       /** \brief Returns the user name.
@@ -178,8 +177,9 @@ namespace mdf {
        * @return User name.
        */
     [ [ nodiscard ] ] std::string UserName () const {
-        const auto* md4 = MetaData ();
-        return md4 != nullptr ? md4->StringProperty ( "user_name" ) : std::string ();
+      FhComment fh_comment;
+      GetFhComment ( fh_comment );
+      return fh_comment.UserName ().Text ();
     }
 
     /** \brief Sets the file history comment.

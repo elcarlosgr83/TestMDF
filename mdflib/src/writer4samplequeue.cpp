@@ -39,6 +39,10 @@ namespace mdf::detail {
       return;
     }
 
+    if ( IsEmpty () ) {
+      return;
+    }
+
     // Save uncompressed data in last DG/DT block
     auto* dg4 = dynamic_cast<Dg4Block*> ( &data_group_ );
 
