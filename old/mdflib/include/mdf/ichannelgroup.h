@@ -1,0 +1,379 @@
+/*
+ * Copyright 2021 Ingemar Hedvall
+ * SPDX-License-Identifier: MIT
+ */
+
+#pragma once
+#include <algorithm>
+#include <string>
+#include <vector>
+
+#include "mdf/ichannel.h"
+#include "mdf/samplerecord.h"
+#include "mdf/mdfenumerates.h"
+#include "mdf/iblock.h"
+#include "mdf/imetadata.h"
+#include "mdf/cgcomment.h"
+#include "mdf/isourceinformation.h"
+
+namespace mdf {
+  /** \brief Channel group flags. */
+  namespace CgFlag {
+    /** \brief Flag is used to indicate the this block is a variable length CG
+     * block.
+     *
+     * If a CG block is marked as a variable length data (VLSD) block. This
+     * technique is used when writing byte arrays with variable length. Bus
+     * recorders uses this technique instead of using SD blocks.
+     *
+     * The problem with
+     * SD blocks is that they need to be temporary stored in primary memory. For
+     * long time recording this is not acceptable due to the risk of loss of power
+     * during th measurement.
+     *
+     * The draw-back is that the VLSD CG block requires some extra internal
+     * functionality both for reading and writing.
+     */
+    constexpr uint16_t VlsdChannel = 0x0001;
+
+    /** \brief Bus event flag. */
+    constexpr uint16_t BusEvent = 0x0002;
+
+    /** \brief Plain bus event flag. */
+    constexpr uint16_t PlainBusEvent = 0x0004;
+
+    /** \brief Remote master flag.*/
+    constexpr uint16_t RemoteMaster = 0x0008;
+
+    /** \brief Event signal group. The group store events not values. */
+    constexpr uint16_t EventSignal = 0x00010;
+  }  // namespace CgFlag
+
+
+  /** \brief Interface against a channel group (CG) block.
+   *
+   * A channel group defines a group of signals that are sampled simultaneously.
+   * So the number of samples are the same for the channels. Each data sample is
+   * stored in so-called record buffer. The record buffer normally have fixed
+   * length.
+   *
+   * The above is somewhat not correct because if the CG block doesn't have any
+   * signals, it stores some other data which typical is used when logging bus
+   * messages.
+   */
+
+  class IChannelGroup : public IBlock {
+
+  public:
+
+    /**
+     * @brief RecordId.
+     * @param record_id record_id.
+     * @return virtual void.
+     */
+    virtual void RecordId ( uint64_t record_id ) = 0; ///< Sets the record identity.
+    /**
+     * @brief RecordId.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
+    [ [ nodiscard ] ] virtual uint64_t RecordId () const = 0; ///< Record identity.
+
+      /**
+       * @brief Name.
+       * @param name name.
+       * @return virtual void.
+       */
+      virtual void Name ( const std::string& name ) = 0; ///< Sets the name.
+    /**
+     * @brief Name.
+     * @return [ [ nodiscard ] ] virtual std::string.
+     */
+    [ [ nodiscard ] ] virtual std::string Name () const = 0; ///< CG name.
+
+      /**
+       * @brief Description.
+       * @param description description.
+       * @return virtual void.
+       */
+      virtual void Description ( const std::string& description )
+      = 0; ///< Sets a descriptive text.
+    /**
+     * @brief Description.
+     * @return [ [ nodiscard ] ] virtual std::string.
+     */
+    [ [ nodiscard ] ] virtual std::string Description () const =
+      0; ///< Description.
+
+    /**
+     * @brief NofSamples.
+     * @return [ [ nodiscard ] ] virtual uint64_t.
+     */
+    [ [ nodiscard ] ] virtual uint64_t NofSamples () const
+      = 0; ///< Number of samples.
+      /** \brief Sets the number of samples.
+       * @param nof_samples Number of samples.
+       */
+      /**
+       * @brief NofSamples.
+       * @param nof_samples nof_samples.
+       * @return virtual void.
+       */
+      virtual void NofSamples ( uint64_t nof_samples ) = 0;
+
+    /**
+     * @brief Flags.
+     * @return [ [ nodiscard ] ] virtual uint16_t.
+     */
+    [ [ nodiscard ] ] virtual uint16_t Flags () const; ///< Returns CgFlag.
+      /** \brief Sets the channel group flags.
+       * @param flags Flags from the CgFlag namespace.
+       */
+      /**
+       * @brief Flags.
+       * @param flags flags.
+       * @return virtual void.
+       */
+      virtual void Flags ( uint16_t flags );
+
+    [ [ nodiscard ] ] virtual char16_t
+      /**
+       * @brief PathSeparator.
+       */
+      PathSeparator (); ///< Returns the path separator.
+      /** \brief Sets the path separator.
+       * @param path_separator Character used as path separator.
+       */
+      /**
+       * @brief PathSeparator.
+       * @param path_separator path_separator.
+       * @return virtual void.
+       */
+      virtual void PathSeparator ( char16_t path_separator );
+
+      /** \brief Returns a list of channels. */
+    [ [ nodiscard ] ] virtual std::vector<IChannel*> Channels () const = 0;
+
+      /** \brief Creates a new channel. */
+    [ [ nodiscard ] ] virtual IChannel* CreateChannel () = 0;
+
+      /** \brief Creates a new channel or returns an existing channel.
+       * @param name Name of the channel to create or locate.
+       * @return Existing or newly created channel.
+       */
+    /**
+     * @brief CreateChannel.
+     * @param name name.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
+    [ [ nodiscard ] ] virtual IChannel* CreateChannel ( const std::string_view& 
+      name );
+
+      /** \brief Returns an existing channel by name or name substring.
+       *
+       * Note that the function searches for a channel name that includes the
+       * provided search name. Example: searching for '.DataLength' will return
+       * 'CAN_DataFrame.DataLength' if it exists without requiring the full name.
+       * @param name Channel name or substring.
+       * @return Pointer to the matching channel or nullptr.
+       */
+    /**
+     * @brief GetChannel.
+     * @param name name.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
+    [ [ nodiscard ] ] virtual IChannel* GetChannel ( const std::string_view& name ) const;
+
+      /** \brief Returns an existing channel by part of its name.
+       *
+       * Note that the function search for a name that includes the search name.
+       * Example if the search name is '.DataLength', the signal with the name
+       * 'CAN_DataFrame.DataLength' will be returned instead of requiring the full name.
+       * @param name Channel name or substring.
+       * @return Pointer to the matching channel or nullptr.
+       */
+    /**
+     * @brief GetMasterChannel.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
+    [ [ nodiscard ] ] virtual IChannel* GetMasterChannel () const;
+
+      /** \brief Returns an external reference channel.
+       * @param reference Reference channel used for lookup.
+       * @return Pointer to the referenced external channel or nullptr.
+       */
+    /**
+     * @brief GetXChannel.
+     * @param reference reference.
+     * @return [ [ nodiscard ] ] virtual IChannel*.
+     */
+    [ [ nodiscard ] ] virtual const IChannel* GetXChannel (
+      const IChannel& reference ) const = 0;
+
+      /** \brief Creates or returns the group source information (SI) block.
+       *
+       * This function creates or returns the source information (SI) block
+       * for the channel group.
+       * @return Pointer to a source information (SI) block.
+       */
+    /**
+     * @brief CreateSourceInformation.
+     * @return [ [ nodiscard ] ] virtual ISourceInformation*.
+     */
+    [ [ nodiscard ] ] virtual ISourceInformation* CreateSourceInformation ();
+
+    /**
+     * @brief SourceInformation.
+     * @return [ [ nodiscard ] ] virtual ISourceInformation*.
+     */
+    [ [ nodiscard ] ] virtual ISourceInformation* SourceInformation ()
+      const; ///< Returns the source information (SI) block if it exist.
+
+      /** \brief Returns the type of bus messages this channel group contains.
+       *
+       * Returns what type bus message this channel group contains.
+       * The function check this in the source information block belonging
+       * to this block.
+       * @return The type of bus. Note that it returns 'None' if it isn't a bus
+       * channel group.
+       */
+    /**
+     * @brief GetBusType.
+     * @return [ [ nodiscard ] ] BusType.
+     */
+    [ [ nodiscard ] ] BusType GetBusType () const;
+
+      /** \brief Support function that creates a sample record.
+       * @return Sample record object.
+       */
+    /**
+     * @brief GetSampleRecord.
+     * @return [ [ nodiscard ] ] SampleRecord.
+     */
+    [ [ nodiscard ] ] SampleRecord GetSampleRecord () const;
+
+      /** \brief Resets the internal sample counter. Internal use only. */
+    void ResetSampleCounter () const { sample_ = 0;}
+
+    /**
+     * @brief ClearData.
+     * @return virtual void.
+     */
+    virtual void ClearData (); ///< Resets all temporary stored samples.
+    /**
+     * @brief IncrementSample.
+     */
+    void IncrementSample () const; ///< Add a sample
+
+    /**
+     * @brief Sample.
+     * @return [ [ nodiscard ] ] size_t.
+     */
+    [ [ nodiscard ] ] size_t Sample () const; ///< Returns number of samples.
+
+      /** \brief Creates a meta-data (MD) block. */
+    [ [ nodiscard ] ] virtual IMetaData* CreateMetaData ();
+
+      /** \brief Returns the meta-data (MD) block if it exist. */
+    [ [ nodiscard ] ] virtual IMetaData* MetaData () const;
+
+      /** \brief Returns a pointer to data group (DG) block. */
+    [ [ nodiscard ] ] virtual const IDataGroup* DataGroup () const = 0;
+
+      /** \brief Sets the channel group comment.
+       * @param cg_comment Channel group comment object.
+       */
+      /**
+       * @brief SetCgComment.
+       * @param cg_comment cg_comment.
+       */
+      void SetCgComment ( const CgComment& cg_comment );
+      /** \brief Retrieves the channel group comment.
+       * @param cg_comment Receives the channel group comment object.
+       */
+      /**
+       * @brief GetCgComment.
+       * @param cg_comment cg_comment.
+       */
+      void GetCgComment ( CgComment& cg_comment ) const;
+
+      /**
+       * @brief StorageType.
+       * @param storage_type storage_type.
+       */
+      void StorageType ( MdfStorageType storage_type ) {
+        storage_type_ = storage_type;
+    }
+    /**
+     * @brief StorageType.
+     * @return [ [ nodiscard ] ] MdfStorageType.
+     */
+    [ [ nodiscard ] ] MdfStorageType StorageType () const {
+        return storage_type_;
+    }
+    /**
+     * @brief MaxLength.
+     * @param max_length max_length.
+     */
+    void MaxLength ( uint32_t max_length ) {
+      max_length_ = max_length < 8 ? 8 : max_length;
+    }
+
+    /**
+     * @brief MaxLength.
+     * @return [ [ nodiscard ] ] uint32_t.
+     */
+    [ [ nodiscard ] ] uint32_t MaxLength () const {
+        return max_length_;
+    }
+
+  protected:
+    /** \brief Temporary record when saving samples.
+     *
+     * The sample buffer is used internally when reading and writing
+     * a channel group record. The record is of fixed size and the
+     * buffer is sized upon initializing the read or write.
+     */
+    mutable std::vector<uint8_t> sample_buffer_;
+
+    /** \brief The storage type is used when creating MDF files.
+     *
+     * The storage type is mainly used when saving Variable Length Signal Data
+     * (VLSD).
+     *
+     * Normally the channel group uses fixed length storage which means
+     * that the byte arrays are stored in a separate signal data block and
+     * the groups record buffer stores an index into that block where the
+     * byte array is stored.
+     *
+     * If the block is defined as VLSD storage, instead of storing the VLSD
+     * byte array in a separate SD block, a special channel group (CG) VLSD
+     * block is used instead.
+     *
+     * If the block is using the MLSD storage type,instead of storing an 8-byte
+     * index, the maximum length of the byte arraya are stored. The actual length
+     * is stored in a separate channel. This storage type are typical used for
+     * CAN and LIN messages.
+     */
+    MdfStorageType storage_type_ = MdfStorageType::FixedLengthStorage;
+
+    /** \brief Only used for MLSD storage type. Defines the max number of bytes.
+     *
+     * This value is used when selecting MLSD storage. When using MLSD storage,
+     * this value defines maximum number of data bytes that can be stored.
+     *
+     * This value is default set to 8 bytes and if set to anything else, do not
+     * use MLSD storage.
+     */
+    uint32_t max_length_ = 8;
+
+
+  private:
+    /** brief Internally used as sample counter.
+     *
+     * The sample counter is used to indicate how many records of this group
+     * that have been read or written.
+     */
+    mutable size_t sample_ = 0;
+  };
+
+  }  // namespace mdf
